@@ -21,8 +21,10 @@ namespace TeamTaskManager
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/ajaxlogin").Include(
-                "~/app/ajaxlogin.js"));
+            bundles.Add(new ScriptBundle("~/bundles/utilities").Include(
+                "~/Scripts/underscore.js",
+           "~/app/js/lib/Smart-Table.min.js",                
+           "~/Scripts/ui-bootstrap-tpls-0.6.0.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/breeze").Include(
                         "~/Scripts/q.js",
@@ -30,13 +32,10 @@ namespace TeamTaskManager
                         "~/Scripts/breeze.min.js",
                         "~/Scripts/breeze.savequeuing.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/todo").Include(
-                "~/app/todo.main.js", // must be first
-                "~/app/todo.model.js",
-                "~/app/todo.datacontext.js",
-                "~/app/todo.controller.js",
-                "~/app/about.controller.js",
-                "~/app/about.logger.js"
+            bundles.Add(new ScriptBundle("~/bundles/teamTaskManager").Include(
+           "~/app/teamTaskManager.main.js", // must be first, well until I include another bundle
+                "~/app/js/controllers/*.js",
+                "~/app/js/services/*.js"
                 ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -45,8 +44,9 @@ namespace TeamTaskManager
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/bootstrap.min.css",
                 "~/Content/Site.css",
-                "~/Content/TodoList.css"));
+                        "~/Content/toastr.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

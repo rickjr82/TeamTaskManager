@@ -1,0 +1,20 @@
+﻿Team:<select ng-model="teamId" ng-options="t.id as t.name for t in teams"><option value="">-- Choose Team --</option></select>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Opponent</th>
+            <th>Location</th>
+            <th ng-repeat="task in teamTasks">{{task.name}}</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="game in teamGames">
+            <td>{{game.date}}</td>
+            <td>{{game.opponent}}</td>
+            <td>{{game.location}}</td>
+            <td ng-repeat="task in teamTasks"><input type="checkbox" ng-model="game[task.name].selected" ng-disabled="game[task.name].selectedBy != null || game[task.name].selectedBy == currentUser.player"></td>
+        </tr>
+    </tbody>
+</table>

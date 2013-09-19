@@ -2,25 +2,30 @@
 
 // 'todo' is the one Angular (Ng) module in this app
 // 'todo' module is in global namespace
-window.todo = angular.module('todo', []);
+window.teamTaskManager = angular.module('teamTaskManager', ['ui.bootstrap', 'smartTable.table']);
 
 // Add global "services" (like breeze and Q) to the Ng injector
 // Learn about Angular dependency injection in this video
 // http://www.youtube.com/watch?feature=player_embedded&v=1CpiB3Wk25U#t=2253s
-todo.value('breeze', window.breeze)
+teamTaskManager.value('breeze', window.breeze)
     .value('Q', window.Q);
 
 // Configure routes
-todo.config(['$routeProvider', function ($routeProvider) {
+teamTaskManager.config(['$routeProvider', function ($routeProvider) {
       $routeProvider.
-          when('/', { templateUrl: 'app/todo.view.html', controller: 'TodoCtrl' }).
-          when('/about', { templateUrl: 'app/about.view.html', controller: 'AboutCtrl' }).
-          otherwise({ redirectTo: '/' });
+          when('/', { templateUrl: 'app/html/views/admin.html', controller: 'adminController' }).
+       when('/teams', { templateUrl: 'app/html/views/teamList.html', controller: 'teamListController' })
+      when('/players', { templateUrl: 'app/html/views/playerList.html', controller: 'playerListController' })
+      when('/games', { templateUrl: 'app/html/views/gameList.html', controller: 'gameListController' })
+    when('/teamDetail', { templateUrl: 'app/html/views/teamDetail.html', controller: 'teamDetailController' })
+    when('/taskSignUp', { templateUrl: 'app/html/views/signUp.html', controller: 'signUpController' })
+        .when('/admin', { templateUrl: 'app/html/views/admin.html', controller: 'adminController' })
+          .otherwise({ redirectTo: '/' });
   }]);
 
 //#region Ng directives
 /*  We extend Angular with custom data bindings written as Ng directives */
-todo.directive('onFocus', function () {
+teamTaskManager.directive('onFocus', function () {
         return {
             restrict: 'A',
             link: function (scope, elm, attrs) {
@@ -65,7 +70,7 @@ todo.directive('onFocus', function () {
 if (!Modernizr.input.placeholder) {
     // this browser does not support HTML5 placeholders
     // see http://stackoverflow.com/questions/14777841/angularjs-inputplaceholder-directive-breaking-with-ng-model
-    todo.directive('placeholder', function () {
+    teamTaskManager.directive('placeholder', function () {
         return {
             restrict: 'A',
             require: 'ngModel',

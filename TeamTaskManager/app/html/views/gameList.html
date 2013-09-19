@@ -1,0 +1,23 @@
+﻿Team:<select ng-model="teamId" ng-options="t.id as t.name for t in teams"><option value="">-- Choose Team --</option></select>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Opponent</th>
+            <th>Location</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="game in teamGames">
+            <td><input type="text" ng-model="game.date"/></td>
+            <td><input type="text" ng-model="game.opponent" /></td>
+            <td>{<input type="text" ng-model="game.location" /></td>
+            <td></td>
+            <td><input type="button" value="Delete" ng-click="deleteGame(player)" /> </td>
+        </tr>
+        <tr>
+            <td><input type="button" value="Add Game" ng-click="addGame()" /></td>
+        </tr>
+    </tbody>
+</table>

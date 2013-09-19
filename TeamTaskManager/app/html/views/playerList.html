@@ -1,0 +1,21 @@
+﻿<table>
+        <thead>
+            <tr>
+                <th>First</th>
+                <th>Last</th>
+                <th>Save</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>                        
+            <tr ng-repeat="player in players">
+                <td><input ng-model="player.firstName" type="text" placeholder="First Name" ng-change="markDirty(player)"/></td>
+                <td><input ng-model="player.lastName" type="text" placeholder="Last Name" ng-change="markDirty(player)"/></td>
+                <td><input type="button" value="Save" ng-click="savePlayer(player)"  ng-disabled="player.isDirty == false || player.firstName.length == 0 || player.lastName.length == 0"/></td>
+                <td><input type="button" value="Delete" ng-click="deletePlayer(player)"/> </td>
+            </tr>
+            <tr>
+            <td><input type="button" value="Add Player" ng-click="addPlayer()"/></td>           
+                </tr>
+        </tbody>
+    </table>

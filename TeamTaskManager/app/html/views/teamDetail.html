@@ -1,0 +1,9 @@
+﻿<select ng-model="currentPlayerId" ng-options="p.id as p.formattedName for p in players"></select>
+<input type="button" ng-disabled="currentPlayerId==0" value="Add Player To Team" ng-click="addPlayerToTeam()"><option value="">-- Choose Player --</option>
+</select>
+    <smart-table rows="teamPlayers" columns="teamPlayerColumns"></smart-table>
+<select ng-model="currentTaskId" ng-options="t.id as t.name for t in tasks"></select>
+<input type="button" ng-disabled="currentTaskId==0" value="Add Task To Team" ng-click="addTaskToTeam()"><option value="">-- Choose Player --</option>
+</select>
+
+    <smart-table rows="teamTasks" columns="teamTaskColumns"></smart-table>

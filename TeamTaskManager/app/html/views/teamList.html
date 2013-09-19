@@ -1,0 +1,20 @@
+﻿<table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Save</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>                        
+            <tr ng-repeat="team in teams">
+                <td><input ng-model="team.Name" type="text" placeholder="Name" /></td>                
+                <td><input type="button" value="Save" ng-click="saveTeam(team)" ng-disabled="team.Name.length == 0"/></td>
+                <td><input type="button" value="Delete" ng-click="deleteTeam(team)"/> </td>
+            </tr>
+            <tr>
+            <td><input type="button" value="Add Team" ng-click="addTeam()"/></td>           
+                </tr>
+        </tbody>
+    </table>
+<input type="button" value="Close" ng-click="close()">
