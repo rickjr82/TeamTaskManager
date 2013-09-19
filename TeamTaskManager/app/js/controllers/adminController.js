@@ -1,4 +1,5 @@
-﻿teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$modal', 'dataservice', 'logger',
+﻿
+teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$modal', 'dataservice', 'logger',
     function ($scope, $rootScope, $modal, dataservice, logger) {
         $scope.teams = [];
         $scope.teamId = 0;
