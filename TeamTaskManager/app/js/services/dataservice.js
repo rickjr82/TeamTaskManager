@@ -2,17 +2,17 @@
 
     breeze.config.initializeAdapterInstance("modelLibrary", "backingStore", true);
 
-    var useLocalHost = true;
-    var host = useLocalHost ? "http://localhost:49242" : "http://myteamtracker.azurewebsites.net/";
-    var serviceName = "api/teaminfo";
+    logger.log("creating datacontext");
+    var initialized;
 
-    var manager = new breeze.EntityManager(serviceName);
-    //    manager.enableSaveQueuing(true);
-
+    configureBreeze();
+    var manager = new breeze.EntityManager("api/teaminfo");
+    manager.enableSaveQueuing(true);
     var dataservice = {
         getTeams: getTeams,
         createTeam: createTeam,
-        saveChanges: saveChanges
+        deleteTeam: deleteTeam,
+        saveEntity: saveEntity
     };
     return dataservice;
 
@@ -28,54 +28,74 @@
     function createTeam(initialValues) {
         return manager.createEntity('Team', initialValues);
     }
+    function deleteTeam(team) {
+        team.entityAspect.setDeleted();
+        return saveEntity(team);
+    }
+    function saveEntity(masterEntity) {
+        // if nothing to save, return a resolved promise
+        if (!manager.hasChanges()) { return Q(); }
 
-    function saveChanges() {
-        return manager.saveChanges()
-            .then(saveSucceeded)
-            .fail(saveFailed);
+        var description = describeSaveOperation(masterEntity);
+        return manager.saveChanges().then(saveSucceeded).fail(saveFailed);
 
-        function saveSucceeded(saveResult) {
-            logger.success("# of Teams saved = " + saveResult.entities.length);
-            logger.log(saveResult);
+        function saveSucceeded() {
+            logger.log("saved " + description);
         }
 
         function saveFailed(error) {
-            var reason = error.message;
-            var detail = error.detail;
+            var msg = "Error saving " +
+                description + ": " +
+                getErrorMessage(error);
 
-            if (error.entityErrors) {
-                reason = handleSaveValidationError(error);
-            } else if (detail && detail.ExceptionType &&
-                detail.ExceptionType.indexOf('OptimisticConcurrencyException') !== -1) {
-                // Concurrency error 
-                reason =
-                    "Another user, perhaps the server, " +
-                    "may have deleted one or all of the teams." +
-                    " You may have to restart the app.";
-            } else {
-                reason = "Failed to save changes: " + reason +
-                         " You may have to restart the app.";
-            }
-
-            logger.error(error, reason);
-            // DEMO ONLY: discard all pending changes
-            // Let them see the error for a second before rejecting changes
-            $timeout(function () {
-                manager.rejectChanges();
-            }, 1000);
-            throw error; // so caller can see it
+            masterEntity.errorMessage = msg;
+            logger.log(msg, 'error');
+            // Let user see invalid value briefly before reverting
+            $timeout(function () { manager.rejectChanges(); }, 1000);
+            throw error; // so caller can see failure
+        }
+    }
+    function describeSaveOperation(entity) {
+        var statename = entity.entityAspect.entityState.name.toLowerCase();
+        var typeName = entity.entityType.shortName;
+        var title = entity.title;
+        title = title ? (" '" + title + "'") : "";
+        return statename + " " + typeName + title;
+    }
+    function getErrorMessage(error) {
+        var reason = error.message;
+        if (reason.match(/validation error/i)) {
+            reason = getValidationErrorMessage(error);
+        }
+        return reason;
+    }
+    function getValidationErrorMessage(error) {
+        try { // return the first error message
+            var firstItem = error.entitiesWithErrors[0];
+            var firstError = firstItem.entityAspect.getValidationErrors()[0];
+            return firstError.errorMessage;
+        } catch (e) { // ignore problem extracting error message 
+            return "validation error";
         }
     }
 
-    function handleSaveValidationError(error) {
-        var message = "Not saved due to validation error";
-        try { // fish out the first error
-            var firstErr = error.entityErrors[0];
-            message += ": " + firstErr.errorMessage;
-        } catch (e) { /* eat it for now */ }
-        return message;
+    function configureBreeze() {
+        // configure to use the model library for Angular
+        breeze.config.initializeAdapterInstance("modelLibrary", "backingStore", true);
+
+        // configure to use camelCase
+        breeze.NamingConvention.camelCase.setAsDefault();
+
+        // configure to resist CSRF attack
+        var antiForgeryToken = $("#antiForgeryToken").val();
+        if (antiForgeryToken) {
+            // get the current default Breeze AJAX adapter & add header
+            var ajaxAdapter = breeze.config.getAdapterInstance("ajax");
+            ajaxAdapter.defaultSettings = {
+                headers: {
+                    'RequestVerificationToken': antiForgeryToken
+                },
+            };
+        }
     }
-
-    //#endregion
-
 }]);

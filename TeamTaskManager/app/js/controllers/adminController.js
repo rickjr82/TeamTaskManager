@@ -1,20 +1,14 @@
 ﻿
-teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$modal', 'dataservice', 'logger',
-    function ($scope, $rootScope, $modal, dataservice, logger) {
+teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$location', 'dataservice', 'logger',
+    function ($scope, $rootScope, $location, dataservice, logger) {
         $scope.teams = [];
         $scope.teamId = 0;
         logger.info("loading teams")
         dataservice.getTeams()
               .then(querySucceeded)
               .fail(queryFailed);
-        $scope.$watch('teamId', function () { $rootScope.teamId = $scope.teamId; });
         $scope.modifyTeams = function () {
-            var opts = { backdrop: true, keyboard: true, backdropClick: false, templateUrl: '/app/html/partials/teamList.html', controller: 'teamListController' };
-            var modalInstance = $modal.open(opts);
-            modalInstance.result.then(function (result) {
-                $scope.teamId = 0;
-                $scope.teams = result;
-            });
+            $location.path('/teams');
         };
         function extendItem(item) {
             if (item.isEditing !== undefined) return; // already extended
@@ -42,19 +36,12 @@ teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$modal',
             logger.error(error.message, "Query failed");
         }
         $scope.modifyPlayers = function () {
-            var opts = { backdrop: true, keyboard: true, backdropClick: true, templateUrl: '/app/html/partials/playerList.html', controller: 'playerListController' };
-            $modal.open(opts);
+            $location.path('/players');
         };
         $scope.signupForTasks = function () {
-            var opts = {
-                backdrop: true, keyboard: true, backdropClick: true, templateUrl: '/app/html/partials/signup.html', controller: 'signupController'
-            };
-            $modal.open(opts);
+            $location.path('/signup/'+$scope.teamId);
         };
         $scope.manageTeam = function () {
-            var opts = {
-                backdrop: true, keyboard: true, backdropClick: true, templateUrl: '/app/html/partials/teamDetail.html', controller: 'teamDetailController'
-            };
-            $modal.open(opts);
+            $location.path('/teamDetail/'+$scope.teamId);
         };
     }]);

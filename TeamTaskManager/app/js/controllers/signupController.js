@@ -1,5 +1,5 @@
-﻿teamTaskManager.controller('signupController', ['$scope', '$rootScope', '$modal', 'teamDetail',
-    function ($scope, $rootScope, $modal, teamDetail) {
+﻿teamTaskManager.controller('signupController', ['$scope', '$rootScope', '$routeParams', 'teamDetail', 
+    function ($scope, $rootScope, $routeParams, teamDetail) {
         $scope.currentUser = { player: 'Nolan Wicker' };
         $scope.teams = [];
         $scope.teamId = 0;

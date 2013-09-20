@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
-namespace MyTeamTracker.Models.Mapping
+namespace TeamTaskManager.Models.Mapping
 {
     public class PlayerMap : EntityTypeConfiguration<Player>
     {

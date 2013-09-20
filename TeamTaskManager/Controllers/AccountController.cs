@@ -88,17 +88,7 @@ namespace TeamTaskManager.Controllers
         /// <param name="userName"></param>
         private static void InitiateDatabaseForNewUser(string userName)
         {
-            TodoItemContext db = new TodoItemContext();
-            TodoList todoList = new TodoList();
-            todoList.UserId = userName;
-            todoList.Title = "My Todo List #1";
-            todoList.Todos = new List<TodoItem>();
-            db.TodoLists.Add(todoList);
-            db.SaveChanges();
-
-            todoList.Todos.Add(new TodoItem() { Title = "Todo item #1", TodoListId = todoList.TodoListId, IsDone = false });
-            todoList.Todos.Add(new TodoItem() { Title = "Todo item #2", TodoListId = todoList.TodoListId, IsDone = false });
-            db.SaveChanges();
+           
         }
 
         //
@@ -271,7 +261,7 @@ namespace TeamTaskManager.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                using (MyTeamTrackerContext db = new MyTeamTrackerContext())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists

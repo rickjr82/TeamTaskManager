@@ -25,7 +25,7 @@ namespace TeamTaskManager.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<MyTeamTrackerContext>(null);
 
                 try
                 {
@@ -38,7 +38,7 @@ namespace TeamTaskManager.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("MyTeamTrackerContext", "UserProfile", "UserId", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

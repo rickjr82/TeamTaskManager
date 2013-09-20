@@ -8,17 +8,17 @@ window.teamTaskManager = angular.module('teamTaskManager', ['ui.bootstrap', 'sma
 // Learn about Angular dependency injection in this video
 // http://www.youtube.com/watch?feature=player_embedded&v=1CpiB3Wk25U#t=2253s
 teamTaskManager.value('breeze', window.breeze)
-    .value('Q', window.Q);
+    .value('Q', window.Q).value('toastr', window.toastr);;
 
 // Configure routes
 teamTaskManager.config(['$routeProvider', function ($routeProvider) {
       $routeProvider.
           when('/', { templateUrl: 'app/html/views/admin.html', controller: 'adminController' }).
-       when('/teams', { templateUrl: 'app/html/views/teamList.html', controller: 'teamListController' })
-      when('/players', { templateUrl: 'app/html/views/playerList.html', controller: 'playerListController' })
-      when('/games', { templateUrl: 'app/html/views/gameList.html', controller: 'gameListController' })
-    when('/teamDetail', { templateUrl: 'app/html/views/teamDetail.html', controller: 'teamDetailController' })
-    when('/taskSignUp', { templateUrl: 'app/html/views/signUp.html', controller: 'signUpController' })
+       when('/teams', { templateUrl: 'app/html/views/teamList.html', controller: 'teamListController' }).
+      when('/players', { templateUrl: 'app/html/views/playerList.html', controller: 'playerListController' }).
+      when('/games', { templateUrl: 'app/html/views/gameList.html', controller: 'gameListController' }).
+    when('/teamDetail/:teamId', { templateUrl: 'app/html/views/teamDetail.html', controller: 'teamDetailController' }).
+    when('/taskSignUp/:teamId', { templateUrl: 'app/html/views/signUp.html', controller: 'signUpController' })
         .when('/admin', { templateUrl: 'app/html/views/admin.html', controller: 'adminController' })
           .otherwise({ redirectTo: '/' });
   }]);

@@ -20,11 +20,13 @@ namespace TeamTaskManager
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular.js"));
-
+            bundles.Add(new ScriptBundle("~/bundles/ajaxlogin").Include(
+            "~/app/ajaxlogin.js"));
             bundles.Add(new ScriptBundle("~/bundles/utilities").Include(
                 "~/Scripts/underscore.js",
-           "~/app/js/lib/Smart-Table.min.js",                
-           "~/Scripts/ui-bootstrap-tpls-0.6.0.min.js"));
+           "~/app/js/lib/Smart-Table.js",
+           "~/Scripts/toastr.js", 
+           "~/Scripts/ui-bootstrap-tpls-0.6.0.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/breeze").Include(
                         "~/Scripts/q.js",
@@ -44,7 +46,7 @@ namespace TeamTaskManager
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/bootstrap.min.css",
+                "~/Content/bootstrap/bootstrap.css",
                 "~/Content/Site.css",
                         "~/Content/toastr.css"));
 

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MyTeamTracker.Models
+namespace TeamTaskManager.Models
 {
     public partial class TeamGameTask
     {

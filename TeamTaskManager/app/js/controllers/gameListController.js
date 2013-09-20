@@ -1,6 +1,6 @@
 ﻿
-teamTaskManager.controller('gameListController', ['$scope', 'teamDetail',
-    function ($scope, teamDetail) {
+teamTaskManager.controller('gameListController', ['$scope', 'teamDetail', '$routeParams',
+function ($scope, teamDetail, $routeParams) {
         $scope.teamGames = [];
         teamDetail.getTeamGames().then(function (result) {
             _.each(result, function (game) { game.isDirty = false; });

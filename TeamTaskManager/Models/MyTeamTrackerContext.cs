@@ -1,8 +1,8 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using MyTeamTracker.Models.Mapping;
+using TeamTaskManager.Models.Mapping;
 
-namespace MyTeamTracker.Models
+namespace TeamTaskManager.Models
 {
     public partial class MyTeamTrackerContext : DbContext
     {
@@ -22,6 +22,7 @@ namespace MyTeamTracker.Models
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamGameTask> TeamGameTasks { get; set; }
         public DbSet<TeamTask> TeamTasks { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

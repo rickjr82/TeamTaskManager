@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using TeamTaskManager.Filters;
 using System.Net.Http;
 using System.Web.Http;
-using MyTeamTracker.Models;
+using TeamTaskManager.Models;
 using Breeze.WebApi;
 using Newtonsoft.Json.Linq;
 
 namespace TeamTaskManager.Controllers
 {
+    [Authorize]
     [BreezeController]
     public class TeamInfoController : ApiController
     {
@@ -23,7 +25,7 @@ namespace TeamTaskManager.Controllers
         // ~/breeze/todos/Metadata 
         [HttpGet]
         public string Metadata()
-        {            
+        {
             return _contextProvider.Metadata();
         }
 
@@ -40,8 +42,8 @@ namespace TeamTaskManager.Controllers
             return _contextProvider.Context.Players;
         }
 
-        // ~/breeze/todos/SaveChanges
         [HttpPost]
+        [ValidateHttpAntiForgeryToken]
         public SaveResult SaveChanges(JObject saveBundle)
         {
             return _contextProvider.SaveChanges(saveBundle);

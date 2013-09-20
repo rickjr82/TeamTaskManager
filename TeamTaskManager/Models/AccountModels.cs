@@ -7,17 +7,7 @@ using System.Globalization;
 using System.Web.Security;
 
 namespace TeamTaskManager.Models
-{
-    public class UsersContext : DbContext
-    {
-        public UsersContext()
-            : base("Name=MyTeamTrackerContext")
-        {
-        }
-
-        public DbSet<UserProfile> UserProfiles { get; set; }
-    }
-
+{    
     [Table("UserProfile")]
     public class UserProfile
     {
