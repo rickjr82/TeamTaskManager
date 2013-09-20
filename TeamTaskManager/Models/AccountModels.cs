@@ -11,7 +11,7 @@ namespace TeamTaskManager.Models
     public class UsersContext : DbContext
     {
         public UsersContext()
-            : base("DefaultConnection")
+            : base("Name=MyTeamTrackerContext")
         {
         }
 
