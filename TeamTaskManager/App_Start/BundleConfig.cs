@@ -31,10 +31,10 @@ namespace TeamTaskManager
                         "~/Scripts/breeze.min.js",
                         "~/Scripts/breeze.savequeuing.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/teamTaskManager").Include(                
+            bundles.Add(new ScriptBundle("~/bundles/teamTaskManager").Include(
+           "~/Scripts/ui-bootstrap-tpls-0.6.0.js", 
            "~/app/js/lib/Smart-Table.js",
-           "~/Scripts/toastr.js", 
-           "~/Scripts/ui-bootstrap-tpls-0.6.0.js",
+           "~/Scripts/toastr.js",            
            "~/app/teamTaskManager.main.js", // must be first, well until I include another bundle
                 "~/app/js/controllers/*.js",
                 "~/app/js/services/*.js"
