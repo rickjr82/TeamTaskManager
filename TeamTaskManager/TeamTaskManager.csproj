@@ -273,6 +273,7 @@
     <Content Include="app\js\controllers\teamDetailController.js" />
     <Content Include="app\js\controllers\teamListController.js" />
     <Content Include="app\js\lib\Smart-Table.js" />
+    <Content Include="app\js\services\breezeWrapper.js" />
     <Content Include="app\js\services\dataservice.js" />
     <Content Include="app\js\services\logger.js" />
     <Content Include="app\js\services\teamDetail.js" />

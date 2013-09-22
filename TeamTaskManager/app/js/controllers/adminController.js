@@ -4,7 +4,7 @@ teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$locatio
         $scope.teams = [];
         $scope.teamId = 0;
         logger.info("loading teams")
-        dataservice.getTeams()
+        dataservice.getEntities('Teams')
               .then(querySucceeded)
               .fail(queryFailed);
         $scope.modifyTeams = function () {

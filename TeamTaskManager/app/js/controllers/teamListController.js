@@ -5,12 +5,12 @@ function ($scope, dataservice, logger, $location) {
     $scope.teams = [];
     $scope.newTeamName = "";
     $scope.getTeams = function () {
-        dataservice.getTeams()
+        dataservice.getEntities('Teams')
             .then(querySucceeded)
             .fail(queryFailed);
     };
     $scope.addTeam = function (newTeamName) {
-        var team = dataservice.createTeam();
+        var team = dataservice.createEntity(team);
         team.name = newTeamName;
         dataservice.saveEntity(team)
             .then(addSucceeded)
@@ -31,7 +31,7 @@ function ($scope, dataservice, logger, $location) {
     function querySucceeded(data) {
         $scope.teams = [];
         data.results.forEach(function (item) {
-            extendItem(item);
+            dataservice.extendItem(item);
             $scope.teams.push(item);
         });
         $scope.$apply();
@@ -41,49 +41,18 @@ function ($scope, dataservice, logger, $location) {
     function queryFailed(error) {
         logger.error(error.message, "Query failed");
     }
-    function extendItem(item) {
-        if (item.isEditing !== undefined) return; // already extended
-
-        item.isEditing = false;
-
-        // listen for changes with Breeze PropertyChanged event
-        item.entityAspect.propertyChanged.subscribe(function () {
-            if (item.isEditing || suspendItemSave) { return; }
-            // give EntityManager time to hear the change
-            setTimeout(function () { saveIfModified(item); }, 0);
-        });
-    }
-    function saveIfModified(item) {
-        if (item.entityAspect.entityState.isModified()) {
-            dataservice.saveChanges();
-        }
-    }
+  
     $scope.endEdit = function (entity) {
         dataservice.saveEntity(entity).fin(refreshView);
     }
     $scope.deleteTeam = function (team) {
         removeItem($scope.teams, team);
-        dataservice.deleteTeam(team)
+        dataservice.deleteEntity(team)
             .fail(deleteFailed)
             .fin(refreshView);
 
         function deleteFailed() {
             $scope.teams.unshift(team);
-        }
-    };
-
-    $scope.saveTeam = function (team) {
-        var existing = _.findWhere($scope.teams, { name: team.name });
-        if (typeof (existing) !== 'undefined') {
-            if (existing.id !== team.id) {
-                alert('Existing Name')
-                team.name = '';
-            }
-            else {
-                teamDetail.saveTeam(team).then(function (result) {
-                    team.id = result.id;
-                });
-            }
         }
     };
     $scope.close = function () {

@@ -9,29 +9,45 @@
     var manager = new breeze.EntityManager("api/teaminfo");
     manager.enableSaveQueuing(true);
     var dataservice = {
-        getTeams: getTeams,
-        createTeam: createTeam,
-        deleteTeam: deleteTeam,
-        saveEntity: saveEntity
+        getEntities: getEntities,
+        createEntity: createEntity,
+        deleteEntity: deleteEntity,
+        saveEntity: saveEntity,
+        extendItem: extendItem
     };
     return dataservice;
 
     /*** implementation details ***/
 
     //#region main application operations
-    function getTeams() {
-        var query = breeze.EntityQuery.from("Teams");
+  
+    function getEntities(pluralName) {
+        var query = breeze.EntityQuery.from(pluralName);
 
         return manager.executeQuery(query);
     }
+ 
+    function createEntity(entityName, initialValues) {
+        return manager.createEntity(entityName, initialValues);
+    }
+    function deleteEntity(entity) {
+        entity.entityAspect.setDeleted();
+        return saveEntity(entity);
 
-    function createTeam(initialValues) {
-        return manager.createEntity('Team', initialValues);
     }
-    function deleteTeam(team) {
-        team.entityAspect.setDeleted();
-        return saveEntity(team);
+    function extendItem(item) {
+        if (item.isEditing !== undefined) return; // already extended
+
+        item.isEditing = false;
+
+        // listen for changes with Breeze PropertyChanged event
+        item.entityAspect.propertyChanged.subscribe(function () {
+            if (item.isEditing || suspendItemSave) { return; }
+            // give EntityManager time to hear the change
+            setTimeout(function () { saveIfModified(item); }, 0);
+        });
     }
+
     function saveEntity(masterEntity) {
         // if nothing to save, return a resolved promise
         if (!manager.hasChanges()) { return Q(); }
