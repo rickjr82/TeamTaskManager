@@ -36,14 +36,17 @@ namespace TeamTaskManager.Controllers
         {
             return _contextProvider.Context.Teams;
         }
+        [HttpGet]
         public IQueryable<Player> Players()
         {
             return _contextProvider.Context.Players;
         }
+        [HttpGet]
         public IQueryable<Task> Tasks()
         {
             return _contextProvider.Context.Tasks;
         }
+        [HttpGet]
         public IQueryable<Game> Games()
         {
             return _contextProvider.Context.Games;

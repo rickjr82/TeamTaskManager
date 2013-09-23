@@ -1,59 +1,24 @@
 ﻿teamTaskManager.controller('teamListController', ['$scope', 'dataservice', 'logger', '$location',
 function ($scope, dataservice, logger, $location) {
-    var removeItem = breeze.core.arrayRemoveItem;
-    var suspendItemSave;
     $scope.teams = [];
     $scope.newTeamName = "";
-    $scope.getTeams = function () {
-        dataservice.getEntities('Teams')
-            .then(querySucceeded)
-            .fail(queryFailed);
-    };
-    $scope.addTeam = function (newTeamName) {
-        var team = dataservice.createEntity(team);
-        team.name = newTeamName;
-        dataservice.saveEntity(team)
-            .then(addSucceeded)
-            .fail(addFailed)
-            .fin(refreshView);
-
-        function addSucceeded() {
-            $scope.teams.unshift(team);
-        }
-
-        function addFailed(error) {
-            failed({ message: "Save of new team failed" });
-        }
-    };
     function refreshView() {
         $scope.$apply();
     }
-    function querySucceeded(data) {
+    $scope.getTeams = function () {
         $scope.teams = [];
-        data.results.forEach(function (item) {
-            dataservice.extendItem(item);
-            $scope.teams.push(item);
-        });
-        $scope.$apply();
+        dataservice.getEntities('Teams', $scope.teams, refreshView);
+    };
+    $scope.addTeam = function (newTeamName) {
+        dataservice.addEntityToCollection('Team', [{ name: 'name', value: newTeamName }], $scope.teams, refreshView);
+        $scope.newTeamName = "";
+    };
 
-        logger.info("Fetched Teams ");
-    }
-    function queryFailed(error) {
-        logger.error(error.message, "Query failed");
-    }
-  
     $scope.endEdit = function (entity) {
-        dataservice.saveEntity(entity).fin(refreshView);
+        dataservice.completeEntityEdit(entity, refreshView);
     }
     $scope.deleteTeam = function (team) {
-        removeItem($scope.teams, team);
-        dataservice.deleteEntity(team)
-            .fail(deleteFailed)
-            .fin(refreshView);
-
-        function deleteFailed() {
-            $scope.teams.unshift(team);
-        }
+        dataservice.deleteEntityFromCollection(team, $scope.teams, refreshView)
     };
     $scope.close = function () {
         $location.path('/admin');

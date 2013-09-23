@@ -1,7 +1,7 @@
 ﻿teamTaskManager.factory('dataservice', ['logger', '$timeout', function (logger, $timeout) {
 
     breeze.config.initializeAdapterInstance("modelLibrary", "backingStore", true);
-
+    var removeItem = breeze.core.arrayRemoveItem;
     logger.log("creating datacontext");
     var initialized;
 
@@ -13,20 +13,35 @@
         createEntity: createEntity,
         deleteEntity: deleteEntity,
         saveEntity: saveEntity,
-        extendItem: extendItem
+        extendItem: extendItem,
+        deleteEntityFromCollection: deleteEntityFromCollection,
+        addEntityToCollection: addEntityToCollection
     };
     return dataservice;
 
     /*** implementation details ***/
 
     //#region main application operations
-  
-    function getEntities(pluralName) {
+    function querySucceeded(data, collectionToModify, refreshFunction) {
+        data.results.forEach(function (item) {
+            dataservice.extendItem(item);
+            collectionToModify.push(item);
+        });
+        refreshFunction();
+
+    }
+    function queryFailed(error) {
+        logger.error(error.message, "Query failed");
+    }
+    function getEntities(pluralName, collectionToModify, refreshFunction) {
         var query = breeze.EntityQuery.from(pluralName);
 
-        return manager.executeQuery(query);
+        return manager.executeQuery(query).then(function (data) {
+            querySucceeded(data, collectionToModify, refreshFunction);
+            logger.info("Fetched " + pluralName);
+        }).fail(queryFailed);;
     }
- 
+
     function createEntity(entityName, initialValues) {
         return manager.createEntity(entityName, initialValues);
     }
@@ -94,7 +109,42 @@
             return "validation error";
         }
     }
+    function deleteEntityFromCollection(entity, collection, refreshFunction) {
+        removeItem(collection, entity);
+        dataservice.deleteEntity(entity)
+            .then(function () {
+                logger.info('Delete succeeded');
+            })
+            .fail(deleteFailed)
+            .fin(refreshFunction);
 
+        function deleteFailed() {
+            collection.unshift(entity);
+            logger.error('Delete failed');
+        }
+    };
+    function addEntityToCollection(entityName, propertyList, collection, refreshFunction) {
+        var entity = dataservice.createEntity(entityName);
+        _.each(propertyList, function (property) {
+            entity[property.name] = property.value;
+        });
+        dataservice.saveEntity(entity)
+            .then(addSucceeded)
+            .fail(addFailed)
+            .fin(refreshFunction);
+
+        function addSucceeded() {
+            collection.unshift(entity);
+            logger.info(entityName + ' added');
+        }
+
+        function addFailed(error) {
+            failed({ message: "Save of new " + entityName + " failed" });
+        }
+    };
+    function completeEntityEdit(entity, refreshFunction) {
+        saveEntity(entity).fin(refreshFunction);
+    }
     function configureBreeze() {
         // configure to use the model library for Angular
         breeze.config.initializeAdapterInstance("modelLibrary", "backingStore", true);
