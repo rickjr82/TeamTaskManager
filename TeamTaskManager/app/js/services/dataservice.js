@@ -33,9 +33,20 @@
     function queryFailed(error) {
         logger.error(error.message, "Query failed");
     }
-    function getEntities(pluralName, collectionToModify, refreshFunction) {
+    function getEntities(pluralName, collectionToModify, refreshFunction, queryAdditions) {
         var query = breeze.EntityQuery.from(pluralName);
-
+        if (typeof (queryAdditions !== 'undefined')) {
+            _.each(queryAdditions, function (addition) {
+                
+                var addType=query[addition.typeQ];
+                if (addType=='where'){
+                    query=query.where(addition.first, addition.second, addition.third);
+                }
+                else if(addType=='orderBy') {
+                    query=query.orderBy(addition.first);
+                }          
+            });
+        }
         return manager.executeQuery(query).then(function (data) {
             querySucceeded(data, collectionToModify, refreshFunction);
             logger.info("Fetched " + pluralName);

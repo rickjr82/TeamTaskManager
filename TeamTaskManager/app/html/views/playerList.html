@@ -1,4 +1,8 @@
-﻿<table>
+﻿<input type="text" ng-model="newFirstName" placeholder="First" />
+<input type="text" ng-model="newLastName" placeholder="Last" />
+<input type="button" value="Add Player" ng-click="addPlayer(newFirstName, newLastName)" ng-disabled="newFirstName.length == 0 || newLastName.length ==0" />
+<div ng-hide="players.length == 0">
+    <table>
         <thead>
             <tr>
                 <th>First</th>
@@ -7,15 +11,23 @@
                 <th>Delete</th>
             </tr>
         </thead>
-        <tbody>                        
+        <tbody>
             <tr ng-repeat="player in players">
-                <td><input ng-model="player.firstName" type="text" placeholder="First Name" ng-change="markDirty(player)"/></td>
-                <td><input ng-model="player.lastName" type="text" placeholder="Last Name" ng-change="markDirty(player)"/></td>
-                <td><input type="button" value="Save" ng-click="savePlayer(player)"  ng-disabled="player.isDirty == false || player.firstName.length == 0 || player.lastName.length == 0"/></td>
-                <td><input type="button" value="Delete" ng-click="deletePlayer(player)"/> </td>
+                <td>
+                    <input ng-model="player.firstName" type="text" placeholder="First" />
+                </td>
+                <td>
+                    <input ng-model="player.lastName" type="text" placeholder="Last" />
+                </td>
+                <td>
+                    <input type="button" value="Save" ng-click="endEdit(player)" ng-disabled="firstName.length == 0 || lastName.length ==0" />
+                </td>
+                <td>
+                    <input type="button" value="Delete" ng-click="deletePlayer(player)" />
+                </td>
             </tr>
-            <tr>
-            <td><input type="button" value="Add Player" ng-click="addPlayer()"/></td>           
-                </tr>
         </tbody>
     </table>
+
+</div>
+<input type="button" value="Close" ng-click="close()">

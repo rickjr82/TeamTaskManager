@@ -1,23 +1,40 @@
 ﻿Team:<select ng-model="teamId" ng-options="t.id as t.name for t in teams"><option value="">-- Choose Team --</option></select>
-<table>
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Opponent</th>
-            <th>Location</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="game in teamGames">
-            <td><input type="text" ng-model="game.date"/></td>
-            <td><input type="text" ng-model="game.opponent" /></td>
-            <td>{<input type="text" ng-model="game.location" /></td>
-            <td></td>
-            <td><input type="button" value="Delete" ng-click="deleteGame(player)" /> </td>
-        </tr>
-        <tr>
-            <td><input type="button" value="Add Game" ng-click="addGame()" /></td>
-        </tr>
-    </tbody>
-</table>
+
+<input type="text" ng-model="newDate" placeholder="Date" />
+<input type="text" ng-model="newOpponent" placeholder="Opponent" />
+<input type="text" ng-model="newLocation" placeholder="Location" />
+<input type="button" value="Add Game" ng-click="addGame(newDate, newOpponent, newLocation)" ng-disabled="newDate.length == 0 || newOpponent.length ==0|| newLocation.length ==0" />
+<div ng-hide="games.length == 0">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Opponent</th>
+                <th>Location</th>
+                <th>Save</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="game in games">
+                <td>
+                    <input ng-model="game.date" type="text" placeholder="Date" />
+                </td>
+                <td>
+                    <input ng-model="game.opponent" type="text" placeholder="Opponent" />
+                </td>
+                <td>
+                    <input ng-model="game.location" type="text" placeholder="Location" />
+                </td>
+                <td>
+                    <input type="button" value="Save" ng-click="endEdit(game)" ng-disabled="game.date == 0 || game.opponent == 0 ||game.location == 0 " />
+                </td>
+                <td>
+                    <input type="button" value="Delete" ng-click="deleteGame(game)" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<input type="button" value="Close" ng-click="close()">

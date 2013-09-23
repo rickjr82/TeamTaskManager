@@ -1,5 +1,5 @@
-﻿teamTaskManager.controller('teamDetailController', ['$scope', '$routeParams', 'teamDetail',
-            function ($scope, $routeParams, teamDetail, teamId) {
+﻿teamTaskManager.controller('teamDetailController', ['$scope', '$routeParams', 'dataservice',
+            function ($scope, $routeParams, dataservice) {
                 $scope.init = function () {
                     $scope.currentPlayerId;
                     $scope.currentTaskId;

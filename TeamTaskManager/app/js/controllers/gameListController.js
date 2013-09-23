@@ -1,44 +1,31 @@
-﻿
-teamTaskManager.controller('gameListController', ['$scope', 'teamDetail', '$routeParams',
-function ($scope, teamDetail, $routeParams) {
-        $scope.teamGames = [];
-        teamDetail.getTeamGames().then(function (result) {
-            _.each(result, function (game) { game.isDirty = false; });
+﻿teamTaskManager.controller('gameListController', ['$scope', 'dataservice', 'logger', '$location', '$routeParams',
+function ($scope, dataservice, logger, $location, $routeParams) {
+    $scope.games = [];
+    $scope.teams = [];
+    $scope.newDate = "";
+    $scope.newOpponent = "";
+    $scope.newLocation = "";
+    $scope.teamId = $routeParams.teamId;
+    dataservice.getEntities('Teams', $scope.teams, refreshView);
+    function refreshView() {
+        $scope.$apply();
+    }
+    $scope.getGames = function () {
+        $scope.games = [];
+        dataservice.getEntities('Games', $scope.games, refreshView, [{ typeQ: 'where' }, {first:'teamId', second:'eq', third:$scope.teamId}]);
+    };
+    $scope.addGame = function (newDate, newOpponent, newLocation) {
+        dataservice.addEntityToCollection('Game', [{ name: 'date', value: newDate }, { name: 'opponent', value: newOpponent }, { name: 'location', value: newLocation }, { name: 'teamId', value: $scope.teamId }], $scope.games, refreshView);
+    };
 
-            $scope.teamGames = result;
-        });
-
-        $scope.addGame = function () {
-            $scope.teamGames.unshift({ gameId: 0, date: '', location: '', opponent: '', isDirty: false });
-        };
-        $scope.deleteGame = function (player) {
-            if (team.id !== 0) {
-                teamDetail.deletePlayer(player.id).then(function () {
-                    var index = $scope.players.indexOf(player);
-                    $scope.players.splice(index, 1);
-                });
-            }
-            else {
-                var index = $scope.players.indexOf(player);
-                $scope.players.splice(index, 1);
-            }
-        };
-        $scope.markDirty = function (player) {
-            player.isDirty = true;
-        };
-        $scope.savePlayer = function (player) {
-            var existing = _.findWhere($scope.players, { firstName: player.firstName, lastName: player.lastName });
-            if (typeof (existing) !== 'undefined') {
-                if (existing.id !== player.id) {
-                    player.firstName = '';
-                    player.lastName = '';
-                }
-                else {
-                    teamDetail.savePlayer(player).then(function (result) {
-                        player.id = result.id;
-                        player.isDirty = false;
-                    });
-                }
-            }
-        };
-    }]);
+    $scope.endEdit = function (game) {
+        completeEntityEdit(game, refreshView);
+    }
+    $scope.deleteGame = function (game) {
+        dataservice.deleteEntityFromCollection(game, $scope.games, refreshView)
+    };
+    $scope.close = function () {
+        $location.path('/admin');
+    };
+    $scope.getGames();
+}]);

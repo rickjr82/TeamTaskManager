@@ -1,42 +1,27 @@
-﻿teamTaskManager.controller('playerListController', ['$scope', 'teamDetail',
-            function ($scope, teamDetail) {
-                $scope.players = [];
-                teamDetail.getPlayers().then(function (result) {
-                    _.each(result, function (player) { player.isDirty = false; });
-
-                    $scope.players = result;
-                });
-             
-                $scope.addPlayer=function(){
-                    $scope.players.unshift({firstName:'', lastName:'', id:0, isDirty:false});
-                };                
-                $scope.deletePlayer=function(player){
-                    if (player.id!==0){
-                        teamDetail.deletePlayer(player.id).then(function () {
-                            var index= $scope.players.indexOf(player);
-                            $scope.players.splice(index, 1);
-                        });}
-                    else{
-                        var index= $scope.players.indexOf(player);
-                        $scope.players.splice(index, 1);
-                    }
-                };
-                $scope.markDirty = function (player) {
-                    player.isDirty = true;
-                };
-                $scope.savePlayer = function (player) {
-                    var existing = _.findWhere($scope.players, { firstName: player.firstName, lastName: player.lastName });
-                    if (typeof (existing) !== 'undefined'){
-                        if (existing.id !== player.id) {
-                            player.firstName = '';
-                            player.lastName = '';
-                        }
-                        else{
-                            teamDetail.savePlayer(player).then(function (result) {
-                                player.id = result.id;
-                                player.isDirty = false;
-                            });
-                        }
-                    }                   
+﻿teamTaskManager.controller('playerListController', ['$scope', 'dataservice', 'logger', '$location',
+function ($scope, dataservice, logger, $location) {
+    $scope.players = [];
+    $scope.newFirstName = "";
+    $scope.newLastName = "";
+    function refreshView() {
+        $scope.$apply();
+    }
+    $scope.getPlayers = function () {
+        $scope.players = [];
+        dataservice.getEntities('Players', $scope.players, refreshView);
     };
+    $scope.addPlayer = function (newFirstName, newLastName) {
+        dataservice.addEntityToCollection('Player', [{ name: 'firstName', value: newFirstName }, { name: 'lastName', value: newLastName }], $scope.players, refreshView);
+    };
+
+    $scope.endEdit = function (player) {
+        completeEntityEdit(player, refreshView);
+    }
+    $scope.deletePlayer = function (player) {
+        dataservice.deleteEntityFromCollection(task, $scope.players, refreshView)
+    };
+    $scope.close = function () {
+        $location.path('/admin');
+    };
+    $scope.getPlayers();
 }]);

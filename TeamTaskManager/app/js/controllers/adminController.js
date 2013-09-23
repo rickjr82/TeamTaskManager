@@ -10,7 +10,9 @@ teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$locatio
         dataservice.getEntities('Teams', $scope.teams, refreshView);
         $scope.modifyTeams = function () {
             $location.path('/teams');
-        }; $scope.modifyTasks = function () {
+        };
+
+        $scope.modifyTasks = function () {
             $location.path('/tasks');
         };
         $scope.modifyPlayers = function () {
@@ -18,6 +20,9 @@ teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$locatio
         };
         $scope.signupForTasks = function () {
             $location.path('/signup/'+$scope.teamId);
+        };
+        $scope.manageGames = function () {
+            $location.path('/games/' + $scope.teamId);
         };
         $scope.manageTeam = function () {
             $location.path('/teamDetail/'+$scope.teamId);
