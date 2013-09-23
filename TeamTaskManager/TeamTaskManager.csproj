@@ -264,6 +264,7 @@
     <Content Include="app\html\views\gameList.html" />
     <Content Include="app\html\views\playerList.html" />
     <Content Include="app\html\views\Signup.html" />
+    <Content Include="app\html\views\taskList.html" />
     <Content Include="app\html\views\teamDetail.html" />
     <Content Include="app\html\views\teamList.html" />
     <Content Include="app\js\controllers\adminController.js" />

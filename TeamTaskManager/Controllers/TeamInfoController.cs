@@ -34,13 +34,21 @@ namespace TeamTaskManager.Controllers
         [HttpGet]
         public IQueryable<Team> Teams()
         {
-
             return _contextProvider.Context.Teams;
         }
         public IQueryable<Player> Players()
         {
             return _contextProvider.Context.Players;
         }
+        public IQueryable<Task> Tasks()
+        {
+            return _contextProvider.Context.Tasks;
+        }
+        public IQueryable<Game> Games()
+        {
+            return _contextProvider.Context.Games;
+        }
+
 
         [HttpPost]
         [ValidateHttpAntiForgeryToken]
