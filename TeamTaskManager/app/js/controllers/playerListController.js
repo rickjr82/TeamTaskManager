@@ -15,7 +15,7 @@ function ($scope, dataservice, logger, $location) {
     };
 
     $scope.endEdit = function (player) {
-        completeEntityEdit(player, refreshView);
+        dataservice.completeEntityEdit(player, refreshView);
     }
     $scope.deletePlayer = function (player) {
         dataservice.deleteEntityFromCollection(player, $scope.players, refreshView)

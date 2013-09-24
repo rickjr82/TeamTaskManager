@@ -11,9 +11,9 @@ namespace TeamTaskManager.Models
         }
 
         public System.DateTime Time { get; set; }
-        public int Team1Id { get; set; }
-        public int Team2Id { get; set; }
         public int Id { get; set; }
+        public string Location { get; set; }
+        public string Opponent { get; set; }
         public virtual ICollection<TeamGameTask> TeamGameTasks { get; set; }
     }
 }
