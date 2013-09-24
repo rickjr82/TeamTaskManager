@@ -71,8 +71,10 @@
             _.each(queryAdditions, function (addition) {
 
                 var addType = query[addition.typeQ];
+                logger.info('addType=' + addType)
                 if (addType == 'where') {
                     query = query.where(addition.first, addition.second, addition.third);
+                    logger.info(addition.first+','+addition.second+','+additon.third )
                 }
                 else if (addType == 'orderBy') {
                     query = query.orderBy(addition.first);
