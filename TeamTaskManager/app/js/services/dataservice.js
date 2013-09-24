@@ -70,7 +70,7 @@
         if (typeof (queryAdditions !== 'undefined')) {
             _.each(queryAdditions, function (addition) {
 
-                var addType = query[addition.typeQ];
+                var addType = addition.typeQ;
                 logger.info('addType=' + addType)
                 if (addType == 'where') {
                     query = query.where(addition.first, addition.second, addition.third);
