@@ -11,15 +11,20 @@ namespace TeamTaskManager.Models.Mapping
             this.HasKey(t => t.Id);
 
             // Properties
-            this.Property(t => t.Id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            this.Property(t => t.Location)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            this.Property(t => t.Opponent)
+                .IsRequired()
+                .HasMaxLength(50);
 
             // Table & Column Mappings
             this.ToTable("Game");
             this.Property(t => t.Time).HasColumnName("Time");
-            this.Property(t => t.Team1Id).HasColumnName("Team1Id");
-            this.Property(t => t.Team2Id).HasColumnName("Team2Id");
             this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.Location).HasColumnName("Location");
+            this.Property(t => t.Opponent).HasColumnName("Opponent");
         }
     }
 }
