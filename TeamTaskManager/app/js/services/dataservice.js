@@ -48,7 +48,7 @@
         if (typeof (queryAdditions !== 'undefined')) {
             _.each(queryAdditions, function (addition) {
                 
-                var addType=query[addition.typeQ];
+                var addType=addition.typeQ;
                 if (addType=='where'){
                     query=query.where(addition.first, addition.second, addition.third);
                 }
