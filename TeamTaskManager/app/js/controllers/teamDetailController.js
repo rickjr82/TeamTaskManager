@@ -14,11 +14,11 @@
 
                     $scope.team = {};
                     
-                    dataservice.getEntity('Teams', $scope.team, refreshView, [{ typeQ: 'where' }, { first: 'Team.teamId', second: 'eq', third: $scope.teamId }]);
+                    dataservice.getEntity('Teams', $scope.team, refreshView, [{ typeQ: 'where' }, { first: 'Id', second: 'eq', third: parseInt($scope.teamId) }]);
                     dataservice.getEntities('Players', $scope.players, refreshView);
                     dataservice.getEntities('Tasks', $scope.tasks, refreshView);
-                    dataservice.getEntities('Players', $scope.teamPlayers, refreshView, [{ typeQ: 'where' }, { first: 'Team.teamId', second: 'eq', third: $scope.teamId },{ typeQ: 'expand' }, { first: 'Team' }]);
-                    dataservice.getEntities('Tasks', $scope.teamTasks, refreshView, [{ typeQ: 'where' }, { first: 'Team.teamId', second: 'eq', third: $scope.teamId }, { typeQ: 'expand' }, { first: 'Team' }]);
+                    dataservice.getEntities('Players', $scope.teamPlayers, refreshView, [{ typeQ: 'where' }, { first: 'Team.teamId', second: 'eq', third: parseInt($scope.teamId) },{ typeQ: 'expand' }, { first: 'Team' }]);
+                    dataservice.getEntities('Tasks', $scope.teamTasks, refreshView, [{ typeQ: 'where' }, { first: 'Team.teamId', second: 'eq', third: parseInt($scope.teamId) }, { typeQ: 'expand' }, { first: 'Team' }]);
                     $scope.teamPlayerColumns = [
                         { label: 'First', map: 'firstName' },
                         { label: 'Last', map: 'lastName' }
@@ -33,7 +33,7 @@
                     dataservice.addEntityMapToJoinTable($scope.team, 'Players', player, $scope.teamPlayers, refreshView);
                 };
                 $scope.addTaskToTeam = function (task) {
-                    dataservice.addEntityMapToJoinTable($scope.team, 'Tasks', player, $scope.teamTasks, refreshView);
+                    dataservice.addEntityMapToJoinTable($scope.team, 'Tasks', task, $scope.teamTasks, refreshView);
                 };
 
             }]);
