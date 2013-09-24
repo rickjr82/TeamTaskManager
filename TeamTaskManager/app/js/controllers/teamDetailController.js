@@ -14,11 +14,11 @@
 
                     $scope.team = {};
                     
-                    dataservice.getEntity('Teams', $scope.team, refreshView, [{ typeQ: 'where' }, { first: 'Id', second: 'eq', third: $scope.teamId.toString() }]);
+                    dataservice.getEntity('Teams', $scope.team, refreshView, [{ typeQ: 'where' }, { first: 'Id', second: 'eq', third: $scope.teamId }]);
                     dataservice.getEntities('Players', $scope.players, refreshView);
                     dataservice.getEntities('Tasks', $scope.tasks, refreshView);
-                    dataservice.getEntities('Players', $scope.teamPlayers, refreshView, [{ typeQ: 'where' }, { first: 'Team.teamId', second: 'eq', third: $scope.teamId.toString() },{ typeQ: 'expand' }, { first: 'Team' }]);
-                    dataservice.getEntities('Tasks', $scope.teamTasks, refreshView, [{ typeQ: 'where' }, { first: 'Team.teamId', second: 'eq', third: $scope.teamId.toString() }, { typeQ: 'expand' }, { first: 'Team' }]);
+                    dataservice.getEntities('Players', $scope.teamPlayers, refreshView, [{ typeQ: 'where' }, { first: 'Team.Id', second: 'eq', third: $scope.teamId },{ typeQ: 'expand', first: 'Team' }]);
+                    dataservice.getEntities('Tasks', $scope.teamTasks, refreshView, [{ typeQ: 'where' }, { first: 'Team.Id', second: 'eq', third: $scope.teamId }, { typeQ: 'expand', first: 'Team' }]);
                     $scope.teamPlayerColumns = [
                         { label: 'First', map: 'firstName' },
                         { label: 'Last', map: 'lastName' }

@@ -12,7 +12,7 @@ function ($scope, dataservice, logger, $location, $routeParams) {
     }
     $scope.getGames = function () {
         $scope.games = [];
-        dataservice.getEntities('Games', $scope.games, refreshView, [{ typeQ: 'where' }, {first:'Id', second:'eq', third:$scope.teamId.toString()}]);
+        dataservice.getEntities('Games', $scope.games, refreshView, [, { first: 'Team.Id', second: 'eq', third: $scope.teamId }, { typeQ: 'expand', first: 'Team' }]);
     };
     $scope.addGame = function (newDate, newOpponent, newLocation) {
         var passed=dataservice.addEntityToCollection('Game', [{ name: 'date', value: newDate }, { name: 'opponent', value: newOpponent }, { name: 'location', value: newLocation }, { name: 'teamId', value: $scope.teamId }], $scope.games, refreshView);
