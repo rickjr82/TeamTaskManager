@@ -18,7 +18,7 @@ function ($scope, dataservice, logger, $location) {
         completeEntityEdit(player, refreshView);
     }
     $scope.deletePlayer = function (player) {
-        dataservice.deleteEntityFromCollection(task, $scope.players, refreshView)
+        dataservice.deleteEntityFromCollection(player, $scope.players, refreshView)
     };
     $scope.close = function () {
         $location.path('/admin');
