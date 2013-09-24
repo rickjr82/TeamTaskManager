@@ -15,7 +15,8 @@
         saveEntity: saveEntity,
         extendItem: extendItem,
         deleteEntityFromCollection: deleteEntityFromCollection,
-        addEntityToCollection: addEntityToCollection
+        addEntityToCollection: addEntityToCollection,
+        completeEntityEdit: completeEntityEdit
     };
     return dataservice;
 

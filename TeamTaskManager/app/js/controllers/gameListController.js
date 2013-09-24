@@ -19,7 +19,7 @@ function ($scope, dataservice, logger, $location, $routeParams) {
     };
 
     $scope.endEdit = function (game) {
-        completeEntityEdit(game, refreshView);
+        dataservice.completeEntityEdit(game, refreshView);
     }
     $scope.deleteGame = function (game) {
         dataservice.deleteEntityFromCollection(game, $scope.games, refreshView)

@@ -15,7 +15,7 @@ function ($scope, dataservice, logger, $location) {
     };
     
     $scope.endEdit = function (task) {
-        completeEntityEdit(task, refreshView);
+        dataservice.completeEntityEdit(task, refreshView);
     }
     $scope.deleteTask = function (task) {
         dataservice.deleteEntityFromCollection(task, $scope.tasks, refreshView)
