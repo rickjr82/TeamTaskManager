@@ -15,7 +15,7 @@ function ($scope, dataservice, logger, $location, $routeParams) {
         dataservice.getEntities('Games', $scope.games, refreshView, [{ typeQ: 'where' }, {first:'teamId', second:'eq', third:$scope.teamId}]);
     };
     $scope.addGame = function (newDate, newOpponent, newLocation) {
-        dataservice.addEntityToCollection('Game', [{ name: 'date', value: newDate }, { name: 'opponent', value: newOpponent }, { name: 'location', value: newLocation }, { name: 'teamId', value: $scope.teamId }], $scope.games, refreshView);
+        var passed=dataservice.addEntityToCollection('Game', [{ name: 'date', value: newDate }, { name: 'opponent', value: newOpponent }, { name: 'location', value: newLocation }, { name: 'teamId', value: $scope.teamId }], $scope.games, refreshView);
     };
 
     $scope.endEdit = function (game) {

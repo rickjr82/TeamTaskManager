@@ -23,11 +23,17 @@
     /*** implementation details ***/
 
     //#region main application operations
-    function querySucceeded(data, collectionToModify, refreshFunction) {
-        data.results.forEach(function (item) {
-            dataservice.extendItem(item);
-            collectionToModify.push(item);
-        });
+    function querySucceeded(data,objectToModify, isCollection, refreshFunction) {
+        if (isCollection) {
+            data.results.forEach(function (item) {
+                dataservice.extendItem(item);
+                objectToModify.push(item);
+            });
+        }
+        else {
+            dataservice.extendItem(data);
+            objectToModify = data;
+        }
         refreshFunction();
 
     }
@@ -45,15 +51,39 @@
                 }
                 else if(addType=='orderBy') {
                     query=query.orderBy(addition.first);
-                }          
+                }
+                else if (addType == 'expand') {
+                    query = query.expand(addition.first);
+                }
             });
         }
         return manager.executeQuery(query).then(function (data) {
-            querySucceeded(data, collectionToModify, refreshFunction);
+            querySucceeded(data, collectionToModify, true, refreshFunction);
             logger.info("Fetched " + pluralName);
         }).fail(queryFailed);;
     }
+    function getEntity(pluralName, objectToModify, refreshFunction, queryAdditions) {
+        var query = breeze.EntityQuery.from(pluralName);
+        if (typeof (queryAdditions !== 'undefined')) {
+            _.each(queryAdditions, function (addition) {
 
+                var addType = query[addition.typeQ];
+                if (addType == 'where') {
+                    query = query.where(addition.first, addition.second, addition.third);
+                }
+                else if (addType == 'orderBy') {
+                    query = query.orderBy(addition.first);
+                }
+                else if (addType == 'expand') {
+                    query = query.expand(addition.first);
+                }
+            });
+        }
+        return manager.executeQuery(query).then(function (data) {
+            querySucceeded(data[0], objectToModify, false,refreshFunction);
+            logger.info("Fetched " + pluralName);
+        }).fail(queryFailed);;
+    }
     function createEntity(entityName, initialValues) {
         return manager.createEntity(entityName, initialValues);
     }
@@ -140,6 +170,23 @@
         _.each(propertyList, function (property) {
             entity[property.name] = property.value;
         });
+        dataservice.saveEntity(entity)
+            .then(addSucceeded)
+            .fail(addFailed)
+            .fin(refreshFunction);
+
+        function addSucceeded() {
+            collection.unshift(entity);
+            logger.info(entityName + ' added');
+        }
+
+        function addFailed(error) {
+            failed({ message: "Save of new " + entityName + " failed" });
+        }
+    };
+    function addEntityMapToJoinTable(entity, joinedEntityName,joinedEntity, collection, refreshFunction) {
+            entity[joinedEntityName].unshift(joinedEntity);
+            collection.unshift(joinedEntity);
         dataservice.saveEntity(entity)
             .then(addSucceeded)
             .fail(addFailed)

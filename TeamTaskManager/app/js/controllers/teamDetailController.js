@@ -1,24 +1,24 @@
 ﻿teamTaskManager.controller('teamDetailController', ['$scope', '$routeParams', 'dataservice',
             function ($scope, $routeParams, dataservice) {
+                function refreshView() {
+                    $scope.$apply();
+                }
                 $scope.init = function () {
                     $scope.currentPlayerId;
                     $scope.currentTaskId;
                     $scope.teamId = $routeParams.teamId;
                     $scope.players = [];
+                    $scope.tasks = [];
                     $scope.teamPlayers = [];
-                    teamDetail.getPlayers().then(function (result) {
-                        _.each(result, function (player) { player.formattedName = player.lastName + ', ' + player.firstName });
-                        $scope.players = result;
-                    });
-                    teamDetail.getTasks().then(function (result) {
-                        $scope.tasks = result;
-                    });
-                    teamDetail.getTeamPlayers($scope.teamId).then(function (result) {
-                        $scope.teamPlayers = result;
-                    });
-                    teamDetail.getTeamTasks($scope.teamId).then(function (result) {
-                        $scope.teamTasks = result;
-                    });
+                    $scope.teamTasks = [];
+
+                    $scope.team = {};
+                    
+                    dataservice.getEntity('Teams', $scope.team, refreshView, [{ typeQ: 'where' }, { first: 'Team.teamId', second: 'eq', third: $scope.teamId }]);
+                    dataservice.getEntities('Players', $scope.players, refreshView);
+                    dataservice.getEntities('Tasks', $scope.tasks, refreshView);
+                    dataservice.getEntities('Players', $scope.teamPlayers, refreshView, [{ typeQ: 'where' }, { first: 'Team.teamId', second: 'eq', third: $scope.teamId },{ typeQ: 'expand' }, { first: 'Team' }]);
+                    dataservice.getEntities('Tasks', $scope.teamTasks, refreshView, [{ typeQ: 'where' }, { first: 'Team.teamId', second: 'eq', third: $scope.teamId }, { typeQ: 'expand' }, { first: 'Team' }]);
                     $scope.teamPlayerColumns = [
                         { label: 'First', map: 'firstName' },
                         { label: 'Last', map: 'lastName' }
@@ -29,17 +29,11 @@
                     ];
                 };
                 $scope.init();
-                $scope.addPlayerToTeam = function () {
-                    teamDetail.addPlayerToTeam($scope.currentPlayerId, $scope.teamId).then(function () {
-                        var player = _.findWhere($scope.players, { id: $scope.currentPlayerId });
-                        $scope.teamPlayers.unshift(player);
-                    });
+                $scope.addPlayerToTeam = function (player) {
+                    dataservice.addEntityMapToJoinTable($scope.team, 'Players', player, $scope.teamPlayers, refreshView);
                 };
-                $scope.addTaskToTeam = function () {
-                    teamDetail.addTaskToTeam($scope.currentTaskId, $scope.teamId).then(function () {
-                        var task = _.findWhere($scope.tasks, { id: $scope.currentTaskId });
-                        $scope.teamTasks.unshift(task);
-                    });
+                $scope.addTaskToTeam = function (task) {
+                    dataservice.addEntityMapToJoinTable($scope.team, 'Tasks', player, $scope.teamTasks, refreshView);
                 };
 
             }]);
