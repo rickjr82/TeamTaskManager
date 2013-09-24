@@ -25,6 +25,10 @@ namespace TeamTaskManager.Models.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Location).HasColumnName("Location");
             this.Property(t => t.Opponent).HasColumnName("Opponent");
+
+            // Relationships         
+            this.HasRequired(t => t.Team)                
+                .HasForeignKey(d => d.TeamId);
         }
     }
 }
