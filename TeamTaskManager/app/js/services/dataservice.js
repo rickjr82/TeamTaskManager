@@ -16,7 +16,10 @@
         extendItem: extendItem,
         deleteEntityFromCollection: deleteEntityFromCollection,
         addEntityToCollection: addEntityToCollection,
-        completeEntityEdit: completeEntityEdit
+        completeEntityEdit: completeEntityEdit,
+        getEntity: getEntity,
+        addEntityMapToJoinTable: addEntityMapToJoinTable
+        
     };
     return dataservice;
 
