@@ -14,7 +14,7 @@
 
                     $scope.team = {};
                     
-                    dataservice.getEntity('Teams', $scope.team, refreshView, [{ typeQ: 'where' }, { first: 'Id', second: 'eq', third: $scope.teamId }]);
+                    dataservice.getEntity('Teams', $scope.team, refreshView, [{ typeQ: 'where', first: 'Id', second: 'eq', third: $scope.teamId }]);
                     dataservice.getEntities('Players', $scope.players, refreshView);
                     dataservice.getEntities('Tasks', $scope.tasks, refreshView);
                     dataservice.getEntities('Players', $scope.teamPlayers, refreshView, [{ typeQ: 'where' }, { first: 'Team.Id', second: 'eq', third: $scope.teamId },{ typeQ: 'expand', first: 'Team' }]);
