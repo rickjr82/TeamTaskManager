@@ -65,27 +65,12 @@
             logger.info("Fetched " + pluralName);
         }).fail(queryFailed);;
     }
-    function getEntity(pluralName, objectToModify, refreshFunction, queryAdditions) {
-        var query = breeze.EntityQuery.from(pluralName);
-        if (typeof (queryAdditions !== 'undefined')) {
-            _.each(queryAdditions, function (addition) {
-
-                var addType = addition.typeQ;
-                logger.info('addType=' + addType)
-                if (addType == 'where') {
-                    query = query.where(addition.first, addition.second, addition.third);
-                    logger.info(addition.first+','+addition.second+','+additon.third )
-                }
-                else if (addType == 'orderBy') {
-                    query = query.orderBy(addition.first);
-                }
-                else if (addType == 'expand') {
-                    query = query.expand(addition.first);
-                }
-            });
-        }
-        return manager.executeQuery(query).then(function (data) {
-            querySucceeded(data[0], objectToModify, false,refreshFunction);
+    function getEntity(entityName, key, objectToUpdate, refreshFunction) {
+        var entityType = manager.metadataStore.getEntityType(entityName);
+        logger.log(entityType.keyProperties)
+        var entityKey = new EntityKey(entityType, parseInt(key));
+        manager.fetchEntityByKey(entityKey).then(function (data) {
+            querySucceeded(data, objectToModify, false,refreshFunction);
             logger.info("Fetched " + pluralName);
         }).fail(queryFailed);;
     }

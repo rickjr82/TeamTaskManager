@@ -14,11 +14,16 @@
 
                     $scope.team = {};
                     
-                    dataservice.getEntity('Teams', $scope.team, refreshView, [{ typeQ: 'where', first: 'Id', second: 'eq', third: $scope.teamId }]);
-                    dataservice.getEntities('Players', $scope.players, refreshView);
+                     dataservice.getEntities('Players', $scope.players, refreshView);
                     dataservice.getEntities('Tasks', $scope.tasks, refreshView);
-                    dataservice.getEntities('Players', $scope.teamPlayers, refreshView, [{ typeQ: 'where' }, { first: 'Team.Id', second: 'eq', third: $scope.teamId },{ typeQ: 'expand', first: 'Team' }]);
-                    dataservice.getEntities('Tasks', $scope.teamTasks, refreshView, [{ typeQ: 'where' }, { first: 'Team.Id', second: 'eq', third: $scope.teamId }, { typeQ: 'expand', first: 'Team' }]);
+                    $scope.$watch($scope.team, function () {
+                        if (typeof ($scope.team.id) !== 'undefined') {
+                            $scope.teamPlayers = $scope.team.players();
+                            $scope.teamTasks = $scope.team.tasks();
+                        }
+                    });
+                    //dataservice.getEntities('Players', $scope.teamPlayers, refreshView, [{ typeQ: 'where', first: 'Team.Id', second: 'eq', third: $scope.teamId },{ typeQ: 'expand', first: 'Teams' }]);
+                    //dataservice.getEntities('Tasks', $scope.teamTasks, refreshView, [{ typeQ: 'where', first: 'Team.Id', second: 'eq', third: $scope.teamId }, { typeQ: 'expand', first: 'Teams' }]);
                     $scope.teamPlayerColumns = [
                         { label: 'First', map: 'firstName' },
                         { label: 'Last', map: 'lastName' }
@@ -30,6 +35,8 @@
                 };
                 $scope.init();
                 $scope.addPlayerToTeam = function (player) {
+                    dataservice.getEntity('Team', $scope.teamId, $scope.team, refreshView);
+
                     dataservice.addEntityMapToJoinTable($scope.team, 'Players', player, $scope.teamPlayers, refreshView);
                 };
                 $scope.addTaskToTeam = function (task) {
