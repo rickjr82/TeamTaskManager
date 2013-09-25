@@ -8,12 +8,9 @@ namespace TeamTaskManager.Models.Mapping
         public TeamGameTaskMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.TeamId, t.TaskId, t.GameId, t.PlayerId });
+            this.HasKey(t => new { t.TaskId, t.GameId, t.PlayerId, t.AcceptedTime });
 
             // Properties
-            this.Property(t => t.TeamId)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             this.Property(t => t.TaskId)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
@@ -25,7 +22,6 @@ namespace TeamTaskManager.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("TeamGameTasks");
-            this.Property(t => t.TeamId).HasColumnName("TeamId");
             this.Property(t => t.TaskId).HasColumnName("TaskId");
             this.Property(t => t.GameId).HasColumnName("GameId");
             this.Property(t => t.PlayerId).HasColumnName("PlayerId");
@@ -41,9 +37,6 @@ namespace TeamTaskManager.Models.Mapping
             this.HasRequired(t => t.Task)
                 .WithMany(t => t.TeamGameTasks)
                 .HasForeignKey(d => d.TaskId);
-            this.HasRequired(t => t.Team)
-                .WithMany(t => t.TeamGameTasks)
-                .HasForeignKey(d => d.TeamId);
 
         }
     }

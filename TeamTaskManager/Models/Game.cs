@@ -14,7 +14,8 @@ namespace TeamTaskManager.Models
         public int Id { get; set; }
         public string Location { get; set; }
         public string Opponent { get; set; }
-        public virtual ICollection<TeamGameTask> TeamGameTasks { get; set; }
+        public int TeamId { get; set; }
         public virtual Team Team { get; set; }
+        public virtual ICollection<TeamGameTask> TeamGameTasks { get; set; }
     }
 }

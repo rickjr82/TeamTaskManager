@@ -25,10 +25,13 @@ namespace TeamTaskManager.Models.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Location).HasColumnName("Location");
             this.Property(t => t.Opponent).HasColumnName("Opponent");
+            this.Property(t => t.TeamId).HasColumnName("TeamId");
 
-            // Relationships         
-            this.HasRequired(t => t.Team)                
+            // Relationships
+            this.HasRequired(t => t.Team)
+                .WithMany(t => t.Games)
                 .HasForeignKey(d => d.TeamId);
+
         }
     }
 }
