@@ -18,7 +18,7 @@
         addEntityToCollection: addEntityToCollection,
         completeEntityEdit: completeEntityEdit,
         getEntity: getEntity,
-        addEntityMapToJoinTable: addEntityMapToJoinTable
+        addExistingEntityToCollection: addExistingEntityToCollection
         
     };
     return dataservice;
@@ -35,7 +35,7 @@
         }
         else {
             dataservice.extendItem(data);
-            objectToModify = data;
+            objectToModify.inner = data;
         }
         refreshFunction();
 
@@ -43,7 +43,7 @@
     function queryFailed(error) {
         logger.error(error.message, "Query failed");
     }
-    function getEntities(pluralName, collectionToModify, refreshFunction, queryAdditions) {
+    function getEntities(pluralName, collectionToModify, refreshFunction, queryAdditions, isCollection) {
         var query = breeze.EntityQuery.from(pluralName);
         if (typeof (queryAdditions !== 'undefined')) {
             _.each(queryAdditions, function (addition) {
@@ -58,21 +58,43 @@
                 else if (addType == 'expand') {
                     query = query.expand(addition.first);
                 }
+                else if (addType == 'select') {
+                    query = query.select(addition.first);
+                }
             });
         }
         return manager.executeQuery(query).then(function (data) {
-            querySucceeded(data, collectionToModify, true, refreshFunction);
-            logger.info("Fetched " + pluralName);
+            if (typeof (isCollection) == 'undefined' || isCollection) {
+                querySucceeded(data, collectionToModify, true, refreshFunction);
+                logger.info("Fetched " + pluralName);
+            }
+            else {
+                querySucceeded(data.results[0], collectionToModify, false, refreshFunction);
+                logger.info("Fetched " + pluralName);
+            }
         }).fail(queryFailed);;
     }
-    function getEntity(entityName, key, objectToUpdate, refreshFunction) {
-        var entityType = manager.metadataStore.getEntityType(entityName);
-        logger.log(entityType.keyProperties)
-        var entityKey = new EntityKey(entityType, parseInt(key));
-        manager.fetchEntityByKey(entityKey).then(function (data) {
-            querySucceeded(data, objectToModify, false,refreshFunction);
-            logger.info("Fetched " + pluralName);
-        }).fail(queryFailed);;
+    function getEntity(pluralName, queryAdditions) {
+        var query = breeze.EntityQuery.from(pluralName);
+        if (typeof (queryAdditions !== 'undefined')) {
+            _.each(queryAdditions, function (addition) {
+
+                var addType = addition.typeQ;
+                if (addType == 'where') {
+                    query = query.where(addition.first, addition.second, addition.third);
+                }
+                else if (addType == 'orderBy') {
+                    query = query.orderBy(addition.first);
+                }
+                else if (addType == 'expand') {
+                    query = query.expand(addition.first);
+                }
+                else if (addType == 'select') {
+                    query = query.select(addition.first);
+                }
+            });
+        }
+        return manager.executeQuery(query);
     }
     function createEntity(entityName, initialValues) {
         return manager.createEntity(entityName, initialValues);
@@ -88,11 +110,20 @@
         item.isEditing = false;
 
         // listen for changes with Breeze PropertyChanged event
-        item.entityAspect.propertyChanged.subscribe(function () {
-            if (item.isEditing || suspendItemSave) { return; }
-            // give EntityManager time to hear the change
-            setTimeout(function () { saveIfModified(item); }, 0);
-        });
+        if (typeof (item.entityAspect) !== 'undefined') {
+            item.entityAspect.propertyChanged.subscribe(function () {
+                if (item.isEditing || suspendItemSave) { return; }
+                // give EntityManager time to hear the change
+                setTimeout(function () { saveIfModified(item); }, 0);
+            });
+        }
+        else {
+            item.entity.entityAspect.propertyChanged.subscribe(function () {
+                if (item.isEditing || suspendItemSave) { return; }
+                // give EntityManager time to hear the change
+                setTimeout(function () { saveIfModified(item); }, 0);
+            });
+        }
     }
 
     function saveEntity(masterEntity) {
@@ -174,16 +205,14 @@
             failed({ message: "Save of new " + entityName + " failed" });
         }
     };
-    function addEntityMapToJoinTable(entity, joinedEntityName,joinedEntity, collection, refreshFunction) {
-            entity[joinedEntityName].unshift(joinedEntity);
-            collection.unshift(joinedEntity);
+    function addExistingEntityToCollection(collection, entity, refreshFunction) {
+        collection.push(entity);
         dataservice.saveEntity(entity)
             .then(addSucceeded)
             .fail(addFailed)
             .fin(refreshFunction);
 
         function addSucceeded() {
-            collection.unshift(entity);
             logger.info(entityName + ' added');
         }
 

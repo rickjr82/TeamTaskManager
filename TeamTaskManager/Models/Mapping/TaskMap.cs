@@ -23,6 +23,16 @@ namespace TeamTaskManager.Models.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.Description).HasColumnName("Description");
+
+            // Relationships
+            this.HasMany(t => t.Teams)
+                .WithMany(t => t.Tasks)
+                .Map(m =>
+                {
+                    m.ToTable("TeamTasks");
+                    m.MapLeftKey("TaskId");
+                    m.MapRightKey("TeamId");
+                });
         }
     }
 }

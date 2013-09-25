@@ -16,7 +16,14 @@ namespace TeamTaskManager.Models
         public int UserId { get; set; }
         public string UserName { get; set; }
     }
-
+    public class UsersContext : DbContext
+    {
+        public UsersContext()
+            : base("Name=context")
+        {
+        }
+        public DbSet<UserProfile> UserProfiles { get; set; }
+    }
     public class RegisterExternalLoginModel
     {
         [Required]

@@ -12,7 +12,7 @@ namespace TeamTaskManager.Models
         }
 
         public MyTeamTrackerContext()
-            : base("Name=MyTeamTrackerContext")
+            : base("Name=context")
         {
         }
 
@@ -21,9 +21,7 @@ namespace TeamTaskManager.Models
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamGameTask> TeamGameTasks { get; set; }
-        public DbSet<TeamTask> TeamTasks { get; set; }
-        public DbSet<UserProfile> UserProfiles { get; set; }
-
+      
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new GameMap());
@@ -31,7 +29,6 @@ namespace TeamTaskManager.Models
             modelBuilder.Configurations.Add(new TaskMap());
             modelBuilder.Configurations.Add(new TeamMap());
             modelBuilder.Configurations.Add(new TeamGameTaskMap());
-            modelBuilder.Configurations.Add(new TeamTaskMap());
-        }
+       }
     }
 }
