@@ -1,12 +1,10 @@
 ﻿teamTaskManager.controller('gameListController', ['$scope', 'dataservice', 'logger', '$location', '$routeParams',
 function ($scope, dataservice, logger, $location, $routeParams) {
     $scope.games = [];
-    $scope.teams = [];
     $scope.newDate = "";
     $scope.newOpponent = "";
     $scope.newLocation = "";
     $scope.teamId = $routeParams.teamId;
-    dataservice.getEntities('Teams', $scope.teams, refreshView);
     function refreshView() {
         $scope.$apply();
     }

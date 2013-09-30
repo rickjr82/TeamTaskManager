@@ -1,6 +1,4 @@
-﻿Team:<select ng-model="teamId" ng-options="t.id as t.name for t in teams"><option value="">-- Choose Team --</option></select>
-
-<input type="text" ng-model="newDate" placeholder="Date" />
+﻿<input type="text" ng-model="newDate" placeholder="Date" />
 <input type="text" ng-model="newOpponent" placeholder="Opponent" />
 <input type="text" ng-model="newLocation" placeholder="Location" />
 <input type="button" value="Add Game" ng-click="addGame(newDate, newOpponent, newLocation)" ng-disabled="newDate.length == 0 || newOpponent.length ==0|| newLocation.length ==0" />
@@ -37,4 +35,4 @@
     </table>
 
 </div>
-<input type="button" value="Close" ng-click="close()">
+<input type="button" value="Return" ng-click="close()">

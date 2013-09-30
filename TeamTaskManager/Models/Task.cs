@@ -7,13 +7,12 @@ namespace TeamTaskManager.Models
     {
         public Task()
         {
-            this.TeamGameTasks = new List<TeamGameTask>();
-        }
+       }
 
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<TeamGameTask> TeamGameTasks { get; set; }
-        public virtual ICollection<Team> Teams { get; set; }
+        public int TeamId { get; set; }
+        public virtual Team Team { get; set; }
     }
 }

@@ -7,7 +7,6 @@ namespace TeamTaskManager.Models
     {
         public Game()
         {
-            this.TeamGameTasks = new List<TeamGameTask>();
         }
 
         public System.DateTime Time { get; set; }
@@ -16,6 +15,5 @@ namespace TeamTaskManager.Models
         public string Opponent { get; set; }
         public int TeamId { get; set; }
         public virtual Team Team { get; set; }
-        public virtual ICollection<TeamGameTask> TeamGameTasks { get; set; }
     }
 }

@@ -15,9 +15,9 @@ teamTaskManager.config(['$routeProvider', function ($routeProvider) {
       $routeProvider.
           when('/', { templateUrl: 'app/html/views/admin.html', controller: 'adminController' }).
        when('/teams', { templateUrl: 'app/html/views/teamList.html', controller: 'teamListController' }).
-      when('/players', { templateUrl: 'app/html/views/playerList.html', controller: 'playerListController' }).
+      when('/players:teamId', { templateUrl: 'app/html/views/playerList.html', controller: 'playerListController' }).
    when('/games/:teamId', { templateUrl: 'app/html/views/gameList.html', controller: 'gameListController' }).
-          when('/tasks', { templateUrl: 'app/html/views/taskList.html', controller: 'taskListController' }).
+          when('/tasks:teamId', { templateUrl: 'app/html/views/taskList.html', controller: 'taskListController' }).
           when('/teamDetail/:teamId', { templateUrl: 'app/html/views/teamDetail.html', controller: 'teamDetailController' }).
     when('/taskSignUp/:teamId', { templateUrl: 'app/html/views/signUp.html', controller: 'signUpController' })
         .when('/admin', { templateUrl: 'app/html/views/admin.html', controller: 'adminController' })

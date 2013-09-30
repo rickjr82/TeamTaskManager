@@ -34,7 +34,7 @@ namespace TeamTaskManager.Controllers
         [HttpGet]
         public IQueryable<Team> Teams()
         {
-            return _contextProvider.Context.Teams;
+           return _contextProvider.Context.Teams;
         }
         [HttpGet]
         public IQueryable<Player> Players()

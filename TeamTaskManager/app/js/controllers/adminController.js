@@ -6,6 +6,9 @@ teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$locatio
         }
         $scope.teams = [];
         $scope.teamId = 0;
+        if ($rootScope.teamId >= 0) { $scope.teamId = $rootScope.teamId;}
+        else { $rootScope.teamId = -1;}
+        $scope.$watch('teamId', function () { $rootScope.teamId=$scope.teamId });
         logger.info("loading teams")
         dataservice.getEntities('Teams', $scope.teams, refreshView);
         $scope.modifyTeams = function () {
@@ -13,10 +16,10 @@ teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$locatio
         };
 
         $scope.modifyTasks = function () {
-            $location.path('/tasks');
+            $location.path('/tasks' + $scope.teamId);
         };
         $scope.modifyPlayers = function () {
-            $location.path('/players');
+            $location.path('/players' + $scope.teamId);
         };
         $scope.signupForTasks = function () {
             $location.path('/signup/'+$scope.teamId);

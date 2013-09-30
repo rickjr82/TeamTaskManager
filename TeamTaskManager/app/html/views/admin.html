@@ -1,7 +1,7 @@
 ﻿     <input type="button" value="Modify Teams" ng-click="modifyTeams()"/>
-    <input type="button" value="Modify Players" ng-click="modifyPlayers()"/>   
-    <input type="button" value="Modify Tasks" ng-click="modifyTasks()" />   
   <select ng-model="teamId" ng-options="t.id as t.name for t in teams"><option value="">-- Choose Team --</option></select>
+    <input type="button" value="Modify Players" ng-click="modifyPlayers()"  ng-disabled="!teamId>0"/>   
+    <input type="button" value="Modify Tasks" ng-click="modifyTasks()"  ng-disabled="!teamId>0" />   
    <input type="button" value="Manage Team" ng-click="manageTeam()" ng-disabled="!teamId>0" />   
 <input type="button" value="Manage Games" ng-click="manageGames()" ng-disabled="!teamId>0" />   
  <input type="button" value="Signup For Tasks" ng-click="signupForTasks()" ng-disabled="!teamId>0" />   
