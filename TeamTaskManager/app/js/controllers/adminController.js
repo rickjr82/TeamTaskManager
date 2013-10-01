@@ -6,7 +6,8 @@ teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$locatio
         }
         $scope.teams = [];
         $scope.teamId = 0;
-        if ($rootScope.teamId >= 0) { $scope.teamId = $rootScope.teamId;}
+        $rootScope.currentPlayerId = 7;
+        if ($rootScope.teamId >= 0) { $scope.teamId = $rootScope.teamId; }
         else { $rootScope.teamId = -1;}
         $scope.$watch('teamId', function () { $rootScope.teamId=$scope.teamId });
         logger.info("loading teams")

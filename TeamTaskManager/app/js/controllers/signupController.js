@@ -4,9 +4,14 @@
         $scope.players = [];
         $scope.tasks = [];
         $scope.games = [];
+        $scope.currentPlayerId = $rootScope.currentPlayerId;
         function refreshView() {
             $scope.$apply();
         }
+        $scope.findTaskAssignmentRecord= function(gameId, taskId) {
+            var taskAssignment=_.findWhere($scope.taskAssignments, {gameId:gameId, taskId:taskId});
+            return taskAssignment;
+        };
         $scope.teamId = $routeParams.teamId;
         dataservice.getEntities('Players', $scope.players, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }]);
         dataservice.getEntities('Tasks', $scope.tasks, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }]);
