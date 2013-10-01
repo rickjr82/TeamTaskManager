@@ -16,13 +16,13 @@ teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$locatio
         };
 
         $scope.modifyTasks = function () {
-            $location.path('/tasks' + $scope.teamId);
+            $location.path('/tasks/' + $scope.teamId);
         };
         $scope.modifyPlayers = function () {
-            $location.path('/players' + $scope.teamId);
+            $location.path('/players/' + $scope.teamId);
         };
         $scope.signupForTasks = function () {
-            $location.path('/signup/'+$scope.teamId);
+            $location.path('/taskSignUp/' + $scope.teamId);
         };
         $scope.manageGames = function () {
             $location.path('/games/' + $scope.teamId);

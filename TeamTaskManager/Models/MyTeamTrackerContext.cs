@@ -20,6 +20,7 @@ namespace TeamTaskManager.Models
         public DbSet<Player> Players { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<TaskAssignment> TaskAssignments { get; set; }
        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -27,6 +28,7 @@ namespace TeamTaskManager.Models
             modelBuilder.Configurations.Add(new PlayerMap());
             modelBuilder.Configurations.Add(new TaskMap());
             modelBuilder.Configurations.Add(new TeamMap());
+            modelBuilder.Configurations.Add(new TaskAssignmentMap());
        }
     }
 }
