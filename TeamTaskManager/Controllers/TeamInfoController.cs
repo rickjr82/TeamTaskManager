@@ -51,6 +51,11 @@ namespace TeamTaskManager.Controllers
         {
             return _contextProvider.Context.Games;
         }
+        [HttpGet]
+        public IQueryable<TaskAssignment> TaskAssignments()
+        {
+            return _contextProvider.Context.TaskAssignments;
+        }
 
 
         [HttpPost]

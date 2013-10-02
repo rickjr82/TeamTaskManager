@@ -26,7 +26,7 @@
     /*** implementation details ***/
 
     //#region main application operations
-    function querySucceeded(data,objectToModify, isCollection, refreshFunction) {
+    function querySucceeded(data, objectToModify, isCollection, refreshFunction, callWhenCompleted) {
         if (isCollection) {
             data.results.forEach(function (item) {
                 dataservice.extendItem(item);
@@ -38,12 +38,15 @@
             objectToModify.inner = data;
         }
         refreshFunction();
+        if (typeof (callWhenCompleted) !== 'undefined') {
+            callWhenCompleted();
+        }
 
     }
     function queryFailed(error) {
         logger.error(error.message, "Query failed");
     }
-    function getEntities(pluralName, collectionToModify, refreshFunction, queryAdditions, isCollection) {
+    function getEntities(pluralName, collectionToModify, refreshFunction, queryAdditions, isCollection, callWhenCompleted) {
         var query = breeze.EntityQuery.from(pluralName);
         if (typeof (queryAdditions !== 'undefined')) {
             _.each(queryAdditions, function (addition) {
@@ -65,7 +68,7 @@
         }
         return manager.executeQuery(query).then(function (data) {
             if (typeof (isCollection) == 'undefined' || isCollection) {
-                querySucceeded(data, collectionToModify, true, refreshFunction);
+                querySucceeded(data, collectionToModify, true, refreshFunction, callWhenCompleted);
                 logger.info("Fetched " + pluralName);
             }
             else {

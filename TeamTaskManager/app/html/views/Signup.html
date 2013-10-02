@@ -12,7 +12,7 @@
             <td>{{game.date}}</td>
             <td>{{game.opponent}}</td>
             <td>{{game.location}}</td>
-            <td ng-repeat="task in tasks"><input type="checkbox" ng-model="game[task.name].selected" ng-disabled="findTaskAssignmentRecord(game.gameId, task.tastId) !=null && findTaskAssignmentRecord(game.gameId, task.tastId).playerId !=currentPlayerId"></td>
+            <td ng-repeat="task in tasks"><input type="checkbox" ng-model="taskAssignments[game.id][task.id]" ng-disabled="findTaskAssignmentRecord(game.id, task.id) !=null && findTaskAssignmentRecord(game.id, task.id).playerId !=currentPlayerId"></td>
         </tr>
     </tbody>
 </table>
