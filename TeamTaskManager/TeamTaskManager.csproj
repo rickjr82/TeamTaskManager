@@ -259,6 +259,7 @@
     <Compile Include="Models\Mapping\TeamMap.cs" />
     <Compile Include="Models\Mapping\UserProfileMap.cs" />
     <Compile Include="Models\MyTeamTrackerContext.cs" />
+    <Compile Include="Models\MyTeamTrackerDBInitializer.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\TaskAssignment.cs" />
