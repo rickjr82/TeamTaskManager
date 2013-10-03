@@ -15,15 +15,11 @@ namespace TeamTaskManager.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
-    }
-    public class UsersContext : DbContext
-    {
-        public UsersContext()
-            : base("Name=context")
-        {
-        }
-        public DbSet<UserProfile> UserProfiles { get; set; }
-    }
+        public virtual List<Player> Players { get; set; }
+        public virtual List<Team> Teams { get; set; }
+        public virtual List<Team> TeamsCoached { get; set; }
+        public bool? IsAdmin { get; set; }
+    }   
     public class RegisterExternalLoginModel
     {
         [Required]

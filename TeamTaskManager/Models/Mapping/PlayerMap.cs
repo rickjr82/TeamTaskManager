@@ -30,8 +30,7 @@ namespace TeamTaskManager.Models.Mapping
             // Relationships
             this.HasRequired(t => t.Team)
                 .WithMany(t => t.Players)
-                .HasForeignKey(d => d.TeamId);
-
+                .HasForeignKey(d => d.TeamId);        
         }
     }
 }

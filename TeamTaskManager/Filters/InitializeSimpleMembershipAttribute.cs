@@ -25,11 +25,11 @@ namespace TeamTaskManager.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<MyTeamTrackerContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new MyTeamTrackerContext())
                     {
                         if (!context.Database.Exists())
                         {

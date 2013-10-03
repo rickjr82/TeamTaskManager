@@ -63,9 +63,11 @@ namespace TeamTaskManager.Controllers
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             var player = context.Players.SingleOrDefault(x => x.UserId == userId);
-            return player.Id;
+            if (player != null)
+                return player.Id;
+            else
+                return null;
         }
-
         [HttpPut]
         public void SetCurrentPlayer(int playerId)
         { 
@@ -82,6 +84,18 @@ namespace TeamTaskManager.Controllers
         {
             return _contextProvider.SaveChanges(saveBundle);
         }
+        [HttpGet]
+        public object GetCurrentUserTeamsAndPlayers()
+        {
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var user = context.UserProfiles.Single(x => x.UserId == userId);
 
+            var teams = user.Teams;
+            var players = user.Players;
+            
+            return new{players=players, teams=teams};
+
+        }
     }
 }

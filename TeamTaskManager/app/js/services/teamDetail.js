@@ -3,7 +3,7 @@
                 return {
                     getCurrentPlayerId: function (teamId) {
                         var deferred = $q.defer();
-                        $http.get('/api/teaminfo/GetTeamMembers', { params: { teamId: teamId } }).success(function (data) {
+                        $http.get('/api/teaminfo/GetCurrentPlayer').success(function (data) {
                             deferred.resolve(data);
                         }).error(function () {
                             deferred.reject();

@@ -19,6 +19,10 @@ namespace TeamTaskManager.Models.Mapping
             this.ToTable("Team");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.Id).HasColumnName("Id");
+
+            this.HasMany(t => t.UserProfiles)
+                .WithMany(t => t.Teams);
+              
         }
     }
 }

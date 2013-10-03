@@ -257,6 +257,7 @@
     <Compile Include="Models\Mapping\TaskAssignmentMap.cs" />
     <Compile Include="Models\Mapping\TaskMap.cs" />
     <Compile Include="Models\Mapping\TeamMap.cs" />
+    <Compile Include="Models\Mapping\UserProfileMap.cs" />
     <Compile Include="Models\MyTeamTrackerContext.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Task.cs" />
@@ -267,12 +268,14 @@
   <ItemGroup>
     <Content Include="app\html\views\admin.html" />
     <Content Include="app\html\views\gameList.html" />
+    <Content Include="app\html\views\manageUser.html" />
     <Content Include="app\html\views\playerList.html" />
     <Content Include="app\html\views\Signup.html" />
     <Content Include="app\html\views\taskList.html" />
     <Content Include="app\html\views\teamList.html" />
     <Content Include="app\js\controllers\adminController.js" />
     <Content Include="app\js\controllers\gameListController.js" />
+    <Content Include="app\js\controllers\manageUserController.js" />
     <Content Include="app\js\controllers\playerListController.js" />
     <Content Include="app\js\controllers\signupController.js" />
     <Content Include="app\js\controllers\taskListController.js" />

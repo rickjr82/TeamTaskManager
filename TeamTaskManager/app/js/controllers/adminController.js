@@ -1,12 +1,14 @@
 ﻿
-teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$location', 'dataservice', 'logger',
-    function ($scope, $rootScope, $location, dataservice, logger) {
+teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$location', 'dataservice', 'logger','teamDetail',
+    function ($scope, $rootScope, $location, dataservice, logger, teamDetail) {
         function refreshView() {
             $scope.$apply();
         }
         $scope.teams = [];
         $scope.teamId = 0;
-        $rootScope.currentPlayerId = 7;
+        teamDetail.getCurrentPlayerId().then(function (result) {
+            $rootScope.currentPlayerId = result;
+        });
         if ($rootScope.teamId >= 0) { $scope.teamId = $rootScope.teamId; }
         else { $rootScope.teamId = -1;}
         $scope.$watch('teamId', function () { $rootScope.teamId=$scope.teamId });
@@ -28,8 +30,8 @@ teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$locatio
         $scope.manageGames = function () {
             $location.path('/games/' + $scope.teamId);
         };
-        $scope.manageTeam = function () {
-            $location.path('/teamDetail/'+$scope.teamId);
+        $scope.manageUser = function () {
+            $location.path('/managerUser/');
         };
 
     }]);

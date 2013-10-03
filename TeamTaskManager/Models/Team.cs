@@ -9,6 +9,7 @@ namespace TeamTaskManager.Models
         {
             this.Games = new List<Game>();
             this.Players = new List<Player>();
+            this.UserProfiles = new List<UserProfile>();
         }
 
         public string Name { get; set; }
@@ -17,5 +18,6 @@ namespace TeamTaskManager.Models
         public virtual ICollection<Game> Games { get; set; }
         public virtual ICollection<Player> Players { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<UserProfile> UserProfiles { get; set; }
     }
 }
