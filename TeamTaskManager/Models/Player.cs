@@ -16,5 +16,6 @@ namespace TeamTaskManager.Models
         public int TeamId { get; set; }
         public virtual Team Team { get; set; }
         public virtual List<TaskAssignment> TaskAssignments { get; set; }
+        public int? UserId { get; set; }
     }
 }

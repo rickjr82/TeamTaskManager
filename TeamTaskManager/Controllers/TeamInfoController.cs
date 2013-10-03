@@ -8,6 +8,7 @@ using System.Web.Http;
 using TeamTaskManager.Models;
 using Breeze.WebApi;
 using Newtonsoft.Json.Linq;
+using WebMatrix.WebData;
 
 namespace TeamTaskManager.Controllers
 {
@@ -56,7 +57,24 @@ namespace TeamTaskManager.Controllers
         {
             return _contextProvider.Context.TaskAssignments;
         }
+        [HttpGet]
+        public int? GetCurrentPlayer()
+        {
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var player = context.Players.SingleOrDefault(x => x.UserId == userId);
+            return player.Id;
+        }
 
+        [HttpPut]
+        public void SetCurrentPlayer(int playerId)
+        { 
+            var context= _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var player = context.Players.Single(x => x.Id == playerId);
+            player.UserId = userId;
+            context.SaveChanges();
+        }
 
         [HttpPost]
         [ValidateHttpAntiForgeryToken]

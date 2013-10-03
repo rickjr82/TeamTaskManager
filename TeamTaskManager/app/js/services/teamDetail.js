@@ -1,9 +1,9 @@
 ﻿teamTaskManager.factory('teamDetail', ['$http', '$q',
             function ($http, $q) {
                 return {
-                    getTeamPlayers: function (teamId) {
+                    getCurrentPlayerId: function (teamId) {
                         var deferred = $q.defer();
-                        $http.get('/api/TeamSearch/TeamDetails/GetTeamMembers', { params: { teamId: teamId } }).success(function (data) {
+                        $http.get('/api/teaminfo/GetTeamMembers', { params: { teamId: teamId } }).success(function (data) {
                             deferred.resolve(data);
                         }).error(function () {
                             deferred.reject();
