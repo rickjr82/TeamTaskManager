@@ -11,6 +11,12 @@ namespace TeamTaskManager.Models
     [Table("UserProfile")]
     public class UserProfile
     {
+        public UserProfile() 
+        {
+            Players = new List<Player>();
+            Teams = new List<Team>();
+            TeamsCoached = new List<Team>();
+        }
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }

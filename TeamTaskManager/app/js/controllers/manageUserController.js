@@ -7,15 +7,18 @@
         $scope.players = [];
         $scope.userTeams = [];
         $scope.userPlayers = [];
+        $scope.selectedPlayerId = 0;
         $scope.teamId = 0;
         dataservice.getEntities('Teams', $scope.teams, refreshView);
-        dataservice.getEntities('Players', $scope.teams, refreshView);
-        teamDetail.GetCurrentUserTeamsAndPlayers().then(function (result) {
+        dataservice.getEntities('Players', $scope.players, refreshView);
+        teamDetail.getCurrentUserTeamsAndPlayers().then(function (result) {
             $scope.userTeams = result.teams;
-            $scope.userTeams = result.players;
-        }).fail(function (error) {
-            logger.error(error.message);
+            $scope.userPlayers = result.players;
         });
+        $scope.addPlayer = function () {
+            var newPlayer = _.findWhere($scope.players, { playerId: $scope.selectedPlayerId })
+            $scope.userPlayers.push(newPlayer);
+        };
         $scope.close = function () {
             $location.path('/admin');
         };

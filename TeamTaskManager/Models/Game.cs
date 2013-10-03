@@ -7,6 +7,7 @@ namespace TeamTaskManager.Models
     {
         public Game()
         {
+            TaskAssignments = new List<TaskAssignment>();
         }
 
         public System.DateTime Time { get; set; }
