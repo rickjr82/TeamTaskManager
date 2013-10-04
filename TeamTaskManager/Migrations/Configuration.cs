@@ -21,7 +21,10 @@ namespace TeamTaskManager.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
-           
+
+            // added initializer for local testing
+            var initializer = new MyTeamTrackerDBInitializer();
+            initializer.Seed(context);
         }
     }
 }
