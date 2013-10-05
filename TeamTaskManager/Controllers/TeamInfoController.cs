@@ -14,6 +14,7 @@ namespace TeamTaskManager.Controllers
 {
     [Authorize]
     [BreezeController]
+    [InitializeSimpleMembership]
     public class TeamInfoController : ApiController
     {
         static DateTime _lastRefresh = DateTime.Now; // will first clear db at Now + "RefreshRate" 
@@ -77,6 +78,26 @@ namespace TeamTaskManager.Controllers
             player.UserId = userId;
             context.SaveChanges();
         }
+        [HttpGet]
+        public void AddPlayerToCurrentUser(int playerId) 
+        {
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var player = context.Players.Single(x => x.Id == playerId);
+            player.UserId = userId;
+            context.SaveChanges();
+        }
+        [HttpDelete]
+        [ValidateHttpAntiForgeryToken]
+        public void DeletePlayerFromCurrentUser(int playerId)
+        {
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var player = context.Players.Single(x => x.Id == playerId);
+            var user = context.UserProfiles.Single(x => x.UserId == userId);
+            user.Players.Remove(player);
+            context.SaveChanges();
+        }
 
         [HttpPost]
         [ValidateHttpAntiForgeryToken]
@@ -92,7 +113,7 @@ namespace TeamTaskManager.Controllers
             var user = context.UserProfiles.Single(x => x.UserId == userId);
 
             var teams = user.Teams;
-            var players = user.Players;
+            var players = context.Players.Where(x=>x.UserId==userId);
             
             return new{players=players, teams=teams};
 

@@ -12,7 +12,7 @@
                     },
                     addPlayerToCurrentUser: function (playerId) {
                         var deferred = $q.defer();
-                        $http.get('/api/TeamSearch/TeamDetails/AddPlayerToCurrentUser', { params: { playerId: playerId } }).success(function (data) {
+                        $http.get('/api/teaminfo/AddPlayerToCurrentUser', { params: { playerId: playerId } }).success(function (data) {
                             deferred.resolve(data);
                         }).error(function () {
                             deferred.reject();
@@ -21,7 +21,7 @@
                     },
                     removePlayerFromCurrentUser: function (playerId) {
                     var deferred = $q.defer();
-                        $http.delete('/api/TeamSearch/TeamDetails/deletePlayerFromCurrentUser', { params: { playerId: playerId } }).success(function (data) {
+                        $http.delete('/api/teaminfo/DeletePlayerFromCurrentUser', { params: { playerId: playerId } }).success(function (data) {
                         deferred.resolve(data);
                     }).error(function () {
                         deferred.reject();

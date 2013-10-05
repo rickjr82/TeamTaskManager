@@ -1,4 +1,4 @@
-﻿<select ng-model="selectedPlayerId" ng-options="t.id as p.firstName+' '+p.lastName for p in players">
+﻿<select ng-model="selectedPlayerId" ng-options="p.id as p.firstName+' '+p.lastName for p in players">
     <option value="">-- Choose Player --</option>
 </select>
 <input type="button" value="Add Player" ng-click="addPlayer()">
@@ -13,7 +13,7 @@
         <tbody>
             <tr ng-repeat="player in userPlayers">
                 <td>
-                    {{player.firstName +' '+ player.lastName}}
+                    {{player.FirstName +' '+ player.LastName}}
                 </td>
                  <td>
                     <input type="button" value="Delete" ng-click="deletePlayer(player)" />

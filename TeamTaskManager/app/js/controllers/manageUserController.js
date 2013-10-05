@@ -7,7 +7,7 @@
         $scope.players = [];
         $scope.userTeams = [];
         $scope.userPlayers = [];
-        $scope.selectedPlayerId = 0;
+        $scope.selectedPlayerId = -1;
         $scope.teamId = 0;
         dataservice.getEntities('Teams', $scope.teams, refreshView);
         dataservice.getEntities('Players', $scope.players, refreshView);
@@ -16,8 +16,16 @@
             $scope.userPlayers = result.players;
         });
         $scope.addPlayer = function () {
-            var newPlayer = _.findWhere($scope.players, { playerId: $scope.selectedPlayerId })
-            $scope.userPlayers.push(newPlayer);
+            var newPlayer = _.findWhere($scope.players, { id: $scope.selectedPlayerId });
+            teamDetail.addPlayerToCurrentUser(newPlayer.id).then(function () {
+                $scope.userPlayers.push(newPlayer);
+            });
+        };
+        $scope.removePlayer = function (player) {
+            teamDetail.removePlayerFromCurrentUser(player.Id).then(function () {
+                var index = $scope.userPlayers.indexOf(player);
+                $scope.userPlayers.splice(index, 1);
+            });
         };
         $scope.close = function () {
             $location.path('/admin');
