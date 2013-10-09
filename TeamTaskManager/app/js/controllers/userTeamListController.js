@@ -12,7 +12,7 @@
          });
         $scope.addTeam = function () {
             var newTeam = _.findWhere($scope.teams, { Id: $scope.selectedTeamId });
-            teamDetail.addTeamToCurrentUser(newTeam.id).then(function () {
+            teamDetail.addTeamToCurrentUser(newTeam.Id).then(function () {
                 $scope.userTeams.push(newTeam);
             });
         };
