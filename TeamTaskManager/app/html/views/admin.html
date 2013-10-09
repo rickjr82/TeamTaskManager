@@ -1,6 +1,6 @@
 ﻿<input type="button" value="Manage User" ng-click="manageUser()" />        
 <input type="button" value="Modify Teams" ng-click="modifyTeams()"/>
-  <select ng-model="teamId" ng-options="t.id as t.name for t in teams"><option value="">-- Choose Team --</option></select>
+  <select ng-model="teamId" ng-options="t.Id as t.Name for t in teams"><option value="">-- Choose Team --</option></select>
     <input type="button" value="Modify Players" ng-click="modifyPlayers()"  ng-disabled="!teamId>0"/>   
     <input type="button" value="Modify Tasks" ng-click="modifyTasks()"  ng-disabled="!teamId>0" />   
 <input type="button" value="Manage Games" ng-click="manageGames()" ng-disabled="!teamId>0" />   

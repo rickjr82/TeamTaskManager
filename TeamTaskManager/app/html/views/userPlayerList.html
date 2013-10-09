@@ -1,4 +1,4 @@
-﻿<select ng-model="selectedPlayerId" ng-options="p.id as p.firstName+' '+p.lastName for p in players">
+﻿<select ng-model="selectedPlayerId" ng-options="p.Id as p.FirstName+' '+p.LastName for p in players">
     <option value="">-- Choose Player --</option>
 </select>
 <input type="button" value="Add Player" ng-click="addPlayer()">

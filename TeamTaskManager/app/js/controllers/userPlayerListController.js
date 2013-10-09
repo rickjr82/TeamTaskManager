@@ -7,13 +7,13 @@
         $scope.players = [];
         $scope.userPlayers = [];
         $scope.selectedPlayerId = -1;
-        dataservice.getEntities('Players', $scope.players, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }]);
-        teamDetail.getCurrentUserPlayers($scope.teamId).then(function (result) {
+        dataservice.getEntities('Players', $scope.players, refreshView, [{ typeQ: 'where', first: 'TeamId', second: 'eq', third: $scope.teamId }]);
+        teamDetail.getCurrentUserPlayers($scope.teamId).then(function (result) {            
             $scope.userPlayers = result;
         });
         $scope.addPlayer = function () {
-            var newPlayer = _.findWhere($scope.players, { id: $scope.selectedPlayerId });
-            teamDetail.addPlayerToCurrentUser(newPlayer.id).then(function () {
+            var newPlayer = _.findWhere($scope.players, { Id: $scope.selectedPlayerId });
+            teamDetail.addPlayerToCurrentUser(newPlayer.Id).then(function () {
                 $scope.userPlayers.push(newPlayer);
             });
         };

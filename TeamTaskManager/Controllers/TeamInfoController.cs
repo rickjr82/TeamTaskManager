@@ -139,7 +139,7 @@ namespace TeamTaskManager.Controllers
         {
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
-            var user = context.UserProfiles.Single(x => x.UserId == userId);
+            var user = context.UserProfiles.Include("Teams").Single(x => x.UserId == userId);
             var teams = user.Teams;
             return teams;
         }

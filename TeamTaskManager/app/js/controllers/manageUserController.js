@@ -16,8 +16,8 @@
             $scope.userPlayers = result.players;
         });
         $scope.addPlayer = function () {
-            var newPlayer = _.findWhere($scope.players, { id: $scope.selectedPlayerId });
-            teamDetail.addPlayerToCurrentUser(newPlayer.id).then(function () {
+            var newPlayer = _.findWhere($scope.players, { Id: $scope.selectedPlayerId });
+            teamDetail.addPlayerToCurrentUser(newPlayer.Id).then(function () {
                 $scope.userPlayers.push(newPlayer);
             });
         };

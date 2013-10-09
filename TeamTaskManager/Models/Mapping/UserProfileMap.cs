@@ -9,7 +9,6 @@ namespace TeamTaskManager.Models.Mapping
         {
             // Primary Key
             this.HasKey(t => t.UserId);
-            this.HasMany(t => t.Teams).WithMany(t => t.UserProfiles);
         }
     }
 }

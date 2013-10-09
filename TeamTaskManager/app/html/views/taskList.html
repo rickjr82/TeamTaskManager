@@ -14,10 +14,10 @@
         <tbody>
             <tr ng-repeat="task in tasks">
                 <td>
-                    <input ng-model="task.name" type="text" placeholder="Name" />
+                    <input ng-model="task.Name" type="text" placeholder="Name" />
                 </td>
                 <td>
-                    <input ng-model="task.description" type="text" placeholder="Description" />
+                    <input ng-model="task.Description" type="text" placeholder="Description" />
                 </td>
                 <td>
                     <input type="button" value="Save" ng-click="endEdit(task)" ng-disabled="newTaskName.length == 0 || newTaskDesc.length ==0" />

@@ -231,8 +231,7 @@
         breeze.config.initializeAdapterInstance("modelLibrary", "backingStore", true);
 
         // configure to use camelCase
-        breeze.NamingConvention.camelCase.setAsDefault();
-
+       
         // configure to resist CSRF attack
         var antiForgeryToken = $("#antiForgeryToken").val();
         if (antiForgeryToken) {
