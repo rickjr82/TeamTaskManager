@@ -12,8 +12,7 @@ using TeamTaskManager.Models;
 
 namespace TeamTaskManager.Controllers
 {
-    [Authorize]
-    [InitializeSimpleMembership]
+    [Authorize]    
     public class AccountController : Controller
     {
         //

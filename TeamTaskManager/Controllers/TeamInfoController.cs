@@ -14,7 +14,6 @@ namespace TeamTaskManager.Controllers
 {
     [Authorize]
     [BreezeController]
-    [InitializeSimpleMembership]
     public class TeamInfoController : ApiController
     {
         static DateTime _lastRefresh = DateTime.Now; // will first clear db at Now + "RefreshRate" 
@@ -98,7 +97,27 @@ namespace TeamTaskManager.Controllers
             user.Players.Remove(player);
             context.SaveChanges();
         }
-
+        [HttpGet]
+        public void AddTeamToCurrentUser(int teamId)
+        {
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var team = context.Teams.Single(x => x.Id == teamId);
+            var user = context.UserProfiles.Single(x => x.UserId == userId);
+            user.Teams.Add(team);
+            context.SaveChanges();
+        }
+        [HttpDelete]
+        [ValidateHttpAntiForgeryToken]
+        public void DeleteTeamFromCurrentUser(int teamId)
+        {
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var team = context.Teams.Single(x => x.Id == teamId);
+            var user = context.UserProfiles.Single(x => x.UserId == userId);
+            user.Teams.Remove(team);
+            context.SaveChanges();
+        }
         [HttpPost]
         [ValidateHttpAntiForgeryToken]
         public SaveResult SaveChanges(JObject saveBundle)
@@ -106,17 +125,23 @@ namespace TeamTaskManager.Controllers
             return _contextProvider.SaveChanges(saveBundle);
         }
         [HttpGet]
-        public object GetCurrentUserTeamsAndPlayers()
+        public object GetCurrentUserPlayers(int teamId)
         {
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             var user = context.UserProfiles.Single(x => x.UserId == userId);
+            var players = context.Players.Where(x=>x.UserId==userId && x.TeamId==teamId);
+            return players;
 
+        }
+        [HttpGet]
+        public object GetCurrentUserTeams()
+        {
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var user = context.UserProfiles.Single(x => x.UserId == userId);
             var teams = user.Teams;
-            var players = context.Players.Where(x=>x.UserId==userId);
-            
-            return new{players=players, teams=teams};
-
+            return teams;
         }
     }
 }
