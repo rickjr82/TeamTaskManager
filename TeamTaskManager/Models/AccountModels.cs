@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -13,18 +14,17 @@ namespace TeamTaskManager.Models
     {
         public UserProfile() 
         {
-            Players = new List<Player>();
-            Teams = new List<Team>();
-            TeamsCoached = new List<Team>();
+            Players = new Collection<Player>();
+            Teams = new Collection<Team>();
+            TeamsCoached = new Collection<Team>();
         }
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
-        public virtual List<Player> Players { get; set; }
-        public virtual List<Team> Teams { get; set; }
-        public virtual List<Team> TeamsCoached { get; set; }
-        public bool? IsAdmin { get; set; }
+        public virtual ICollection<Player> Players { get; set; }
+        public virtual ICollection<Team> Teams { get; set; }
+        public virtual ICollection<Team> TeamsCoached { get; set; }
     }   
     public class RegisterExternalLoginModel
     {

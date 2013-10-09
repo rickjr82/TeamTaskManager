@@ -9,7 +9,6 @@ namespace TeamTaskManager.Models
         {
             this.Games = new List<Game>();
             this.Players = new List<Player>();
-            this.UserProfiles = new List<UserProfile>();
         }
 
         public string Name { get; set; }

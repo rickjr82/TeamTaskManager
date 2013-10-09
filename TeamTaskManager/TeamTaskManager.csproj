@@ -243,15 +243,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TeamInfoController.cs" />
     <Compile Include="Controllers\TodoController.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\ValidateHttpAntiForgeryTokenAttribute.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201310042315437_initializeDatabase.cs" />
-    <Compile Include="Migrations\201310042315437_initializeDatabase.Designer.cs">
-      <DependentUpon>201310042315437_initializeDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -278,6 +273,8 @@
     <Content Include="app\html\views\Signup.html" />
     <Content Include="app\html\views\taskList.html" />
     <Content Include="app\html\views\teamList.html" />
+    <Content Include="app\html\views\userPlayerList.html" />
+    <Content Include="app\html\views\userTeamList.html" />
     <Content Include="app\js\controllers\adminController.js" />
     <Content Include="app\js\controllers\gameListController.js" />
     <Content Include="app\js\controllers\manageUserController.js" />
@@ -285,6 +282,8 @@
     <Content Include="app\js\controllers\signupController.js" />
     <Content Include="app\js\controllers\taskListController.js" />
     <Content Include="app\js\controllers\teamListController.js" />
+    <Content Include="app\js\controllers\userPlayerListController.js" />
+    <Content Include="app\js\controllers\userTeamListController.js" />
     <Content Include="app\js\lib\Smart-Table.js" />
     <Content Include="app\js\services\breezeWrapper.js" />
     <Content Include="app\js\services\dataservice.js" />
@@ -775,11 +774,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201310042315437_initializeDatabase.resx">
-      <DependentUpon>201310042315437_initializeDatabase.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

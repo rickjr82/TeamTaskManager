@@ -31,7 +31,7 @@ teamTaskManager.controller('adminController', ['$scope', '$rootScope', '$locatio
             $location.path('/games/' + $scope.teamId);
         };
         $scope.manageUser = function () {
-            $location.path('/manageUser/');
+            $location.path('/manageUser/teams/');
         };
 
     }]);
