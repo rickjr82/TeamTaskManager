@@ -125,23 +125,23 @@ namespace TeamTaskManager.Controllers
             return _contextProvider.SaveChanges(saveBundle);
         }
         [HttpGet]
-        public object GetCurrentUserPlayers(int teamId)
+        public List<Player> GetCurrentUserPlayers(int teamId)
         {
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             var user = context.UserProfiles.Single(x => x.UserId == userId);
             var players = context.Players.Where(x=>x.UserId==userId && x.TeamId==teamId);
-            return players;
+            return players.ToList();
 
         }
         [HttpGet]
-        public object GetCurrentUserTeams()
+        public List<Team> GetCurrentUserTeams()
         {
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             var user = context.UserProfiles.Include("Teams").Single(x => x.UserId == userId);
             var teams = user.Teams;
-            return teams;
+            return teams.ToList();
         }
     }
 }
