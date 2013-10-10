@@ -17,12 +17,12 @@ namespace TeamTaskManager.Models
 
         public void Seed(MyTeamTrackerContext context)
         {
-            SeedMembership(context);
-            
-            SeedTeams(context);
+         //  var validUser =SeedMembership(context);
+
+           //SeedTeams(context, validUser);
            // SeedPlayers(context);
-            SeedTasks(context);
-            SeedGames(context);
+           // SeedTasks(context);
+           // SeedGames(context);
             
         }
 
@@ -52,23 +52,23 @@ namespace TeamTaskManager.Models
             context.SaveChanges();
         }
 
-        public void SeedTeams(MyTeamTrackerContext context)
+        public void SeedTeams(MyTeamTrackerContext context, UserProfile coach)
         {
             if (context.Teams.Any()) return;
 
             var firstUser = context.UserProfiles.First();
 
-            context.Teams.Add(new Team { Name = "The Boogaloogas", Coach=context.UserProfiles.First() });
+            context.Teams.Add(new Team { Name = "The Boogaloogas", Coach = coach });
 
-            context.Teams.Add(new Team { Name = "The Screaming Ninnies", Coach = context.UserProfiles.First() });
+            context.Teams.Add(new Team { Name = "The Screaming Ninnies", Coach = coach });
 
-            context.Teams.Add(new Team { Name = "The Arthropods", Coach = context.UserProfiles.First() });
+            context.Teams.Add(new Team { Name = "The Arthropods", Coach = coach });
 
             context.SaveChanges();
 
         }
 
-        public void SeedMembership(MyTeamTrackerContext context)
+        public UserProfile SeedMembership(MyTeamTrackerContext context)
         {
 
             //  WebSecurity.InitializeDatabaseConnection(context.Database.Connection.ConnectionString, "UserProfile", "UserId", "UserName", autoCreateTables: true);
@@ -98,6 +98,8 @@ namespace TeamTaskManager.Models
 
             if (!Roles.GetRolesForUser("rwicker").Contains("Administrator"))
                 Roles.AddUsersToRoles(new[] { "rwicker" }, new[] { "Administrator" });
+            var userId=WebSecurity.GetUserId("test");
+            return context.UserProfiles.Single(x => x.UserId == userId);
         }
 
         public void SeedGames(MyTeamTrackerContext context)
