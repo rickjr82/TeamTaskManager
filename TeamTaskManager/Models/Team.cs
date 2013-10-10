@@ -14,6 +14,8 @@ namespace TeamTaskManager.Models
         public string Name { get; set; }
         [Key]
         public int Id { get; set; }
+        public int CoachId { get; set; }
+        public virtual UserProfile Coach { get; set; }
         public virtual ICollection<Game> Games { get; set; }
         public virtual ICollection<Player> Players { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }

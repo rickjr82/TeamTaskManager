@@ -40,7 +40,11 @@ namespace TeamTaskManager.Controllers
         [HttpGet]
         public IQueryable<Player> Players()
         {
-            return _contextProvider.Context.Players;
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var user = context.UserProfiles.Single(x => x.UserId == userId);
+            var players = context.Players.Where(x => x.UserId == userId);
+            return players;
         }
         [HttpGet]
         public IQueryable<Task> Tasks()
@@ -125,23 +129,22 @@ namespace TeamTaskManager.Controllers
             return _contextProvider.SaveChanges(saveBundle);
         }
         [HttpGet]
-        public List<Player> GetCurrentUserPlayers(int teamId)
+        public IQueryable<Player> CurrentUserPlayers()
         {
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
-            var user = context.UserProfiles.Single(x => x.UserId == userId);
-            var players = context.Players.Where(x=>x.UserId==userId && x.TeamId==teamId);
-            return players.ToList();
+            var players = context.Players.Where(x=>x.UserId==userId);
+            return players;
 
         }
         [HttpGet]
-        public List<Team> GetCurrentUserTeams()
+        public ICollection<Team> CurrentUserTeams()
         {
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             var user = context.UserProfiles.Include("Teams").Single(x => x.UserId == userId);
             var teams = user.Teams;
-            return teams.ToList();
+            return teams;
         }
     }
 }

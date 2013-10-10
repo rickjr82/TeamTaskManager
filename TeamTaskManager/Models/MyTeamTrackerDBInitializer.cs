@@ -58,11 +58,11 @@ namespace TeamTaskManager.Models
 
             var firstUser = context.UserProfiles.First();
 
-            context.Teams.Add(new Team { Name = "The Boogaloogas" });
+            context.Teams.Add(new Team { Name = "The Boogaloogas", Coach=context.UserProfiles.First() });
 
-            context.Teams.Add(new Team { Name = "The Screaming Ninnies" });
+            context.Teams.Add(new Team { Name = "The Screaming Ninnies", Coach = context.UserProfiles.First() });
 
-            context.Teams.Add(new Team { Name = "The Arthropods" });
+            context.Teams.Add(new Team { Name = "The Arthropods", Coach = context.UserProfiles.First() });
 
             context.SaveChanges();
 
@@ -88,7 +88,11 @@ namespace TeamTaskManager.Models
                     "rwicker",
                     "test1234"
                     );
-
+            if (!WebSecurity.UserExists("test"))
+                WebSecurity.CreateUserAndAccount(
+                    "test",
+                    "testtest"
+                    );
             if (!Roles.GetRolesForUser("pdriscoll").Contains("Administrator"))
                 Roles.AddUsersToRoles(new[] { "pdriscoll" }, new[] { "Administrator" });
 
