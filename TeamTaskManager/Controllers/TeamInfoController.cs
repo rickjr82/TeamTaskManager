@@ -13,21 +13,25 @@ using System.Web.Security;
 
 namespace TeamTaskManager.Controllers
 {
+    [Authorize]
     public class MyTeamTrackerContextProvider : EFContextProvider<MyTeamTrackerContext>
     {
-        public MyTeamTrackerContextProvider() : base() { }
-        readonly EFContextProvider<MyTeamTrackerContext> _contextProvider = new EFContextProvider<MyTeamTrackerContext>();
+        private readonly int _currentUserId;
+
+        public MyTeamTrackerContextProvider(int userId) : base()
+        {
+            _currentUserId = userId;
+
+        }
         protected override bool BeforeSaveEntity(EntityInfo entityInfo)
         {
-             // return false if we don’t want the entity saved.
+            // return false if we don’t want the entity saved.
             // prohibit any additions of entities of type 'Role'
             if (entityInfo.Entity.GetType() == typeof(Team)
               && entityInfo.EntityState == EntityState.Added)
             {
-                var info = entityInfo.Entity;
-
-                
-                
+                ((Team) entityInfo.Entity).CoachId = _currentUserId;
+                return true;
             }
             else
             {
@@ -48,9 +52,14 @@ namespace TeamTaskManager.Controllers
         static DateTime _lastRefresh = DateTime.Now; // will first clear db at Now + "RefreshRate" 
         // static DateTime lastRefresh = DateTime.MinValue; // will clear when server starts
 
-        readonly EFContextProvider<MyTeamTrackerContext> _contextProvider =
-            new EFContextProvider<MyTeamTrackerContext>();
+        private readonly MyTeamTrackerContextProvider _contextProvider;
 
+        public TeamInfoController()
+        {
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            _contextProvider = new MyTeamTrackerContextProvider(userId);
+            
+        }
 
         // ~/breeze/todos/Metadata 
         [HttpGet]
@@ -65,26 +74,37 @@ namespace TeamTaskManager.Controllers
         public IQueryable<Team> Teams()
         {
             var userId = WebSecurity.GetUserId(User.Identity.Name);
-            return _contextProvider.Context.Teams.Where(x => x.UserId == userId || isAdmin); ;
+            bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
+            return _contextProvider.Context.Teams.Where(x => x.CoachId == userId || isAdmin || x.UserProfiles.Where(y=>y.UserId==userId).Count()>0);
+            
+
         }
         [HttpGet]
         public IQueryable<Player> Players()
         {
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
-            bool isAdmin=Roles.GetRolesForUser().Contains("Administrator")
-            var players = context.Players.Where(x => x.UserId == userId || isAdmin);
+            bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
+            var players = context.Players.Where(x => x.UserId == userId || isAdmin || x.Team.CoachId==userId);
             return players;
         }
         [HttpGet]
         public IQueryable<Task> Tasks()
         {
-            return _contextProvider.Context.Tasks;
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
+            var tasks = context.Tasks.Where(x => isAdmin || x.Team.CoachId==userId|| x.Team.Players.Where(y=>y.UserId==userId).Count()>0);
+            return tasks;
         }
         [HttpGet]
         public IQueryable<Game> Games()
         {
-            return _contextProvider.Context.Games;
+           var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
+            var games = context.Games.Where(x => isAdmin || x.Team.CoachId == userId || x.Team.Players.Where(y => y.UserId == userId).Count() > 0);
+            return games;
         }
         [HttpGet]
         public IQueryable<TaskAssignment> TaskAssignments()
@@ -97,7 +117,7 @@ namespace TeamTaskManager.Controllers
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             var player = context.Players.SingleOrDefault(x => x.UserId == userId);
-            bool isAdmin=Roles.GetRolesForUser().Contains("Administrator")
+            bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
             var users = context.UserProfiles.Where(x => x.UserId == userId || isAdmin);
             return users;
         }
@@ -154,7 +174,7 @@ namespace TeamTaskManager.Controllers
         [HttpPost]
         [ValidateHttpAntiForgeryToken]
         public SaveResult SaveChanges(JObject saveBundle)
-        {
+        {        
             return _contextProvider.SaveChanges(saveBundle);
         }
         [HttpGet]
