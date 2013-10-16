@@ -1,10 +1,6 @@
 namespace TeamTaskManager.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
-    using System.Collections;
     using TeamTaskManager.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<TeamTaskManager.Models.MyTeamTrackerContext>

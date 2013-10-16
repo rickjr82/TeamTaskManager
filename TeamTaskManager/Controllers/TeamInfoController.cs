@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using TeamTaskManager.Filters;
-using System.Net.Http;
 using System.Web.Http;
 using TeamTaskManager.Models;
 using Breeze.WebApi;
@@ -31,12 +29,8 @@ namespace TeamTaskManager.Controllers
               && entityInfo.EntityState == EntityState.Added)
             {
                 ((Team) entityInfo.Entity).CoachId = _currentUserId;
-                return true;
             }
-            else
-            {
-                return true;
-            }
+            return true;
         }
 
         protected override Dictionary<Type, List<EntityInfo>> BeforeSaveEntities(Dictionary<Type, List<EntityInfo>> saveMap)
@@ -75,7 +69,7 @@ namespace TeamTaskManager.Controllers
         {
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
-            return _contextProvider.Context.Teams.Where(x => x.CoachId == userId || isAdmin || x.UserProfiles.Where(y=>y.UserId==userId).Count()>0);
+            return _contextProvider.Context.Teams.Where(x => x.CoachId == userId || isAdmin || x.UserProfiles.Any(y => y.UserId==userId));
             
 
         }
@@ -94,7 +88,7 @@ namespace TeamTaskManager.Controllers
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
-            var tasks = context.Tasks.Where(x => isAdmin || x.Team.CoachId==userId|| x.Team.Players.Where(y=>y.UserId==userId).Count()>0);
+            var tasks = context.Tasks.Where(x => isAdmin || x.Team.CoachId==userId|| x.Team.Players.Any(y => y.UserId==userId));
             return tasks;
         }
         [HttpGet]
@@ -103,7 +97,7 @@ namespace TeamTaskManager.Controllers
            var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
-            var games = context.Games.Where(x => isAdmin || x.Team.CoachId == userId || x.Team.Players.Where(y => y.UserId == userId).Count() > 0);
+            var games = context.Games.Where(x => isAdmin || x.Team.CoachId == userId || x.Team.Players.Any(y => y.UserId == userId));
             return games;
         }
         [HttpGet]

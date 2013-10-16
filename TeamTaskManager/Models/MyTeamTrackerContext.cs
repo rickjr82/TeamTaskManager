@@ -1,5 +1,4 @@
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using TeamTaskManager.Models.Mapping;
 
 namespace TeamTaskManager.Models

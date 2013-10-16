@@ -7,7 +7,6 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using TeamTaskManager.Filters;
 using TeamTaskManager.Models;
 
 namespace TeamTaskManager.Controllers
