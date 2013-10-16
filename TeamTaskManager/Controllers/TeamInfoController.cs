@@ -134,7 +134,6 @@ namespace TeamTaskManager.Controllers
             context.SaveChanges();
         }
         [HttpDelete]
-        [ValidateHttpAntiForgeryToken]
         public void DeletePlayerFromCurrentUser(int playerId)
         {
             var context = _contextProvider.Context;
@@ -155,7 +154,6 @@ namespace TeamTaskManager.Controllers
             context.SaveChanges();
         }
         [HttpDelete]
-        [ValidateHttpAntiForgeryToken]
         public void DeleteTeamFromCurrentUser(int teamId)
         {
             var context = _contextProvider.Context;
@@ -166,7 +164,6 @@ namespace TeamTaskManager.Controllers
             context.SaveChanges();
         }
         [HttpPost]
-        [ValidateHttpAntiForgeryToken]
         public SaveResult SaveChanges(JObject saveBundle)
         {        
             return _contextProvider.SaveChanges(saveBundle);
