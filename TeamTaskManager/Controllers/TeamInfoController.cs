@@ -106,6 +106,11 @@ namespace TeamTaskManager.Controllers
             return _contextProvider.Context.TaskAssignments;
         }
         [HttpGet]
+        public int GetCurrentUser()
+        {
+            return WebSecurity.GetUserId(User.Identity.Name);
+        }
+        [HttpGet]
         public IQueryable<UserProfile> Users()
         {
             var context = _contextProvider.Context;
@@ -178,13 +183,18 @@ namespace TeamTaskManager.Controllers
 
         }
         [HttpGet]
-        public ICollection<Team> CurrentUserTeams()
+        public object GetCurrentUserDetails()
         {
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             var user = context.UserProfiles.Include("Teams").Single(x => x.UserId == userId);
-            var teams = user.Teams;
-            return teams;
+            var teams = user.Teams.ToList();
+            var players = context.Players.Where(x => x.UserId == userId).ToList();
+            return new
+            {
+                teams = teams,
+                players = players
+            };
         }
     }
 }

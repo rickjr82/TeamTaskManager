@@ -9,7 +9,7 @@
         dataservice.getEntities('Teams', $scope.teams, refreshView);
         teamDetail.getCurrentUserTeams().then(function (result) {
             $scope.userTeams = result;
-         });
+        });
         $scope.addTeam = function () {
             var newTeam = _.findWhere($scope.teams, { Id: $scope.selectedTeamId });
             teamDetail.addTeamToCurrentUser(newTeam.Id).then(function () {
@@ -23,9 +23,9 @@
             });
         };
         $scope.selectPlayers = function (teamId) {
-            $location.path('/manageUser/players/'+teamId);
+            $location.path('/manageUser/players/' + teamId);
         };
         $scope.close = function () {
-            $location.path('/admin');
+            $location.path('/home');
         };
     }]);

@@ -23,7 +23,7 @@ function ($scope, dataservice, logger, $location, $routeParams) {
         dataservice.deleteEntityFromCollection(game, $scope.games, refreshView)
     };
     $scope.close = function () {
-        $location.path('/admin');
+        $location.path('/home');
     };
     $scope.getGames();
 }]);

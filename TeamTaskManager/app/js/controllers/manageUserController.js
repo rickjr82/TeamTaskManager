@@ -28,6 +28,6 @@
             });
         };
         $scope.close = function () {
-            $location.path('/admin');
+            $location.path('/home');
         };
     }]);

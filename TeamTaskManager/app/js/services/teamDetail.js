@@ -54,8 +54,15 @@
                             deferred.reject();
                         });
                         return deferred.promise;
+                    },
+                    getCurrentUserDetails: function () {
+                        var deferred = $q.defer();
+                        $http.get('/api/teaminfo/GetCurrentUserDetails').success(function (data) {
+                            deferred.resolve(data);
+                        }).error(function (error) {
+                            deferred.reject();
+                        });
+                        return deferred.promise;
                     }
-
-
                 };
             }]);

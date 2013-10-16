@@ -13,7 +13,7 @@ teamTaskManager.value('breeze', window.breeze)
 // Configure routes
 teamTaskManager.config(['$routeProvider', function ($routeProvider) {
       $routeProvider.
-          when('/', { templateUrl: 'app/html/views/admin.html', controller: 'adminController' }).
+          when('/', { templateUrl: 'app/html/views/home.html', controller: 'homeController' }).
        when('/teams', { templateUrl: 'app/html/views/teamList.html', controller: 'teamListController' }).
     when('/manageUser/players/:teamId', { templateUrl: 'app/html/views/userPlayerList.html', controller: 'userPlayerListController' }).
           when('/manageUser/teams', { templateUrl: 'app/html/views/userTeamList.html', controller: 'userTeamListController' }).
@@ -22,7 +22,7 @@ teamTaskManager.config(['$routeProvider', function ($routeProvider) {
           when('/tasks/:teamId', { templateUrl: 'app/html/views/taskList.html', controller: 'taskListController' }).
           when('/teamDetail/:teamId', { templateUrl: 'app/html/views/teamDetail.html', controller: 'teamDetailController' }).
     when('/taskSignUp/:teamId', { templateUrl: 'app/html/views/signUp.html', controller: 'signupController' })
-        .when('/admin', { templateUrl: 'app/html/views/admin.html', controller: 'adminController' })
+        .when('/home', { templateUrl: 'app/html/views/home.html', controller: 'homeController' })
           .otherwise({ redirectTo: '/' });
   }]);
 

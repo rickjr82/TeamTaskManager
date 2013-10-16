@@ -266,22 +266,24 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\html\views\admin.html" />
+    <Content Include="app\html\views\home.html" />
     <Content Include="app\html\views\gameList.html" />
     <Content Include="app\html\views\manageUser.html" />
     <Content Include="app\html\views\playerList.html" />
     <Content Include="app\html\views\Signup.html" />
     <Content Include="app\html\views\taskList.html" />
     <Content Include="app\html\views\teamList.html" />
+    <Content Include="app\html\views\userDetail.html" />
     <Content Include="app\html\views\userPlayerList.html" />
     <Content Include="app\html\views\userTeamList.html" />
-    <Content Include="app\js\controllers\adminController.js" />
+    <Content Include="app\js\controllers\homeController.js" />
     <Content Include="app\js\controllers\gameListController.js" />
     <Content Include="app\js\controllers\manageUserController.js" />
     <Content Include="app\js\controllers\playerListController.js" />
     <Content Include="app\js\controllers\signupController.js" />
     <Content Include="app\js\controllers\taskListController.js" />
     <Content Include="app\js\controllers\teamListController.js" />
+    <Content Include="app\js\controllers\userDetailController.js" />
     <Content Include="app\js\controllers\userPlayerListController.js" />
     <Content Include="app\js\controllers\userTeamListController.js" />
     <Content Include="app\js\lib\Smart-Table.js" />

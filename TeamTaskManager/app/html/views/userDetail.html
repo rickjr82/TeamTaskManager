@@ -1,0 +1,38 @@
+﻿<div ng-hide="userTeams.length == 0" ng-controller="userDetailController">
+    <table>
+        <thead>
+            <tr>
+                <th>Teams:</th>
+            </tr>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="team in userTeams">
+                <td>
+                {{team.Name}}
+                <td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-hide="userPlayers.length == 0">
+    <table>
+        <thead>
+            <tr>
+                <th>Players:</th>
+            </tr>
+            <tr>
+                <th>First</th>
+                <th>Last</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="play in userPlayers">
+                <td>{{play.FirstName}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
