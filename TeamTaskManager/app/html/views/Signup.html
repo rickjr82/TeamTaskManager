@@ -9,7 +9,7 @@
     </thead>
     <tbody>
         <tr ng-repeat="game in games">
-            <td>{{game.Time}}</td>
+            <td>{{game.Time | date:'medium'}}</td>
             <td>{{game.Opponent}}</td>
             <td>{{game.Location}}</td>
             <td ng-repeat="task in tasks"><input type="button" value="{{getAssignedPerson(game.Id, task.Id)}}" ng-click="setTaskAssignment(game.Id, task.Id)" ng-class="{btn: true, 'btn-success': isAssigned(game.Id, task.Id)}" ng-disabled="taskIsNotAbleToBeAssigned(game.Id, task.Id)"></td>

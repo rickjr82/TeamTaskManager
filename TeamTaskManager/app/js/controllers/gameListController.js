@@ -4,6 +4,7 @@ function ($scope, dataservice, logger, $location, $routeParams) {
     $scope.newDate = "";
     $scope.newOpponent = "";
     $scope.newLocation = "";
+    $scope.dateTimePattern = /^\w\w$/;
     $scope.teamId = $routeParams.teamId;
     function refreshView() {
         $scope.$apply();
