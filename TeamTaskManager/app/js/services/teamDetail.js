@@ -12,7 +12,7 @@
                     },
                     getCurrentUserTeams: function () {
                         var deferred = $q.defer();
-                        $http.get('/api/teaminfo/CurrentUserTeams').success(function (data) {
+                        $http.get('/api/teaminfo/Teams').success(function (data) {
                             deferred.resolve(data);
                         }).error(function (error) {
                             deferred.reject();
@@ -58,6 +58,15 @@
                     getCurrentUserDetails: function () {
                         var deferred = $q.defer();
                         $http.get('/api/teaminfo/GetCurrentUserDetails').success(function (data) {
+                            deferred.resolve(data);
+                        }).error(function (error) {
+                            deferred.reject();
+                        });
+                        return deferred.promise;
+                    },
+                    assignTaskToCurrentPlayer: function (gameId, taskId) {
+                        var deferred = $q.defer();
+                        $http.get('/api/teaminfo/AssignTaskToCurrentPlayer', { params: { gameId: gameId, taskId: taskId } }).success(function (data) {
                             deferred.resolve(data);
                         }).error(function (error) {
                             deferred.reject();
