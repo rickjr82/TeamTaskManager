@@ -63,7 +63,7 @@ namespace TeamTaskManager.Controllers
         public int TaskId;
         public int GameId;
         public int PlayerId;
-        public int DisplayName;
+        public string DisplayName;
     }
 
     [Authorize]
@@ -83,7 +83,7 @@ namespace TeamTaskManager.Controllers
 
      
         [HttpGet]
-        public List<TaskAssignment> GetTaskAssignments(int teamId)
+        public List<VmTaskAssignment> GetTaskAssignments(int teamId)
         {
             var context = _contextProvider.Context;
             var team = context.Teams.Include(x=>x.Tasks).Include(x=>x.Games).Single(x => x.Id == teamId);
@@ -102,7 +102,7 @@ namespace TeamTaskManager.Controllers
                     taskAssignments.Add(taskAssignment);                    
                 }
             }
-            return taskAssignments.ToList().Select(x => new x.VmTaskAssignment(x));
+            return taskAssignments.ToList().Select(x => new VmTaskAssignment(x)).ToList();
         }
         [HttpGet]
         public int GetCurrentUser()
