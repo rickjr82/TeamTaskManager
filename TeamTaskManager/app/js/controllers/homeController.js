@@ -4,7 +4,6 @@ teamTaskManager.controller('homeController', ['$scope', '$rootScope', '$location
         function refreshView() {
             $scope.$apply();
         }
-        $scope.text = 'Hello World!';
         $scope.teams = [];
         $scope.teamId = 0;
         //teamDetail.getCurrentPlayerId().then(function (result) {

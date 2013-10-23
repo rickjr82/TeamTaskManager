@@ -13,7 +13,7 @@ describe('homeController', function () {
         $controller('homeController', { $scope: scope });
     }));
     // tests start here
-    it('should have variable text = "Hello World!"', function(){
-        expect(scope.text).toBe('Hello World!');
+    it('should have no teams', function(){
+        expect(scope.teams.length).toBe(0);
         });
 });

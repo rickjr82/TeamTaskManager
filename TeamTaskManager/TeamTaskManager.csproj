@@ -276,6 +276,7 @@
     <Content Include="app\html\views\userDetail.html" />
     <Content Include="app\html\views\userPlayerList.html" />
     <Content Include="app\html\views\userTeamList.html" />
+    <Content Include="app\js\controllers\exampleController.js" />
     <Content Include="app\js\controllers\homeController.js" />
     <Content Include="app\js\controllers\gameListController.js" />
     <Content Include="app\js\controllers\manageUserController.js" />
@@ -291,6 +292,8 @@
     <Content Include="app\js\services\dataservice.js" />
     <Content Include="app\js\services\logger.js" />
     <Content Include="app\js\services\teamDetail.js" />
+    <Content Include="app\tests\homeController.tests.js" />
+    <Content Include="app\tests\karma.config.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\bootstrap-theme.min.css" />

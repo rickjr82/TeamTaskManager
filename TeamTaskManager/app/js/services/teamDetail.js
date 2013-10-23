@@ -64,9 +64,18 @@
                         });
                         return deferred.promise;
                     },
-                    assignTaskToCurrentPlayer: function (gameId, taskId) {
+                    getTaskAssignments: function (teamId) {
                         var deferred = $q.defer();
-                        $http.get('/api/teaminfo/AssignTaskToCurrentPlayer', { params: { gameId: gameId, taskId: taskId } }).success(function (data) {
+                        $http.get('/api/teaminfo/GetTaskAssignments', { params: { teamId: teamId } }).success(function (data) {
+                            deferred.resolve(data);
+                        }).error(function (error) {
+                            deferred.reject();
+                        });
+                        return deferred.promise;
+                    },                    
+                    toggleTaskForCurrentPlayer: function (gameId, taskId) {
+                        var deferred = $q.defer();
+                        $http.get('/api/teaminfo/ToggleTaskForCurrentPlayer', { params: { gameId: gameId, taskId: taskId } }).success(function (data) {
                             deferred.resolve(data);
                         }).error(function (error) {
                             deferred.reject();

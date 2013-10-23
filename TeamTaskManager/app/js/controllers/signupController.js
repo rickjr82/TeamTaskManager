@@ -1,46 +1,28 @@
 ﻿teamTaskManager.controller('signupController', ['$scope', '$rootScope', '$routeParams', 'dataservice', '$location', 'teamDetail',
     function ($scope, $rootScope, $routeParams, dataservice, $location, teamDetail) {
         $scope.currentUser = { player: 'Nolan Wicker' };
-        $scope.players = [];
         $scope.tasks = [];
         $scope.games = [];
-        $scope.taskAssignmentArray = [];
         $scope.taskAssignments = [];
         $scope.currentPlayerId = $rootScope.currentPlayerId;
         function refreshView() {
             $scope.$apply();
         }
         $scope.findTaskAssignment = function (gameId, taskId) {
-           return  _.findWhere($scope.taskAssignmentArray, { GameId: gameId, TaskId: taskId });
+            return _.findWhere($scope.taskAssignments, { GameId: gameId, TaskId: taskId });
         };
         $scope.isAssigned = function (gameId, taskId) {
-            if ($scope.taskAssignmentArray.length == 0) {
+            if ($scope.taskAssignments.length == 0) {
                 return false;
             }
             var taskAssignment = $scope.findTaskAssignment(gameId, taskId);
-            return taskAssignment.DisplayName!=='None';
+            return taskAssignment.PlayerId!==0;
         };
-        $scope.setTaskAssignments = function () {
-            if ($scope.games.length > 0 && $scope.tasks.length > 0) {
-                _.each($scope.games, function (game) {
-                    _.each($scope.tasks, function (task) {
-                        $scope.taskAssignmentArray.push({ GameId: game.Id, PlayerId: null, TaskId: task.Id, DisplayName:'None' });
-                    });
-                });
-                if ($scope.taskAssignments.length > 0) {
-                    _.each($scope.taskAssignments, function (taskAssignmentFromDb) {
-                        var taskAssignment = $scope.findTaskAssignment(taskAssignmentFromDb.GameId, taskAssignmentFromDb.TaskId);
-                        taskAssignment.PlayerId = taskAssignmentFromDb.PlayerId;
-                        taskAssignment.DisplayName = taskAssignmentFromDb.Player.FirstName + ' ' + taskAssignmentFromDb.Player.LastName;
-                    });
-                    refreshView();
-                }
-            }
-        };
+
         $scope.teamId = $routeParams.teamId;
         $scope.getAssignedPerson = function (gameId, taskId) {
             if ($scope.taskAssignmentArray.length == 0) {
-                return 'None';
+                return 'Loading';
             }
             var taskAssignment=$scope.findTaskAssignment(gameId, taskId);
             return taskAssignment.DisplayName;
@@ -53,18 +35,31 @@
             var taskAssignment = $scope.findTaskAssignment(gameId, taskId);
             return taskAssignment.PlayerId !== $scope.currentPlayerId && taskAssignment.PlayerId !==null;
         };
-
-        dataservice.getEntities('Players', $scope.players, refreshView, [{ typeQ: 'where', first: 'TeamId', second: 'eq', third: $scope.teamId }]);
-        dataservice.getEntities('Tasks', $scope.tasks, refreshView, [{ typeQ: 'where', first: 'TeamId', second: 'eq', third: $scope.teamId }], true, $scope.setTaskAssignments);
-        dataservice.getEntities('Games', $scope.games, refreshView, [{ typeQ: 'where', first: 'TeamId', second: 'eq', third: $scope.teamId }], true, $scope.setTaskAssignments);
-        dataservice.getEntities('TaskAssignments', $scope.taskAssignments, refreshView, [{ typeQ: 'where', first: 'Game.TeamId', second: 'eq', third: $scope.teamId }, { typeQ: 'expand', first: 'Player' }], true, $scope.setTaskAssignments);
+        getDisplayName = function (taskAssignment) {
+            if (taskAssignment.PlayerId == 0) {
+                return 'None';
+            } else {
+                return taskAssignment.Player.FirstName + ' ' + taskAssignment.Player.LastName;
+            }
+        };        
+        dataservice.getEntities('Tasks', $scope.tasks, refreshView, [{ typeQ: 'where', first: 'TeamId', second: 'eq', third: $scope.teamId }], true);
+        dataservice.getEntities('Games', $scope.games, refreshView, [{ typeQ: 'where', first: 'TeamId', second: 'eq', third: $scope.teamId }], true);
+        teamDetail.getTaskAssignments($scope.teamId).then(function (results) {
+            _.each(results, function (taskAssignment) {
+                taskAssignment.DisplayName = getDisplayName(taskAssignment);
+            });
+            $scope.taskAssignments = results;
+            
+        });
+        
         $scope.setTaskAssignment = function (gameId, taskId) {
             var localTask = $scope.findTaskAssignment(gameId, taskId);
-            teamDetail.assignTaskToCurrentPlayer(gameId, taskId).then(function (taskAssignmentFromDb) {
+            teamDetail.toggleTaskForCurrentPlayer(gameId, taskId).then(function (taskAssignmentFromDb) {
+                taskAssignmentFromDb.DisplayName = getDisplayName(taskAssignment);
                 localTask = taskAssignmentFromDb;
-                localTask.DisplayName = taskAssignmentFromDb.Player.FirstName + ' ' + taskAssignmentFromDb.Player.LastName;
+                $scope.$apply();
             });
-            $scope.$apply();
+            
         };
         
         $scope.close = function () {

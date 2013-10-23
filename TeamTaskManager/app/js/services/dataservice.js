@@ -6,7 +6,7 @@
     var initialized;
 
     configureBreeze();
-    var manager = new breeze.EntityManager("api/teaminfo");
+    var manager = new breeze.EntityManager("api/teaminfobreeze");
     manager.enableSaveQueuing(true);
     var dataservice = {
         getEntities: getEntities,
