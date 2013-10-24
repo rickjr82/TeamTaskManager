@@ -34,10 +34,10 @@ namespace TeamTaskManager
             public SimpleMembershipInitializer()
             {
                 using (var context = new MyTeamTrackerContext())
-                    context.UserProfiles.Find(1);
+                  //  context.UserProfiles.Find(1);
 
                 if (!WebSecurity.Initialized)
-                    WebSecurity.InitializeDatabaseConnection("context", "UserProfile", "UserId", "UserName", autoCreateTables: false);
+                    WebSecurity.InitializeDatabaseConnection("context", "UserProfile", "UserId", "UserName", autoCreateTables: true);
             }
         }
     }
