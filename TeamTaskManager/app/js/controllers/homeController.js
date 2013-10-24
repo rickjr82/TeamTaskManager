@@ -6,9 +6,6 @@ teamTaskManager.controller('homeController', ['$scope', '$rootScope', '$location
         }
         $scope.teams = [];
         $scope.teamId = 0;
-        //teamDetail.getCurrentPlayerId().then(function (result) {
-          //  $rootScope.currentPlayerId = result;
-     //   });
         if ($rootScope.teamId >= 0) { $scope.teamId = $rootScope.teamId; }
         else { $rootScope.teamId = -1;}
         $scope.$watch('teamId', function () { $rootScope.teamId = $scope.teamId });
