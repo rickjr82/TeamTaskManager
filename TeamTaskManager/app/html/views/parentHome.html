@@ -1,4 +1,4 @@
-﻿<div ng-controller="userDetailController">
+﻿<input type="button" value="Manage User" ng-click="manageUser()" />
     <div ng-hide="userTeams.length == 0" >
         <table>
             <thead>
@@ -29,4 +29,8 @@
             </tbody>
         </table>
     </div>
-</div>
+    <select ng-model="teamId" ng-options="t.id as t.name for t in userTeams">
+        <option value="">-- Choose Team --</option>
+    </select>
+<input type="button" value="Signup For Tasks" ng-click="signupForTasks()" ng-hide="userPlayers.length == 0 || userTeams.length == 0" ng-disabled="!teamId>0" />
+<input type="button" value="Return" ng-click="close()">

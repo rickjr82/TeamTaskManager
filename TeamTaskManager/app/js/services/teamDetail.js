@@ -1,18 +1,18 @@
 ﻿teamTaskManager.factory('teamDetail', ['$http', '$q',
             function ($http, $q) {
                 return {
-                    getCurrentUserPlayers: function (teamId) {
+                    getCurrentUserPlayers: function (teamId, inCoachMode) {
                         var deferred = $q.defer();
-                        $http.get('/api/teaminfo/CurrentUserPlayers', { params: { teamId: teamId } }).success(function (data) {
+                        $http.get('/api/teaminfo/CurrentUserPlayers', { params: { teamId: teamId, inCoachMode: inCoachMode } }).success(function (data) {
                             deferred.resolve(data);
                         }).error(function (error) {
                             deferred.reject();
                         });
                         return deferred.promise;
                     },
-                    getCurrentUserTeams: function () {
+                    getCurrentUserTeams: function (inCoachMode) {
                         var deferred = $q.defer();
-                        $http.get('/api/teaminfo/CurrentUserTeams').success(function (data) {
+                        $http.get('/api/teaminfo/CurrentUserTeams', { params: { inCoachMode: inCoachMode } }).success(function (data) {
                             deferred.resolve(data);
                         }).error(function (error) {
                             deferred.reject();
@@ -73,9 +73,9 @@
                         });
                         return deferred.promise;
                     },                    
-                    toggleTaskForCurrentPlayer: function (gameId, taskId) {
+                    toggleTaskForCurrentPlayer: function (gameId, taskId, playerId) {
                         var deferred = $q.defer();
-                        $http.get('/api/teaminfo/ToggleTaskForCurrentPlayer', { params: { gameId: gameId, taskId: taskId } }).success(function (data) {
+                        $http.get('/api/teaminfo/ToggleTaskForCurrentPlayer', { params: { gameId: gameId, taskId: taskId, playerId:playerId } }).success(function (data) {
                             deferred.resolve(data);
                         }).error(function (error) {
                             deferred.reject();

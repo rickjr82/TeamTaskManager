@@ -22,7 +22,7 @@ function ($scope, dataservice, logger, $location, $routeParams) {
         dataservice.deleteEntityFromCollection(task, $scope.tasks, refreshView)
     };
     $scope.close = function () {
-        $location.path('/home');
+        $location.path('/coachHome');
     };
     $scope.getTasks();
 }]);

@@ -21,8 +21,10 @@ teamTaskManager.config(['$routeProvider', function ($routeProvider) {
    when('/games/:teamId', { templateUrl: 'app/html/views/gameList.html', controller: 'gameListController' }).
           when('/tasks/:teamId', { templateUrl: 'app/html/views/taskList.html', controller: 'taskListController' }).
           when('/teamDetail/:teamId', { templateUrl: 'app/html/views/teamDetail.html', controller: 'teamDetailController' }).
-    when('/taskSignUp/:teamId', { templateUrl: 'app/html/views/signUp.html', controller: 'signupController' })
+    when('/taskSignUp/:teamId/:inCoachMode', { templateUrl: 'app/html/views/signUp.html', controller: 'signupController' })
         .when('/home', { templateUrl: 'app/html/views/home.html', controller: 'homeController' })
+    .when('/coachHome', { templateUrl: 'app/html/views/coachHome.html', controller: 'coachHomeController' })
+    .when('/parentHome', { templateUrl: 'app/html/views/parentHome.html', controller: 'parentHomeController' })
           .otherwise({ redirectTo: '/' });
   }]);
 

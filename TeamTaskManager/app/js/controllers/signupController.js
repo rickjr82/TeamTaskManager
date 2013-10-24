@@ -1,9 +1,13 @@
-﻿teamTaskManager.controller('signupController', ['$scope', '$rootScope', '$routeParams', 'dataservice', '$location', 'teamDetail',
-    function ($scope, $rootScope, $routeParams, dataservice, $location, teamDetail) {        
+﻿teamTaskManager.controller('signupController', ['$scope', '$routeParams', 'dataservice', '$location', 'teamDetail',
+    function ($scope, $routeParams, dataservice, $location, teamDetail) {        
         $scope.tasks = [];
         $scope.games = [];
         $scope.taskAssignments = [];
-        $scope.currentPlayerId = $rootScope.currentPlayerId;
+        $scope.userPlayersOnTeam = [];
+        $scope.teamId = $routeParams.teamId;
+        $scope.selectedPlayerId = -1;
+        $scope.inCoachMode = ($routeParams.inCoachMode=="true");
+        
         function refreshView() {
             $scope.$apply();
         }
@@ -18,7 +22,6 @@
             return taskAssignment.playerId!==0;
         };
 
-        $scope.teamId = $routeParams.teamId;
         $scope.getAssignedPerson = function (gameId, taskId) {
             if ($scope.taskAssignments.length == 0) {
                 return 'Loading';
@@ -40,7 +43,15 @@
             } else {
                 return taskAssignment.displayName;
             }
-        };        
+        };
+        teamDetail.getCurrentUserPlayers($scope.teamId, $scope.inCoachMode).then(function (result) {
+            $scope.userPlayersOnTeam = result;
+            if ($scope.inCoachMode) {
+                $scope.selectedPlayerId = -1;
+            } else {
+                $scope.selectedPlayerId = $scope.userPlayersOnTeam[0].id;
+            }
+        });
         dataservice.getEntities('Tasks', $scope.tasks, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }], true);
         dataservice.getEntities('Games', $scope.games, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }], true);
         teamDetail.getTaskAssignments($scope.teamId).then(function (results) {
@@ -53,7 +64,7 @@
         
         $scope.setTaskAssignment = function (gameId, taskId) {
             var localTask = $scope.findTaskAssignment(gameId, taskId);
-            teamDetail.toggleTaskForCurrentPlayer(gameId, taskId).then(function (taskAssignmentFromDb) {
+            teamDetail.toggleTaskForCurrentPlayer(gameId, taskId, $scope.selectedPlayerId).then(function (taskAssignmentFromDb) {
                 taskAssignmentFromDb.displayName = getDisplayName(taskAssignmentFromDb);
                 localTask.displayName = taskAssignmentFromDb.displayName;
                 localTask.playerId = taskAssignmentFromDb.playerId;
@@ -64,6 +75,10 @@
         };
         
         $scope.close = function () {
-            $location.path('/home');
+            if ($scope.inCoachMode) {
+                $location.path('/coachHome');
+            } else {
+                $location.path('/parentHome');
+            }
         };
     }]);

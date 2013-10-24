@@ -1,0 +1,24 @@
+﻿teamTaskManager.controller('parentHomeController', ['$scope', '$rootScope', '$location', 'logger', 'teamDetail',
+    function ($scope, $rootScope, $location, logger, teamDetail) {
+        function refreshView() {
+            $scope.$apply();
+        }
+        $scope.userTeams = [];
+        $scope.userPlayers = [];
+        $scope.teamId = 0;
+        if ($rootScope.parentTeamId >= 0) { $scope.teamId = $rootScope.parentTeamId; }       
+        $scope.$watch('teamId', function () { $rootScope.teamId = $scope.teamId });
+            teamDetail.getCurrentUserDetails().then(function (result) {
+                $scope.userTeams = result.teams;
+                $scope.userPlayers = result.players;
+            });
+            $scope.manageUser = function () {
+                $location.path('/manageUser/teams/');
+            };
+        $scope.signupForTasks = function() {
+            $location.path('/taskSignUp/' + $rootScope.teamId+'/'+false);
+        };
+        $scope.close = function () {
+            $location.path('/home');
+        };
+    }]);

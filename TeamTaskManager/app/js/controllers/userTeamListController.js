@@ -5,9 +5,9 @@
         }
         $scope.teams = [];
         $scope.userTeams = [];
-        $scope.selectedTeamId = 0;
+        $scope.selectedTeamId = 0;       
         dataservice.getEntities('Teams', $scope.teams, refreshView);
-        teamDetail.getCurrentUserTeams().then(function (result) {
+        teamDetail.getCurrentUserTeams(false).then(function (result) {
             $scope.userTeams = result;
         });
         $scope.addTeam = function () {
@@ -26,6 +26,6 @@
             $location.path('/manageUser/players/' + teamId);
         };
         $scope.close = function () {
-            $location.path('/home');
+            $location.path('/parentHome');
         };
     }]);

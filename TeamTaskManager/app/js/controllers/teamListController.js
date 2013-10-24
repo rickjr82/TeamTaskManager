@@ -21,7 +21,7 @@ function ($scope, dataservice, logger, $location) {
         dataservice.deleteEntityFromCollection(team, $scope.teams, refreshView)
     };
     $scope.close = function () {
-        $location.path('/home');
+        $location.path('/coachHome');
     };
     $scope.getTeams();
 }]);
