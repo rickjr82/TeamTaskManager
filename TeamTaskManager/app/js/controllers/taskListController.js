@@ -9,10 +9,10 @@ function ($scope, dataservice, logger, $location, $routeParams) {
     }
     $scope.getTasks = function () {
         $scope.tasks = [];
-        dataservice.getEntities('Tasks', $scope.tasks, refreshView, [{ typeQ: 'where', first: 'TeamId', second: 'eq', third: $scope.teamId }]);
+        dataservice.getEntities('Tasks', $scope.tasks, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }]);
     };
     $scope.addTask = function (newTaskName, newTaskDesc) {
-        dataservice.addEntityToCollection('Task', [{ name: 'Name', value: newTaskName }, { name: 'Description', value: newTaskDesc }, {name:'TeamId', value:$scope.teamId}], $scope.tasks, refreshView);
+        dataservice.addEntityToCollection('Task', [{ name: 'name', value: newTaskName }, { name: 'description', value: newTaskDesc }, {name:'teamId', value:$scope.teamId}], $scope.tasks, refreshView);
     };
     
     $scope.endEdit = function (task) {

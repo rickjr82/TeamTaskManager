@@ -14,13 +14,13 @@
         <tbody>
             <tr ng-repeat="player in players">
                 <td>
-                    <input ng-model="player.FirstName" type="text" placeholder="First" />
+                    <input ng-model="player.firstName" type="text" placeholder="First" />
                 </td>
                 <td>
-                    <input ng-model="player.LastName" type="text" placeholder="Last" />
+                    <input ng-model="player.lastName" type="text" placeholder="Last" />
                 </td>
                 <td>
-                    <input type="button" value="Save" ng-click="endEdit(player)" ng-disabled="FirstName.length == 0 || LastName.length ==0" />
+                    <input type="button" value="Save" ng-click="endEdit(player)" ng-disabled="firstName.length == 0 || lastName.length ==0" />
                 </td>
                 <td>
                     <input type="button" value="Delete" ng-click="deletePlayer(player)" />

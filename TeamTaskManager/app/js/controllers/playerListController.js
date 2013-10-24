@@ -9,10 +9,10 @@ function ($scope, dataservice, logger, $location, $routeParams) {
     }
     $scope.getPlayers = function () {
         $scope.players = [];
-        dataservice.getEntities('Players', $scope.players, refreshView, [{ typeQ: 'where', first: 'TeamId', second: 'eq', third: $scope.teamId }]);
+        dataservice.getEntities('Players', $scope.players, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }]);
     };
     $scope.addPlayer = function (newFirstName, newLastName) {
-        dataservice.addEntityToCollection('Player', [{ name: 'FirstName', value: newFirstName }, { name: 'LastName', value: newLastName }, { name: 'TeamId', value: $scope.teamId }], $scope.players, refreshView);
+        dataservice.addEntityToCollection('Player', [{ name: 'firstName', value: newFirstName }, { name: 'lastName', value: newLastName }, { name: 'teamId', value: $scope.teamId }], $scope.players, refreshView);
     };
 
     $scope.endEdit = function (player) {

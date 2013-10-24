@@ -10,9 +10,9 @@ namespace TeamTaskManager.Models
     {
         public UserProfile() 
         {
-            Players = new Collection<Player>();
-            Teams = new Collection<Team>();
-            TeamsCoached = new Collection<Team>();
+            Players = new HashSet<Player>();
+            Teams = new HashSet<Team>();
+            TeamsCoached = new HashSet<Team>();
         }
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]

@@ -16,16 +16,16 @@
         <tbody>
             <tr ng-repeat="game in games">
                 <td>
-                    <input ng-model="game.Time" type="text" placeholder="Date" />
+                    <input ng-model="game.time" type="text" placeholder="Date" />
                 </td>
                 <td>
-                    <input ng-model="game.Opponent" type="text" placeholder="Opponent" />
+                    <input ng-model="game.opponent" type="text" placeholder="Opponent" />
                 </td>
                 <td>
-                    <input ng-model="game.Location" type="text" placeholder="Location" />
+                    <input ng-model="game.location" type="text" placeholder="Location" />
                 </td>
                 <td>
-                    <input type="button" value="Save" ng-click="endEdit(game)" ng-disabled="game.Date == 0 || game.Opponent == 0 ||game.Location == 0 " />
+                    <input type="button" value="Save" ng-click="endEdit(game)" ng-disabled="game.date == 0 || game.opponent == 0 ||game.location == 0 " />
                 </td>
                 <td>
                     <input type="button" value="Delete" ng-click="deleteGame(game)" />

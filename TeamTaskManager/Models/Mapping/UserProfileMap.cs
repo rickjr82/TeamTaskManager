@@ -8,6 +8,14 @@ namespace TeamTaskManager.Models.Mapping
         {
             // Primary Key
             this.HasKey(t => t.UserId);
+            this.HasMany(x => x.Teams)
+                .WithMany(x => x.Parents)
+                .Map(x =>
+                {
+                    x.MapLeftKey("TeamId");
+                    x.MapRightKey("UserId");
+                    x.ToTable("ParentTeams");
+                });           
         }
     }
 }

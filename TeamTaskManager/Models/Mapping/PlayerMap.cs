@@ -20,10 +20,7 @@ namespace TeamTaskManager.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("Player");
-            this.Property(t => t.FirstName).HasColumnName("FirstName");
-            this.Property(t => t.LastName).HasColumnName("LastName");
-            this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.TeamId).HasColumnName("TeamId");
+          
 
             // Relationships
             // Relationships

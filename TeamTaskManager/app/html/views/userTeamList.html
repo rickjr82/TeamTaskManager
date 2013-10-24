@@ -1,4 +1,4 @@
-﻿<select ng-model="selectedTeamId" ng-options="t.Id as t.Name for t in teams">
+﻿<select ng-model="selectedTeamId" ng-options="t.id as t.name for t in teams">
     <option value="">-- Choose Team --</option>
 </select>
 <input type="button" value="Add Team" ng-click="addTeam()">
@@ -12,10 +12,10 @@
         </thead>
         <tbody>
             <tr ng-repeat="team in userTeams">
-                <td>{{team.Name}}
+                <td>{{team.name}}
                 </td>
                 <td>
-                    <input type="button" value="Select Player(s)" ng-click="selectPlayers(team.Id)">
+                    <input type="button" value="Select Player(s)" ng-click="selectPlayers(team.id)">
                 </td>
                 <td>
                     <input type="button" value="Delete" ng-click="removeTeam(team)" />

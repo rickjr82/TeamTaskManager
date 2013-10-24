@@ -11,13 +11,13 @@
             $scope.userTeams = result;
         });
         $scope.addTeam = function () {
-            var newTeam = _.findWhere($scope.teams, { Id: $scope.selectedTeamId });
-            teamDetail.addTeamToCurrentUser(newTeam.Id).then(function () {
+            var newTeam = _.findWhere($scope.teams, { id: $scope.selectedTeamId });
+            teamDetail.addTeamToCurrentUser(newTeam.id).then(function () {
                 $scope.userTeams.push(newTeam);
             });
         };
         $scope.removeTeam = function (team) {
-            teamDetail.removeTeamFromCurrentUser(team.Id).then(function () {
+            teamDetail.removeTeamFromCurrentUser(team.id).then(function () {
                 var index = $scope.userTeams.indexOf(team);
                 $scope.userTeams.splice(index, 1);
             });

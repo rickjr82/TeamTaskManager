@@ -12,7 +12,7 @@
                     },
                     getCurrentUserTeams: function () {
                         var deferred = $q.defer();
-                        $http.get('/api/teaminfo/Teams').success(function (data) {
+                        $http.get('/api/teaminfo/CurrentUserTeams').success(function (data) {
                             deferred.resolve(data);
                         }).error(function (error) {
                             deferred.reject();

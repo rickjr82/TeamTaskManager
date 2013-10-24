@@ -56,7 +56,7 @@ namespace TeamTaskManager.Controllers
             }
             else
             {
-                DisplayName = ta.Player.FirstName + "" + ta.Player.LastName;
+                DisplayName = ta.Player.FirstName + " " + ta.Player.LastName;
             }
         }
 
@@ -65,7 +65,30 @@ namespace TeamTaskManager.Controllers
         public int PlayerId;
         public string DisplayName;
     }
+    public class VmTeam
+    {
+        public VmTeam(Team team)
+        {
+            Id = team.Id;
+            Name = team.Name;
+        }
 
+        public int Id;
+        public string Name;      
+    }
+    public class VmPlayer
+    {
+        public VmPlayer(Player player)
+        {
+            Id = player.Id;
+            FirstName = player.FirstName;
+            LastName = player.LastName;
+        }
+
+        public int Id;
+        public string FirstName;
+        public string LastName;
+    }
     [Authorize]
     public class TeamInfoController : ApiController
     {
@@ -81,7 +104,24 @@ namespace TeamTaskManager.Controllers
 
         }
 
-     
+        [HttpGet]
+        public List<Player> CurrentUserPlayers()
+        {
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var players = context.Players.Where(x => x.UserId == userId);
+            return players.ToList();
+
+        }
+        [HttpGet]
+        public List<Team> CurrentUserTeams()
+        {
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var teams=_contextProvider.Context.Teams.Where(x=> x.Parents.Any(y => y.UserId == userId));
+            return teams.ToList();
+
+        }
         [HttpGet]
         public List<VmTaskAssignment> GetTaskAssignments(int teamId)
         {
@@ -191,9 +231,8 @@ namespace TeamTaskManager.Controllers
         {
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
-            var user = context.UserProfiles.Include(x=>x.Teams).Single(x => x.UserId == userId);
-            var teams = user.Teams.ToList();
-            var players = context.Players.Where(x => x.UserId == userId).ToList();
+            var teams = context.Teams.Where(x => x.Parents.Any(y => y.UserId == userId)).ToList().Select(x => new VmTeam(x)).ToList();
+            var players = context.Players.Where(x => x.UserId == userId).ToList().Select(x=> new VmPlayer(x)).ToList();
             return new
             {
                 teams = teams,
@@ -228,20 +267,14 @@ namespace TeamTaskManager.Controllers
         // ~/breeze/todos/Todos?$filter=IsArchived eq false&$orderby=CreatedAt 
         [HttpGet]
         public IQueryable<Team> Teams()
-        {
-            var userId = WebSecurity.GetUserId(User.Identity.Name);
-            bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
-            return _contextProvider.Context.Teams.Where(x => x.CoachId == userId || isAdmin || x.UserProfiles.Any(y => y.UserId == userId));
-
-
+        {          
+            return _contextProvider.Context.Teams;
         }
         [HttpGet]
         public IQueryable<Player> Players()
         {
             var context = _contextProvider.Context;
-            var userId = WebSecurity.GetUserId(User.Identity.Name);
-            bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
-            var players = context.Players.Where(x => x.UserId == userId || isAdmin || x.Team.CoachId == userId);
+            var players = context.Players;
             return players;
         }
         [HttpGet]
@@ -250,7 +283,7 @@ namespace TeamTaskManager.Controllers
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
-            var tasks = context.Tasks.Where(x => isAdmin || x.Team.CoachId == userId || x.Team.Players.Any(y => y.UserId == userId));
+            var tasks = context.Tasks.Where(x => isAdmin || x.Team.Players.Any(y => y.UserId == userId));
             return tasks;
         }
         [HttpGet]
@@ -259,7 +292,7 @@ namespace TeamTaskManager.Controllers
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
-            var games = context.Games.Where(x => isAdmin || x.Team.CoachId == userId || x.Team.Players.Any(y => y.UserId == userId));
+            var games = context.Games.Where(x => isAdmin  || x.Team.Players.Any(y => y.UserId == userId));
             return games;
         }
        
@@ -279,14 +312,6 @@ namespace TeamTaskManager.Controllers
         {
             return _contextProvider.SaveChanges(saveBundle);
         }
-        [HttpGet]
-        public IQueryable<Player> CurrentUserPlayers()
-        {
-            var context = _contextProvider.Context;
-            var userId = WebSecurity.GetUserId(User.Identity.Name);
-            var players = context.Players.Where(x => x.UserId == userId);
-            return players;
-
-        }
+     
     }
 }

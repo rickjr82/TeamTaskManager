@@ -1,4 +1,6 @@
 using System.Data.Entity.ModelConfiguration;
+using DotNetOpenAuth.AspNet.Clients;
+using Microsoft.Ajax.Utilities;
 
 namespace TeamTaskManager.Models.Mapping
 {
@@ -15,9 +17,17 @@ namespace TeamTaskManager.Models.Mapping
                 .HasMaxLength(50);
 
             // Table & Column Mappings
-            this.ToTable("Team");
-            this.Property(t => t.Name).HasColumnName("Name");
-            this.Property(t => t.Id).HasColumnName("Id");           
+            this.HasMany(x => x.Parents)
+                .WithMany(x => x.Teams)
+                .Map(x =>
+                {
+                    x.MapLeftKey("TeamId");
+                    x.MapRightKey("UserId");
+                    x.ToTable("ParentTeams");
+                }
+
+                );
+            this.HasRequired(x => x.Coach).WithMany(x => x.TeamsCoached).HasForeignKey(x => x.CoachId).WillCascadeOnDelete(false);
         }
     }
 }
