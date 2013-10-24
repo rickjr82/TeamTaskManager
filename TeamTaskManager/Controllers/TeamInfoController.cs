@@ -120,36 +120,9 @@ namespace TeamTaskManager.Controllers
             }            
         }
         [HttpGet]
-        public List<VmPlayer> GetTeams()
+        public int GetCurrentUserId()
         {
-            var context = _contextProvider.Context;
-
-            var players = context.Players;
-            if (inCoachMode)
-            {
-                return players.Where(x => x.TeamId == teamId).ToList().Select(x => new VmPlayer(x)).ToList();
-            }
-            else
-            {
-                var userId = WebSecurity.GetUserId(User.Identity.Name);
-                return players.Where(x => x.UserId == userId && x.TeamId == teamId).ToList().Select(x => new VmPlayer(x)).ToList();
-            }
-        }
-        [HttpGet]
-        public List<VmPlayer> CurrentUserPlayers(int teamId, bool inCoachMode)
-        {
-            var context = _contextProvider.Context;
-
-            var players = context.Players;
-            if (inCoachMode)
-            {
-                return players.Where(x => x.TeamId == teamId).ToList().Select(x => new VmPlayer(x)).ToList();
-            }
-            else
-            {
-                var userId = WebSecurity.GetUserId(User.Identity.Name);
-                return players.Where(x => x.UserId == userId && x.TeamId == teamId).ToList().Select(x => new VmPlayer(x)).ToList();
-            }
+            return WebSecurity.GetUserId(User.Identity.Name);
         }
         [HttpGet]
         public List<VmTeam> CurrentUserTeams(bool inCoachMode)
@@ -313,14 +286,14 @@ namespace TeamTaskManager.Controllers
         public IQueryable<Team> Teams()
         {          
             var userId = WebSecurity.GetUserId(User.Identity.Name);
-            return _contextProvider.Context.Teams.Where(x => x.CoachId == userId);
+            return _contextProvider.Context.Teams;
         }
         [HttpGet]
         public IQueryable<Player> Players()
         {
             var userId = WebSecurity.GetUserId(User.Identity.Name); 
             var context = _contextProvider.Context;
-            var players = context.Players.Where(x => x.CoachId == userId || x.UserId==userId || x.UserId);
+            var players = context.Players;
             return players;
         }
         [HttpGet]
