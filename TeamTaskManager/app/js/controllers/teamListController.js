@@ -10,7 +10,7 @@ function ($scope, dataservice, logger, $location) {
         dataservice.getEntities('Teams', $scope.teams, refreshView);
     };
     $scope.addTeam = function (newTeamName) {
-        dataservice.addEntityToCollection('Team', [{ name: 'Name', value: newTeamName }], $scope.teams, refreshView);
+        dataservice.addEntityToCollection('Team', [{ name: 'name', value: newTeamName }], $scope.teams, refreshView);
         $scope.newTeamName = "";
     };
 

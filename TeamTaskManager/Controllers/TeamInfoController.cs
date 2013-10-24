@@ -281,18 +281,14 @@ namespace TeamTaskManager.Controllers
         public IQueryable<Task> Tasks()
         {
             var context = _contextProvider.Context;
-            var userId = WebSecurity.GetUserId(User.Identity.Name);
-            bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
-            var tasks = context.Tasks.Where(x => isAdmin || x.Team.Players.Any(y => y.UserId == userId));
+            var tasks = context.Tasks;
             return tasks;
         }
         [HttpGet]
         public IQueryable<Game> Games()
         {
             var context = _contextProvider.Context;
-            var userId = WebSecurity.GetUserId(User.Identity.Name);
-            bool isAdmin = Roles.GetRolesForUser().Contains("Administrator");
-            var games = context.Games.Where(x => isAdmin  || x.Team.Players.Any(y => y.UserId == userId));
+            var games = context.Games;
             return games;
         }
        
