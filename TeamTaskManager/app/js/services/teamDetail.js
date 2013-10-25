@@ -17,8 +17,7 @@
                         }).error(function (error) {
                             deferred.reject();
                         });
-                        return deferred.promise;
-                    },
+                        return deferred
                     getCurrentUserTeams: function (inCoachMode) {
                         var deferred = $q.defer();
                         $http.get('/api/teaminfo/CurrentUserTeams', { params: { inCoachMode: inCoachMode } }).success(function (data) {
