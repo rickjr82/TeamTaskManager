@@ -19,7 +19,7 @@
                 $location.path('/manageUser/teams/');
             };
         $scope.signupForTasks = function() {
-            $location.path('/taskSignUp/' + $rootScope.teamId+'/'+false);
+            $location.path('/taskSignUp/' + $rootScope.parentTeamId + '/' + false);
         };
         $scope.close = function () {
             $location.path('/home');

@@ -7,7 +7,7 @@
         $scope.players = [];
         $scope.userPlayers = [];
         $scope.selectedPlayerId = -1;
-        dataservice.getEntities('Players', $scope.players, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }]);
+        dataservice.getEntities('Players', $scope.players, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }, { typeQ: 'where', first: 'userId', second: 'eq', third: null }]);
         teamDetail.getCurrentUserPlayers($scope.teamId, false).then(function (result) {            
             $scope.userPlayers = result;
         });

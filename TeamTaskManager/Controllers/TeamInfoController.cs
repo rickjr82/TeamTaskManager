@@ -71,10 +71,12 @@ namespace TeamTaskManager.Controllers
         {
             Id = team.Id;
             Name = team.Name;
+            CoachId = team.CoachId;
         }
 
         public int Id;
-        public string Name;      
+        public string Name;
+        public int CoachId;
     }
     public class VmPlayer
     {
@@ -83,9 +85,12 @@ namespace TeamTaskManager.Controllers
             Id = player.Id;
             FirstName = player.FirstName;
             LastName = player.LastName;
+            UserId = player.UserId;
+
         }
 
         public int Id;
+        public int? UserId; 
         public string FirstName;
         public string LastName;
     }

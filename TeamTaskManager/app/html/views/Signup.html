@@ -13,7 +13,7 @@
             <td>{{game.time | date:'medium'}}</td>
             <td>{{game.opponent}}</td>
             <td>{{game.location}}</td>
-            <td ng-repeat="task in tasks"><input type="button" value="{{getAssignedPerson(game.id, task.id)}}" ng-click="setTaskAssignment(game.id, task.id)" ng-class="{btn: true, 'btn-success': isAssigned(game.id, task.id)}" ng-disabled="(selectedPlayerId <=0 && !isAssigned(game.id, task.id)) || taskIsNotAbleToBeAssigned(game.id, task.id)"></td>
+            <td ng-repeat="task in tasks"><input type="button" value="{{getAssignedPerson(game.id, task.id)}}" ng-click="setTaskAssignment(game.id, task.id)" ng-class="{btn: true, 'btn-success': isAssigned(game.id, task.id)}" ng-disabled="!taskIsAbleToBeAssigned(game.id, task.id)"></td>
         </tr>
     </tbody>
 </table>

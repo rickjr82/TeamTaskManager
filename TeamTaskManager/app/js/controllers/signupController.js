@@ -29,13 +29,34 @@
             var taskAssignment=$scope.findTaskAssignment(gameId, taskId);
             return taskAssignment.displayName;
         };
-        $scope.taskIsNotAbleToBeAssigned = function (gameId, taskId) {
-            return false;
-            if ($scope.taskAssignments.length == 0) {
-                return true;
+        $scope.taskIsAbleToBeAssigned = function (gameId, taskId) {
+           if ($scope.taskAssignments.length == 0) {
+                return false;
             }
-            var taskAssignment = $scope.findTaskAssignment(gameId, taskId);
-            return taskAssignment.playerId !== $scope.currentPlayerId && taskAssignment.playerId !==null;
+           var taskAssignment = $scope.findTaskAssignment(gameId, taskId);
+           if ($scope.inCoachMode) {
+               if ($scope.selectedPlayerId > 0) {
+                   return true;
+               } else {
+                   if (taskAssignment.playerId !== 0) {
+                       return true;
+                   } else {
+                       return false;
+                   }
+               }
+           } else {
+               if ($scope.selectedPlayerId > 0) {
+                   if (taskAssignment.playerId == $scope.selectedPlayerId || taskAssignment.playerId == 0) {
+                       return true;
+                   } else {
+                       return false
+                   }
+
+               } else {
+                   return false;
+               }
+           }
+            return ($scope.selectedPlayerId > 0 || $scope.inCoachMode )&& taskAssignment.playerId == $scope.selectedPlayerId || taskAssignment.playerId == null;
         };
         getDisplayName = function (taskAssignment) {
             if (taskAssignment.playerId == 0) {
