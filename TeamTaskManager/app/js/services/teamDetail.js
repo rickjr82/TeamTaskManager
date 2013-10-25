@@ -17,7 +17,7 @@
                         }).error(function(error) {
                             deferred.reject();
                         });
-                        return deferred
+                        return deferred.promise;
                     },
                     getCurrentUserTeams: function (inCoachMode) {
                         var deferred = $q.defer();
