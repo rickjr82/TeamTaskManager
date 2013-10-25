@@ -229,7 +229,7 @@ namespace TeamTaskManager.Controllers
             else
             {            
                     context.TaskAssignments.Remove(taskAssignment);
-                    if (player!=null)
+                    if (player!=null && player.Id!=taskAssignment.PlayerId)
                     {
                         taskAssignment = new TaskAssignment { GameId = gameId, TaskId = taskId, PlayerId = player.Id, Player = player }; ;
                         context.TaskAssignments.Add(taskAssignment);
