@@ -10,14 +10,15 @@
                         });
                         return deferred.promise;
                     },
-                    getCurrentUserId: function () {
+                    getCurrentUserId: function() {
                         var deferred = $q.defer();
-                        $http.get('/api/teaminfo/GetCurrentUserId', { params: { inCoachMode: inCoachMode } }).success(function (data) {
+                        $http.get('/api/teaminfo/GetCurrentUserId', { params: { inCoachMode: inCoachMode } }).success(function(data) {
                             deferred.resolve(data);
-                        }).error(function (error) {
+                        }).error(function(error) {
                             deferred.reject();
                         });
                         return deferred
+                    },
                     getCurrentUserTeams: function (inCoachMode) {
                         var deferred = $q.defer();
                         $http.get('/api/teaminfo/CurrentUserTeams', { params: { inCoachMode: inCoachMode } }).success(function (data) {
