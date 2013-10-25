@@ -12,7 +12,7 @@
                     },
                     getCurrentUserId: function() {
                         var deferred = $q.defer();
-                        $http.get('/api/teaminfo/GetCurrentUserId', { params: { inCoachMode: inCoachMode } }).success(function(data) {
+                        $http.get('/api/teaminfo/GetCurrentUserId').success(function(data) {
                             deferred.resolve(data);
                         }).error(function(error) {
                             deferred.reject();
