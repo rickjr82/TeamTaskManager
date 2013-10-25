@@ -7,10 +7,13 @@
         $scope.userPlayers = [];
         $scope.teamId = 0;
         if ($rootScope.parentTeamId >= 0) { $scope.teamId = $rootScope.parentTeamId; }       
-        $scope.$watch('teamId', function () { $rootScope.teamId = $scope.teamId });
+        $scope.$watch('teamId', function () { $rootScope.parentTeamId = $scope.teamId });
             teamDetail.getCurrentUserDetails().then(function (result) {
-                $scope.userTeams = result.teams;
+                $scope.userTeams = result.teams;               
                 $scope.userPlayers = result.players;
+                if ($scope.userTeams.length == 1) {
+                    $scope.teamId = $scope.userTeams[0].id;
+                }
             });
             $scope.manageUser = function () {
                 $location.path('/manageUser/teams/');
