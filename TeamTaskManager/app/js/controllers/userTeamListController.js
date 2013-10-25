@@ -10,6 +10,10 @@
         teamDetail.getCurrentUserTeams(false).then(function (result) {
             $scope.userTeams = result;
         });
+        $scope.isTeamAlreadyAdded = function (selectedTeamId) {            
+            var team = _.findWhere($scope.userTeams, { id: $scope.selectedTeamId });
+            return typeof(team) !== 'undefined';
+        };
         $scope.addTeam = function () {
             var newTeam = _.findWhere($scope.teams, { id: $scope.selectedTeamId });
             teamDetail.addTeamToCurrentUser(newTeam.id).then(function () {
