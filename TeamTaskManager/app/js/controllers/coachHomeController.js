@@ -13,7 +13,19 @@ teamTaskManager.controller('coachHomeController', ['$scope', '$rootScope', '$loc
                 $scope.teamId = $scope.teams[0].id;
             }
         });
-        dataservice.getEntities('Teams', $scope.teams, refreshView, [{ typeQ: 'where', first: 'coachId', second: 'eq', third: $rootScope.currentUserId }]);
+        $scope.getTeams = function () {
+            $scope.teams = [];
+            dataservice.getEntities('Teams', $scope.teams, refreshView, [{ typeQ: 'where', first: 'coachId', second: 'eq', third: $rootScope.currentUserId }]);
+        };
+        if (typeof ($rootScope.currentUserId) !== 'undefined') {
+            $scope.getTeams();
+        }
+        else {
+            teamDetail.getCurrentUserId().then(function (result) {
+                $rootScope.currentUserId = result;
+                $scope.getTeams();
+            });
+        }
         $scope.modifyTeams = function () {
             $location.path('/teams');
         };
