@@ -7,8 +7,13 @@ teamTaskManager.controller('coachHomeController', ['$scope', '$rootScope', '$loc
         $scope.teams = [];
         $scope.teamId = 0;        
         if ($rootScope.coachTeamId >= 0) { $scope.teamId = $rootScope.coachTeamId; }
-       $scope.$watch('teamId', function () { $rootScope.teamId = $scope.teamId });        
-       dataservice.getEntities('Teams', $scope.teams, refreshView);
+        $scope.$watch('teamId', function () { $rootScope.coachTeamId = $scope.teamId });
+       teamDetail.getCurrentUserDetails().then(function(result) {
+           $scope.teams = result.teams;
+           if ($scope.teams.length == 1) {
+               $scope.teamId = $scope.teams[0].id;
+           }
+       });
         $scope.modifyTeams = function () {
             $location.path('/teams');
         };
@@ -22,7 +27,7 @@ teamTaskManager.controller('coachHomeController', ['$scope', '$rootScope', '$loc
             $location.path('/games/' + $scope.teamId);
         };
         $scope.signupForTasks = function () {
-            $location.path('/taskSignUp/' + $rootScope.teamId + '/' + true);
+            $location.path('/taskSignUp/' + $rootScope.coachTeamId + '/' + true);
         };
         $scope.close = function () {
             $location.path('/home');

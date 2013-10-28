@@ -52,7 +52,7 @@ namespace TeamTaskManager.Controllers
             PlayerId = ta.PlayerId;
             if (ta.PlayerId == 0)
             {
-                DisplayName = "None";                
+                DisplayName = "None";
             }
             else
             {
@@ -74,7 +74,7 @@ namespace TeamTaskManager.Controllers
         }
 
         public int Id;
-        public string Name;      
+        public string Name;
     }
     public class VmPlayer
     {
@@ -104,20 +104,20 @@ namespace TeamTaskManager.Controllers
         }
 
         [HttpGet]
-        public List<VmPlayer> CurrentUserPlayers(int teamId, bool inCoachMode )
+        public List<VmPlayer> CurrentUserPlayers(int teamId, bool inCoachMode)
         {
             var context = _contextProvider.Context;
-           
+
             var players = context.Players;
             if (inCoachMode)
             {
-                return players.Where(x => x.TeamId == teamId).ToList().Select(x => new VmPlayer(x)).ToList();                
+                return players.Where(x => x.TeamId == teamId).ToList().Select(x => new VmPlayer(x)).ToList();
             }
             else
             {
                 var userId = WebSecurity.GetUserId(User.Identity.Name);
-                return players.Where(x => x.UserId == userId && x.TeamId==teamId).ToList().Select(x=>new VmPlayer(x)).ToList();
-            }            
+                return players.Where(x => x.UserId == userId && x.TeamId == teamId).ToList().Select(x => new VmPlayer(x)).ToList();
+            }
         }
         [HttpGet]
         public int GetCurrentUserId()
@@ -129,23 +129,23 @@ namespace TeamTaskManager.Controllers
         {
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
-            var teams=_contextProvider.Context.Teams;
+            var teams = _contextProvider.Context.Teams;
             if (inCoachMode)
             {
-                return teams.Where(x => x.CoachId== userId).ToList().Select(x => new VmTeam(x)).ToList();
+                return teams.Where(x => x.CoachId == userId).ToList().Select(x => new VmTeam(x)).ToList();
             }
             else
             {
-                return teams.Where(x=> x.Parents.Any(y => y.UserId == userId)).ToList().Select(x=>new VmTeam(x)).ToList();
-            }                        
+                return teams.Where(x => x.Parents.Any(y => y.UserId == userId)).ToList().Select(x => new VmTeam(x)).ToList();
+            }
         }
         [HttpGet]
         public List<VmTaskAssignment> GetTaskAssignments(int teamId)
         {
             var context = _contextProvider.Context;
-            var team = context.Teams.Include(x=>x.Tasks).Include(x=>x.Games).Single(x => x.Id == teamId);
-            var taskAssignmentsFilled=context.TaskAssignments.Where(x => x.Task.TeamId==teamId).Include(x => x.Player).ToList();
-            List<TaskAssignment> taskAssignments= new List<TaskAssignment>();
+            var team = context.Teams.Include(x => x.Tasks).Include(x => x.Games).Single(x => x.Id == teamId);
+            var taskAssignmentsFilled = context.TaskAssignments.Where(x => x.Task.TeamId == teamId).Include(x => x.Player).ToList();
+            List<TaskAssignment> taskAssignments = new List<TaskAssignment>();
             foreach (var task in team.Tasks)
             {
                 foreach (var game in team.Games)
@@ -154,9 +154,9 @@ namespace TeamTaskManager.Controllers
                         taskAssignmentsFilled.SingleOrDefault(x => x.GameId == game.Id && x.TaskId == task.Id);
                     if (taskAssignment == null)
                     {
-                        taskAssignment= new TaskAssignment{GameId = game.Id, TaskId = task.Id, PlayerId=0};
+                        taskAssignment = new TaskAssignment { GameId = game.Id, TaskId = task.Id, PlayerId = 0 };
                     }
-                    taskAssignments.Add(taskAssignment);                    
+                    taskAssignments.Add(taskAssignment);
                 }
             }
             return taskAssignments.ToList().Select(x => new VmTaskAssignment(x)).ToList();
@@ -165,7 +165,7 @@ namespace TeamTaskManager.Controllers
         public int GetCurrentUser()
         {
             return WebSecurity.GetUserId(User.Identity.Name);
-        }       
+        }
         [HttpPut]
         public void SetCurrentPlayer(int playerId)
         {
@@ -213,32 +213,32 @@ namespace TeamTaskManager.Controllers
             var user = context.UserProfiles.Single(x => x.UserId == userId);
             user.Teams.Remove(team);
             context.SaveChanges();
-        }   
+        }
         [HttpGet]
         public object ToggleTaskForCurrentPlayer(int gameId, int taskId, int playerId)
         {
             var context = _contextProvider.Context;
-            
+
             var player = context.Players.SingleOrDefault(x => x.Id == playerId);
-            var taskAssignment = context.TaskAssignments.Include(x=>x.Player).SingleOrDefault(x=>x.GameId==gameId && x.TaskId==taskId);
-            if (taskAssignment == null && player !=null)
+            var taskAssignment = context.TaskAssignments.Include(x => x.Player).SingleOrDefault(x => x.GameId == gameId && x.TaskId == taskId);
+            if (taskAssignment == null && player != null)
             {
-                taskAssignment = new TaskAssignment { GameId = gameId, PlayerId = player.Id, TaskId = taskId};
+                taskAssignment = new TaskAssignment { GameId = gameId, PlayerId = player.Id, TaskId = taskId };
                 context.TaskAssignments.Add(taskAssignment);
             }
             else
-            {            
-                    context.TaskAssignments.Remove(taskAssignment);
-                    if (player!=null)
-                    {
-                        taskAssignment = new TaskAssignment { GameId = gameId, TaskId = taskId, PlayerId = player.Id, Player = player }; ;
-                        context.TaskAssignments.Add(taskAssignment);
-                    }
-                    else
-                    {
-                        taskAssignment = new TaskAssignment { GameId = gameId, TaskId = taskId, PlayerId = 0 }; ;    
-                    }          
-                          
+            {
+                context.TaskAssignments.Remove(taskAssignment);
+                if (player != null && player.Id != taskAssignment.PlayerId)
+                {
+                    taskAssignment = new TaskAssignment { GameId = gameId, TaskId = taskId, PlayerId = player.Id, Player = player }; ;
+                    context.TaskAssignments.Add(taskAssignment);
+                }
+                else
+                {
+                    taskAssignment = new TaskAssignment { GameId = gameId, TaskId = taskId, PlayerId = 0 }; ;
+                }
+
             }
             context.SaveChanges();
             return new VmTaskAssignment(taskAssignment);
@@ -249,7 +249,7 @@ namespace TeamTaskManager.Controllers
             var context = _contextProvider.Context;
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             var teams = context.Teams.Where(x => x.Parents.Any(y => y.UserId == userId)).ToList().Select(x => new VmTeam(x)).ToList();
-            var players = context.Players.Where(x => x.UserId == userId).ToList().Select(x=> new VmPlayer(x)).ToList();
+            var players = context.Players.Where(x => x.UserId == userId).ToList().Select(x => new VmPlayer(x)).ToList();
             return new
             {
                 teams = teams,
@@ -284,14 +284,14 @@ namespace TeamTaskManager.Controllers
         // ~/breeze/todos/Todos?$filter=IsArchived eq false&$orderby=CreatedAt 
         [HttpGet]
         public IQueryable<Team> Teams()
-        {          
+        {
             var userId = WebSecurity.GetUserId(User.Identity.Name);
             return _contextProvider.Context.Teams;
         }
         [HttpGet]
         public IQueryable<Player> Players()
         {
-            var userId = WebSecurity.GetUserId(User.Identity.Name); 
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
             var context = _contextProvider.Context;
             var players = context.Players;
             return players;
@@ -310,7 +310,7 @@ namespace TeamTaskManager.Controllers
             var games = context.Games;
             return games;
         }
-       
+
         [HttpGet]
         public IQueryable<UserProfile> Users()
         {
@@ -321,12 +321,12 @@ namespace TeamTaskManager.Controllers
             var users = context.UserProfiles.Where(x => x.UserId == userId || isAdmin);
             return users;
         }
-      
+
         [HttpPost]
         public SaveResult SaveChanges(JObject saveBundle)
         {
             return _contextProvider.SaveChanges(saveBundle);
         }
-     
+
     }
 }
