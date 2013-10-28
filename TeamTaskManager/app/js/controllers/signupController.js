@@ -24,18 +24,35 @@
 
         $scope.getAssignedPerson = function (gameId, taskId) {
             if ($scope.taskAssignments.length == 0) {
-                return 'Loading';
+                return 'Loading...';
             }
             var taskAssignment=$scope.findTaskAssignment(gameId, taskId);
             return taskAssignment.displayName;
         };
-        $scope.taskIsNotAbleToBeAssigned = function (gameId, taskId) {
-            return false;
+        $scope.isAbleToBeAssigned = function (gameId, taskId) {         
             if ($scope.taskAssignments.length == 0) {
-                return true;
+                return false;
             }
             var taskAssignment = $scope.findTaskAssignment(gameId, taskId);
+            if ($scope.inCoachMode) {
+                return taskAssignment.playerId !== 0 || $scope.selectedPlayerId > 0;
+            } else {
+                if (taskAssignment.playerId == 0 && $scope.selectedPlayerId>0) {
+                    return true;
+                } else {
+                    if (taskAssignment.playerId > 0) {
+                        return isOwnedByCurrentUser(taskAssignment.playerId);
+                    } else {
+                        return $scope.selectedPlayerId > 0;
+                    }
+                }
+            }
+            
             return taskAssignment.playerId !== $scope.currentPlayerId && taskAssignment.playerId !==null;
+        };
+        isOwnedByCurrentUser = function(playerId) {
+            var player = _.findWhere($scope.userPlayersOnTeam, { id: playerId });
+            return typeof(player) !== 'undefined';
         };
         getDisplayName = function (taskAssignment) {
             if (taskAssignment.playerId == 0) {
