@@ -8,12 +8,12 @@ teamTaskManager.controller('coachHomeController', ['$scope', '$rootScope', '$loc
         $scope.teamId = 0;        
         if ($rootScope.coachTeamId >= 0) { $scope.teamId = $rootScope.coachTeamId; }
         $scope.$watch('teamId', function () { $rootScope.coachTeamId = $scope.teamId });
-       teamDetail.getCurrentUserDetails().then(function(result) {
-           $scope.teams = result.teams;
-           if ($scope.teams.length == 1) {
-               $scope.teamId = $scope.teams[0].id;
-           }
-       });
+        $scope.$watch('teams.length', function () {
+            if ($scope.teams.length == 1) {
+                $scope.teamId = $scope.teams[0].id;
+            }
+        });
+        dataservice.getEntities('Teams', $scope.teams, refreshView);
         $scope.modifyTeams = function () {
             $location.path('/teams');
         };
