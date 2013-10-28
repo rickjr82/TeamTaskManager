@@ -1,7 +1,11 @@
-﻿teamTaskManager.controller('teamListController', ['$scope', 'dataservice', 'logger', '$location', 'teamDetail',
-function ($scope, dataservice, logger, $location,teamDetail) {
+﻿teamTaskManager.controller('teamListController', ['$scope', '$rootScope', 'dataservice', 'logger', '$location', 'teamDetail',
+function ($scope, $rootScope, dataservice, logger, $location, teamDetail) {
     $scope.teams = [];
     $scope.newTeamName = "";
+    $scope.getTeams = function () {
+        $scope.teams = [];
+        dataservice.getEntities('Teams', $scope.teams, refreshView, [{ typeQ: 'where', first: 'coachId', second: 'eq', third: $rootScope.currentUserId }]);
+    };
     if (typeof ($rootScope.currentUserId) !== 'undefined') {
         $scope.getTeams();
     }
@@ -14,10 +18,7 @@ function ($scope, dataservice, logger, $location,teamDetail) {
     function refreshView() {
         $scope.$apply();
     }
-    $scope.getTeams = function () {
-        $scope.teams = [];
-        dataservice.getEntities('Teams', $scope.teams, refreshView, [{ typeQ: 'where', first: 'coachId', second: 'eq', third: $rootScope.currentUserId }]);
-    };
+   
     $scope.addTeam = function (newTeamName) {
         dataservice.addEntityToCollection('Team', [{ name: 'name', value: newTeamName }], $scope.teams, refreshView);
         $scope.newTeamName = "";

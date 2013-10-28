@@ -3,7 +3,7 @@
 <input type="text" ng-model="newLocation" placeholder="Location" />
 <input type="button" value="Add Game" ng-click="addGame(newDate, newOpponent, newLocation)" ng-disabled="newDate.length == 0 || newOpponent.length ==0|| newLocation.length ==0" />
 <div ng-hide="games.length == 0">
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Date</th>
@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="game in games">
+            <tr ng-repeat="game in games | orderBy:'time'">
                 <td>
                     <input ng-model="game.time" type="text" placeholder="Date" />
                 </td>

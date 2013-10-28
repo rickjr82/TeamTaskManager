@@ -16,6 +16,10 @@
                 $scope.userTeams.push(newTeam);
             });
         };
+        $scope.isTeamAlreadyAdded = function() {
+            var team = _.findWhere($scope.userTeams, { id: $scope.selectedTeamId });
+            return typeof(team) !== 'undefined';
+        };
         $scope.removeTeam = function (team) {
             teamDetail.removeTeamFromCurrentUser(team.id).then(function () {
                 var index = $scope.userTeams.indexOf(team);

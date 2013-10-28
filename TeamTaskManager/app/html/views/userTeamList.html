@@ -1,9 +1,9 @@
 ﻿<select ng-model="selectedTeamId" ng-options="t.id as t.name for t in teams">
     <option value="">-- Choose Team --</option>
 </select>
-<input type="button" value="Add Team" ng-click="addTeam()">
+<input type="button" value="Add Team" ng-click="addTeam()" ng-disabled="isTeamAlreadyAdded()">
 <div ng-hide="userTeams.length == 0">
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Name</th>

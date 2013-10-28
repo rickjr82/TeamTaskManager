@@ -11,6 +11,9 @@
             teamDetail.getCurrentUserDetails().then(function (result) {
                 $scope.userTeams = result.teams;
                 $scope.userPlayers = result.players;
+                if ($scope.userTeams.length == 1) {
+                    $scope.teamId = $scope.userTeams[0].id;
+                }
             });
             $scope.manageUser = function () {
                 $location.path('/manageUser/teams/');
