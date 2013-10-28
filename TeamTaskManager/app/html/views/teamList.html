@@ -1,7 +1,7 @@
 ﻿<input type="text" ng-model="newTeamName" placeholder="Name" />
 <input type="button" value="Add Team" ng-click="addTeam(newTeamName)" ng-disabled="newTeamName.length == 0" />
 <div ng-hide="teams.length == 0">
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -12,9 +12,11 @@
         <tbody>
             <tr ng-repeat="team in teams">
                 <td>
-                    <input ng-model="team.name" type="text" placeholder="Name" /></td>
+                    <input ng-model="team.name" type="text" placeholder="Name" />
+                </td>
                 <td>
-                    <input type="button" value="Save" ng-click="endEdit(team)" ng-disabled="team.name.length == 0" /></td>
+                    <input type="button" value="Save" ng-click="endEdit(team)" ng-disabled="team.name.length == 0" />
+                </td>
                 <td>
                     <input type="button" value="Delete" ng-click="deleteTeam(team)" />
                 </td>

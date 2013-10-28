@@ -58,12 +58,28 @@ namespace TeamTaskManager.Controllers
             {
                 DisplayName = ta.Player.FirstName + " " + ta.Player.LastName;
             }
+            if (ta.Game != null)
+            {
+                GameTime = ta.Game.Time.ToString();
+                GameLocation = ta.Game.Location;
+            }
+            if (ta.Task != null)
+            {
+                TaskName = ta.Task.Name;
+                TaskDescription = ta.Task.Description;
+            }
+            
+            
         }
 
         public int TaskId;
         public int GameId;
         public int PlayerId;
-        public string DisplayName;
+        public string GameTime;
+        public string GameLocation;
+        public string TaskName;
+        public string TaskDescription;
+        public string DisplayName;        
     }
     public class VmTeam
     {
@@ -138,6 +154,15 @@ namespace TeamTaskManager.Controllers
             {
                 return teams.Where(x => x.Parents.Any(y => y.UserId == userId)).ToList().Select(x => new VmTeam(x)).ToList();
             }
+        }
+        [HttpGet]
+        public List<VmTaskAssignment> CurrentUserAssignments()
+        {
+            var context = _contextProvider.Context;
+            var userId = WebSecurity.GetUserId(User.Identity.Name);
+            var taskAssignmentsFilled = context.TaskAssignments.Include(x => x.Player).Include(x => x.Task).Include(x => x.Game).Where(x => x.Player.UserId == userId).ToList();
+
+            return taskAssignmentsFilled.Select(x => new VmTaskAssignment(x)).ToList();
         }
         [HttpGet]
         public List<VmTaskAssignment> GetTaskAssignments(int teamId)

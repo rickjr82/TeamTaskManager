@@ -1,0 +1,35 @@
+﻿<div ng-controller="userTaskAssignmentsController">
+    <div ng-hide="taskAssignments.length == 0">
+       
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Time: (Completed:<input type="checkbox" ng-model="includeCompleted">)</th>
+                    <th>Player</th>
+                    <th>Location</th>
+                    <th>Task</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in taskAssignments | filter:alreadyCompleted">
+                    <td>
+                        {{task.gameTime | date:'medium'}}
+                    </td>
+                    <td>
+                        {{task.displayName}}
+                    </td>
+                    <td>
+                        {{task.gameLocation}}
+                    </td>
+                    <td>
+                        {{task.taskName}}
+                    </td>
+                    <td>
+                        {{task.taskDescription}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

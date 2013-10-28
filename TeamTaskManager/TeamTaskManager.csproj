@@ -276,6 +276,7 @@
     <Content Include="app\html\views\teamList.html" />
     <Content Include="app\html\views\parentHome.html" />
     <Content Include="app\html\views\userPlayerList.html" />
+    <Content Include="app\html\views\userTaskAssignments.html" />
     <Content Include="app\html\views\userTeamList.html" />
     <Content Include="app\js\controllers\coachHomeController.js" />
     <Content Include="app\js\controllers\gameListController.js" />
@@ -287,6 +288,7 @@
     <Content Include="app\js\controllers\teamListController.js" />
     <Content Include="app\js\controllers\parentHomeController.js" />
     <Content Include="app\js\controllers\userPlayerListController.js" />
+    <Content Include="app\js\controllers\userTaskAssignmentsController.js" />
     <Content Include="app\js\controllers\userTeamListController.js" />
     <Content Include="app\js\lib\Smart-Table.js" />
     <Content Include="app\js\services\breezeWrapper.js" />
