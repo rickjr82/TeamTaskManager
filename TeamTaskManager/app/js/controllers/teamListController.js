@@ -1,4 +1,4 @@
-﻿teamTaskManager.controller('teamListController', ['$scope', , '$rootScope', 'dataservice', 'logger', '$location', 'teamDetail',
+﻿teamTaskManager.controller('teamListController', ['$scope', '$rootScope', 'dataservice', 'logger', '$location', 'teamDetail',
 function ($scope, $rootScope, dataservice, logger, $location, teamDetail) {
     $scope.teams = [];
     $scope.newTeamName = "";
