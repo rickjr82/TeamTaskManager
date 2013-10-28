@@ -1,5 +1,5 @@
 ﻿
-teamTaskManager.controller('coachHomeController', ['$scope', '$rootScope', '$location', 'dataservice', 'logger', 'teamDetail',
+teamTaskManager.controller('coachHomeController', ['$scope', '$rootScope', '$location', 'dataservice', 'logger','teamDetail',
     function ($scope, $rootScope, $location, dataservice, logger, teamDetail) {
         function refreshView() {
             $scope.$apply();
