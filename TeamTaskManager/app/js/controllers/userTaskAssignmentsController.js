@@ -5,7 +5,7 @@
         teamDetail.getCurrentUserAssignments().then(function (results) {
             $scope.taskAssignments = results;
         });
-        $scope.alreadyCompleted = function (task) {
+        $scope.notAlreadyCompleted = function (task) {
             if ($scope.includeCompleted) {
                 return true;
             }

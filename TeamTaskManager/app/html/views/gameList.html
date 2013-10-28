@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="game in games">
+            <tr ng-repeat="game in games | orderBy:'time'">
                 <td>
                     <input ng-model="game.time" type="text" placeholder="Date" />
                 </td>

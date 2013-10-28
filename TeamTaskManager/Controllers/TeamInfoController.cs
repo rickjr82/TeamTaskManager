@@ -179,7 +179,7 @@ namespace TeamTaskManager.Controllers
                         taskAssignmentsFilled.SingleOrDefault(x => x.GameId == game.Id && x.TaskId == task.Id);
                     if (taskAssignment == null)
                     {
-                        taskAssignment = new TaskAssignment { GameId = game.Id, TaskId = task.Id, PlayerId = 0 };
+                        taskAssignment = new TaskAssignment { GameId = game.Id, TaskId = task.Id, PlayerId = 0, Game = game, Task = task};
                     }
                     taskAssignments.Add(taskAssignment);
                 }

@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="task in taskAssignments | filter:alreadyCompleted">
+                <tr ng-repeat="task in taskAssignments | filter:notAlreadyCompleted | orderBy:'gameTime'">
                     <td>
                         {{task.gameTime | date:'medium'}}
                     </td>
