@@ -65,7 +65,7 @@ namespace TeamTaskManager.Controllers
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
 
-                    InitiateDatabaseForNewUser(model.UserName);
+                    InitiateDatabaseForNewUser(model.UserName, model.Email);
 
                     FormsAuthentication.SetAuthCookie(model.UserName, createPersistentCookie: false);
                     return Json(new { success = true, redirect = returnUrl });
@@ -84,9 +84,13 @@ namespace TeamTaskManager.Controllers
         /// Initiate a new todo list for new user
         /// </summary>
         /// <param name="userName"></param>
-        private static void InitiateDatabaseForNewUser(string userName)
+        private static void InitiateDatabaseForNewUser(string userName, string email)
         {
-           
+            var context = new MyTeamTrackerContext();
+            var user=context.UserProfiles.Single(x => x.UserName == userName);
+            user.Email = email;
+            context.SaveChanges();
+
         }
 
         //
@@ -266,10 +270,10 @@ namespace TeamTaskManager.Controllers
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName});
                         db.SaveChanges();
 
-                        InitiateDatabaseForNewUser(model.UserName);
+                        InitiateDatabaseForNewUser(model.UserName, model.Email);
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);

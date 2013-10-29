@@ -18,6 +18,7 @@ namespace TeamTaskManager.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public string Email { get; set; }
         public virtual ICollection<Player> Players { get; set; }
         public virtual ICollection<Team> Teams { get; set; }
         public virtual ICollection<Team> TeamsCoached { get; set; }
@@ -27,8 +28,10 @@ namespace TeamTaskManager.Models
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
-
-        public string ExternalLoginData { get; set; }
+        [Required]
+        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Email address is not valid.")]
+        [Display(Name = "Email Address")]
+        public string Email { get; set; }public string ExternalLoginData { get; set; }
     }
 
     public class LocalPasswordModel
@@ -70,7 +73,10 @@ namespace TeamTaskManager.Models
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
-
+        [Required]
+        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Email address is not valid.")]
+        [Display(Name = "Email Address")]
+        public string Email { get; set; }
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
