@@ -60,7 +60,7 @@ namespace TeamTaskManager.Controllers
             }
             if (ta.Game != null)
             {
-                GameTime = ta.Game.Time.ToString();
+                GameTime = ta.Game.Time;
                 GameLocation = ta.Game.Location;
             }
             if (ta.Task != null)
@@ -75,7 +75,7 @@ namespace TeamTaskManager.Controllers
         public int TaskId;
         public int GameId;
         public int PlayerId;
-        public string GameTime;
+        public DateTime GameTime;
         public string GameLocation;
         public string TaskName;
         public string TaskDescription;
