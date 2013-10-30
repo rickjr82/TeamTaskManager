@@ -43,20 +43,19 @@
 
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-lg-12">
-                    <h4 class="panel-title">Current Assignments</h4>
                     <div ng-include="'/app/html/views/userTaskAssignments.html'" />
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" ng-hide="userPlayers.length == 0 || userTeams.length == 0">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">Task Signup</h4>
         </div>
         <div class="panel-body">
-            <h4 class="panel-title">Current Team:</h4><select ng-model="teamId" ng-options="t.id as t.name for t in userTeams" ng-hide="userPlayers.length == 0 || userTeams.length == 0">
+            <h4 class="panel-title">Current Team:</h4><select ng-model="teamId" ng-options="t.id as t.name for t in userTeams">
                 <option value="">-- Choose Team --</option>
             </select>
             <input type="button" value="Start Signup!" ng-click="signupForTasks()" ng-hide="userPlayers.length == 0 || userTeams.length == 0" ng-disabled="!teamId>0" />
