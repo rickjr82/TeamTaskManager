@@ -1,28 +1,80 @@
-﻿Available Players:<select ng-model="selectedPlayerId" ng-options="p.id as p.firstName+' '+p.lastName for p in players">
-    <option value="">-- Choose Player --</option>
-</select>
-<input type="button" value="Claim Player" ng-disabled="selectedPlayerId==0" ng-click="addPlayer()">
-<div ng-hide="userPlayers.length == 0">
-    <table class="table table-striped table-condensed table-bordered">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Remove</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="player in userPlayers">
-                <td>
-                    {{player.firstName +' '+ player.lastName}}
-                </td>
-                <td>
-                    <input type="button" value="Not My Player- Remove" ng-click="removePlayer(player)" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
+﻿<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Player Selection</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-lg-2">
+                    <h4>Current Player:</h4>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-lg-2">
+                    <select ng-model="selectedPlayerId" ng-options="p.id as p.firstName+' '+p.lastName for p in players">
+                        <option value="">-- Choose Player --</option>
+                    </select>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-lg-2">
+                    <input type="button" value="Claim Player" ng-disabled="selectedPlayerId==0" ng-click="addPlayer()">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<input type="button" value="Start Signup!" ng-click="close('signup')" ng-hide="userPlayers.length == 0">
-<input type="button" value="Add More Teams" ng-click="close('teams')">
-<input type="button" value="Home" ng-click="close('home')">
+<div class="row">
+    <div ng-hide="userPlayers.length == 0">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Current Players</h4>
+            </div>
+            <div class="panel-body">
+                <div class="col-xs-5 col-sm-5 col-lg-5">
+                    <table class="table table-striped table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="player in userPlayers">
+                                <td>
+                                    {{player.firstName +' '+ player.lastName}}
+                                </td>
+                                <td>
+                                    <input type="button" value="Not My Player- Remove" ng-click="removePlayer(player)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-hide="userPlayers.length == 0 || userTeams.length == 0">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Task Signup</h4>
+        </div>
+        <div class="panel-body">
+            <input type="button" value="Start Signup!" ng-click="close('signup')" ng-hide="userPlayers.length == 0">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Navigation</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 col-lg-4">
+                    <input type="button" value="Return To Home" ng-click="close('home')">
+                </div>
+                <div class="col-xs-4 col-sm-4 col-lg-4">
+                    <input type="button" value="Add More Teams" ng-click="close('teams')">
+                </div>               
+            </div>
+        </div>
+    </div>
+</div>

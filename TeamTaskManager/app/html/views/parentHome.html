@@ -61,7 +61,7 @@
             <h4 class="panel-title">Task Signup</h4>
         </div>
         <div class="panel-body">
-            <h4 class="panel-title">Current Team:</h4><select ng-model="teamId" ng-options="t.id as t.name for t in userTeams">
+            <h4>Current Team:</h4><select ng-model="teamId" ng-options="t.id as t.name for t in userTeams">
                 <option value="">-- Choose Team --</option>
             </select>
             <input type="button" value="Task Signup!" ng-click="signupForTasks()" ng-hide="userPlayers.length == 0 || userTeams.length == 0" ng-disabled="!teamId>0" />

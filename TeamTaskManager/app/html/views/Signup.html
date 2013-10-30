@@ -1,20 +1,57 @@
-﻿Current Player: <select ng-model="selectedPlayerId" ng-options="p.id as p.firstName+' '+p.lastName for p in userPlayersOnTeam"></select>
-<table ng-hide="games.length==0 || tasks.length==0" class="table table-striped table-condensed table-bordered">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Opponent</th>
-            <th>Location</th>
-            <th ng-repeat="task in tasks">{{task.name}}</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="game in games | orderBy:'time'">
-            <td>{{game.time | date:'medium'}}</td>
-            <td>{{game.opponent}}</td>
-            <td>{{game.location}}</td>
-            <td ng-repeat="task in tasks"><input type="button" value="{{getAssignedPerson(game.id, task.id)}}" ng-click="setTaskAssignment(game.id, task.id)" ng-class="{btn: true, 'btn-success': isAssigned(game.id, task.id)}" ng-disabled="!isAbleToBeAssigned(game.id, task.id)"></td>
-        </tr>
-    </tbody>
-</table>
-<input type="button" value="Return" ng-click="close()">
+﻿<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Player Selection</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-lg-2">
+                    <h4>Current Player:</h4>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-lg-2">
+                    <select ng-model="selectedPlayerId" ng-options="p.id as p.firstName+' '+p.lastName for p in userPlayersOnTeam">
+                        <option value="">-- Choose Player --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Task Assignments</h4>
+        </div>
+        <div class="panel-body">
+            <table ng-hide="games.length==0 || tasks.length==0" class="table table-striped table-condensed table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Opponent</th>
+                        <th>Location</th>
+                        <th ng-repeat="task in tasks">{{task.name}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="game in games | orderBy:'time'">
+                        <td>{{game.time | date:'medium'}}</td>
+                        <td>{{game.opponent}}</td>
+                        <td>{{game.location}}</td>
+                        <td ng-repeat="task in tasks"><input type="button" value="{{getAssignedPerson(game.id, task.id)}}" ng-click="setTaskAssignment(game.id, task.id)" ng-class="{btn: true, 'btn-success': isAssigned(game.id, task.id)}" ng-disabled="!isAbleToBeAssigned(game.id, task.id)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Navigation</h4>
+        </div><div class="panel-body">
+            <div class="col-xs-4 col-sm-4 col-lg-4">
+                <input type="button" value="Return to Home" ng-click="close()">
+            </div>
+        </div>
+    </div>
+</div>

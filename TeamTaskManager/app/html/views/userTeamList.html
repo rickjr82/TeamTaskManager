@@ -1,30 +1,68 @@
-﻿Available Teams:<select ng-model="selectedTeamId" ng-options="t.id as t.name for t in teams">
-    <option value="">-- Choose Team --</option>
-</select>
-<input type="button" value="Claim Team" ng-click="addTeam()" ng-disabled="isTeamAlreadyAdded() || selectedTeamId==0">
-<div ng-hide="userTeams.length == 0">
-    <table class="table table-striped table-condensed table-bordered">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Claim</th>
-                <th>Remove</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="team in userTeams">
-                <td>
-                    {{team.name}}
-                </td>
-                <td>
-                    <input type="button" value="Claim Player(s)" ng-click="selectPlayers(team.id)">
-                </td>
-                <td>
-                    <input type="button" value="Not My Team- Remove" ng-click="removeTeam(team)" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
+﻿<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Team Selection</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-lg-2">
+                    <h4>Current Team:</h4>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-lg-2">
+                    <select ng-model="selectedTeamId" ng-options="t.id as t.name for t in teams">
+                        <option value="">-- Choose Team --</option>
+                    </select>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-lg-2">
+                    <input type="button" value="Claim Team" ng-click="addTeam()" ng-disabled="isTeamAlreadyAdded() || selectedTeamId==0">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<input type="button" value="Return To Home" ng-click="close()">
+<div class="row">
+    <div ng-hide="userTeams.length == 0">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Current Teams</h4>
+            </div>
+            <div class="panel-body">
+                <div class="col-xs-5 col-sm-5 col-lg-5">
+                    <table class="table table-striped table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Claim</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="team in userTeams">
+                                <td>
+                                    {{team.name}}
+                                </td>
+                                <td>
+                                    <input type="button" value="Claim Player(s)" ng-click="selectPlayers(team.id)">
+                                </td>
+                                <td>
+                                    <input type="button" value="Not My Team- Remove" ng-click="removeTeam(team)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Navigation</h4>
+        </div><div class="panel-body">
+            <div class="col-xs-4 col-sm-4 col-lg-4">
+                <input type="button" value="Return to Home" ng-click="close()">
+            </div>
+        </div>
+    </div>
+</div>
