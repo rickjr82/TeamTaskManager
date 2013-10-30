@@ -22,25 +22,25 @@
 </div>
 <div class="row" ng-hide="teams.length==0 || !teamId>0 ">
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">Team Management</h4>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-xs-4 col-sm-4 col-lg-4">
-                    <input type="button" value="Modify Players" ng-click="modifyPlayers()" ng-disabled="!teamId>0" />
-                </div>
-                <div class="col-xs-4 col-sm-4 col-lg-4">
-                    <input type="button" value="Modify Tasks" ng-click="modifyTasks()" ng-disabled="!teamId>0" />
-                </div>
-                <div class="col-xs-4 col-sm-4 col-lg-4">
-                    <input type="button" value="Modify Games" ng-click="manageGames()" ng-disabled="!teamId>0" />
-                </div>
+    <div class="panel-heading">
+        <h4 class="panel-title">Team Management</h4>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-lg-4">
+                <input type="button" value="Modify Players" ng-click="modifyPlayers()" ng-disabled="!teamId>0" />
+            </div>
+            <div class="col-xs-4 col-sm-4 col-lg-4">
+                <input type="button" value="Modify Tasks" ng-click="modifyTasks()" ng-disabled="!teamId>0" />
+            </div>
+            <div class="col-xs-4 col-sm-4 col-lg-4">
+                <input type="button" value="Modify Games" ng-click="manageGames()" ng-disabled="!teamId>0" />
             </div>
         </div>
     </div>
 </div>
-<div class="row" ng-hide="teams.length == 0 || !teamId>0">
+</div>
+<div class="row" ng-hide="teams.length == 0 || !teamId>0" ng-animate="'animate'">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">Task Signup</h4>

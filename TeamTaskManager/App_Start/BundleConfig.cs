@@ -18,7 +18,9 @@ namespace TeamTaskManager
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                        "~/Scripts/angular.js"));
+                        "~/Scripts/angular.js",
+                        "~/Scripts/angular-animate.js",
+                        "~/Scripts/angular-route.js"));
             bundles.Add(new ScriptBundle("~/bundles/ajaxlogin").Include(
             "~/app/ajaxlogin.js"));
             bundles.Add(new ScriptBundle("~/bundles/utilities").Include(
@@ -32,7 +34,6 @@ namespace TeamTaskManager
 
             bundles.Add(new ScriptBundle("~/bundles/teamTaskManager").Include(
            "~/Scripts/ui-bootstrap-tpls-0.6.0.js", 
-           "~/app/js/lib/Smart-Table.js",
            "~/Scripts/toastr.js",            
            "~/app/teamTaskManager.main.js", // must be first, well until I include another bundle
                 "~/app/js/controllers/*.js",

@@ -2,7 +2,7 @@
 
 // 'todo' is the one Angular (Ng) module in this app
 // 'todo' module is in global namespace
-window.teamTaskManager = angular.module('teamTaskManager', ['ui.bootstrap', 'smartTable.table']);
+window.teamTaskManager = angular.module('teamTaskManager', ['ngAnimate', 'ngRoute', 'ui.bootstrap']);
 
 // Add global "services" (like breeze and Q) to the Ng injector
 // Learn about Angular dependency injection in this video
