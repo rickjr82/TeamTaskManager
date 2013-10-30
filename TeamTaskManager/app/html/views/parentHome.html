@@ -3,78 +3,83 @@
         <div class="panel-heading">
             <h4 class="panel-title">User Info</h4>
         </div>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-xs-6 col-sm-6 col-lg-6">
-                <div ng-hide="userTeams.length == 0">
-                    <table class="table table-striped table-condensed table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Teams:</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="team in userTeams">
-                                <td>
-                                    {{team.name}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <div ng-hide="userTeams.length == 0">
+                        <table class="table table-striped table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Teams:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="team in userTeams">
+                                    <td>
+                                        {{team.name}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <div ng-hide="userPlayers.length == 0">
+                        <table class="table table-striped table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Players:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="player in userPlayers">
+                                    <td>{{player.firstName + " "+player.lastName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-6 col-lg-6">
-                <div ng-hide="userPlayers.length == 0">
-                    <table class="table table-striped table-condensed table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Players:</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="player in userPlayers">
-                                <td>{{player.firstName + " "+player.lastName}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-12">
+                    <h4 class="panel-title">Current Assignments</h4>
+                    <div ng-include="'/app/html/views/userTaskAssignments.html'" />
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-            <h4 class="panel-title">Current Assignments</h4>
-            <div ng-include="'/app/html/views/userTaskAssignments.html'" />
+</div>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Task Signup</h4>
+        </div>
+        <div class="panel-body">
+            <h4 class="panel-title">Current Team:</h4><select ng-model="teamId" ng-options="t.id as t.name for t in userTeams" ng-hide="userPlayers.length == 0 || userTeams.length == 0">
+                <option value="">-- Choose Team --</option>
+            </select>
+            <input type="button" value="Start Signup!" ng-click="signupForTasks()" ng-hide="userPlayers.length == 0 || userTeams.length == 0" ng-disabled="!teamId>0" />
+        </div>
     </div>
 </div>
-
-<hr />
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">Task Signup</h4>
-    </div>
-    <div class="panel-body">
-        Current Team:<select ng-model="teamId" ng-options="t.id as t.name for t in userTeams" ng-hide="userPlayers.length == 0 || userTeams.length == 0">
-            <option value="">-- Choose Team --</option>
-        </select>
-        <input type="button" value="Start Signup!" ng-click="signupForTasks()" ng-hide="userPlayers.length == 0 || userTeams.length == 0" ng-disabled="!teamId>0" />
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Manage User</h4>
+        </div>
+        <div class="panel-body">
+            <input type="button" value="Find My Teams and Players" ng-click="manageUser()" />
+        </div>
     </div>
 </div>
-<hr />
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">Manage User</h4>
-    </div>
-    <div class="panel-body">
-        <input type="button" value="Find My Teams and Players" ng-click="manageUser()" />
-    </div>
-</div>
-<hr />
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">For Coaches</h4>
-    </div>
-    <div class="panel-body">
-        <input type="button" value="Coach Tasks" ng-click="selectCoach()" />
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">For Coaches</h4>
+        </div>
+        <div class="panel-body">
+            <input type="button" value="Coach Tasks" ng-click="selectCoach()" />
+        </div>
     </div>
 </div>
