@@ -2,7 +2,7 @@
 <input type="text" ng-model="newLastName" placeholder="Last" />
 <input type="button" value="Add Player" ng-click="addPlayer(newFirstName, newLastName)" ng-disabled="newFirstName.length == 0 || newLastName.length ==0" />
 <div ng-hide="players.length == 0">
-    <table class="table">
+    <table class="table table-striped table-condensed table-bordered">
         <thead>
             <tr>
                 <th>First</th>

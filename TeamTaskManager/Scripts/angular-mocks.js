@@ -716,7 +716,7 @@ angular.mock.dump = function(object) {
  * The test will pass whether or not the request gets made during testing.
  *
  *
- * <table class="table">
+ * <table class="table table-striped table-condensed table-bordered">
  *   <tr><th width="220px"></th><th>Request expectations</th><th>Backend definitions</th></tr>
  *   <tr>
  *     <th>Syntax</th>

@@ -3,11 +3,11 @@
 </select>
 <input type="button" value="Claim Player" ng-disabled="selectedPlayerId==0" ng-click="addPlayer()">
 <div ng-hide="userPlayers.length == 0">
-    <table class="table">
+    <table class="table table-striped table-condensed table-bordered">
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Delete</th>
+                <th>Remove</th>
             </tr>
         </thead>
         <tbody>
@@ -16,7 +16,7 @@
                     {{player.firstName +' '+ player.lastName}}
                 </td>
                 <td>
-                    <input type="button" value="Delete" ng-click="removePlayer(player)" />
+                    <input type="button" value="Not My Player- Remove" ng-click="removePlayer(player)" />
                 </td>
             </tr>
         </tbody>

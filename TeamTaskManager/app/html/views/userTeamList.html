@@ -3,22 +3,24 @@
 </select>
 <input type="button" value="Claim Team" ng-click="addTeam()" ng-disabled="isTeamAlreadyAdded()">
 <div ng-hide="userTeams.length == 0">
-    <table class="table">
+    <table class="table table-striped table-condensed table-bordered">
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Delete</th>
+                <th>Claim</th>
+                <th>Remove</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="team in userTeams">
-                <td>{{team.name}}
+                <td>
+                    {{team.name}}
                 </td>
                 <td>
                     <input type="button" value="Claim Player(s)" ng-click="selectPlayers(team.id)">
                 </td>
                 <td>
-                    <input type="button" value="Delete" ng-click="removeTeam(team)" />
+                    <input type="button" value="Not My Team- Remove" ng-click="removeTeam(team)" />
                 </td>
             </tr>
         </tbody>
