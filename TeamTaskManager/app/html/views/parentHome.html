@@ -22,6 +22,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <div ng-hide="userTeams.length>0">
+                        <input type="button" value="Click to add a team" ng-click="manageUser()" />
+                    </div>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-lg-6">
                     <div ng-hide="userPlayers.length == 0">
@@ -37,6 +40,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div ng-hide="userPlayers.length>0 || userTeams.length==0">
+                       <input type="button" value="Click to claim players" ng-click="manageUser()" />
                     </div>
                 </div>
             </div>
@@ -58,17 +64,17 @@
             <h4 class="panel-title">Current Team:</h4><select ng-model="teamId" ng-options="t.id as t.name for t in userTeams">
                 <option value="">-- Choose Team --</option>
             </select>
-            <input type="button" value="Start Signup!" ng-click="signupForTasks()" ng-hide="userPlayers.length == 0 || userTeams.length == 0" ng-disabled="!teamId>0" />
+            <input type="button" value="Task Signup!" ng-click="signupForTasks()" ng-hide="userPlayers.length == 0 || userTeams.length == 0" ng-disabled="!teamId>0" />
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" ng-hide="userPlayers.length == 0 || userTeams.length == 0">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">Manage User</h4>
         </div>
         <div class="panel-body">
-            <input type="button" value="Find My Teams and Players" ng-click="manageUser()" />
+            <input type="button" value="My Teams and Players" ng-click="manageUser()" />
         </div>
     </div>
 </div>
