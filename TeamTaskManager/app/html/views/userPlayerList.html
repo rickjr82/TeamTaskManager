@@ -1,7 +1,7 @@
-﻿<select ng-model="selectedPlayerId" ng-options="p.id as p.firstName+' '+p.lastName for p in players">
+﻿Available Players:<select ng-model="selectedPlayerId" ng-options="p.id as p.firstName+' '+p.lastName for p in players">
     <option value="">-- Choose Player --</option>
 </select>
-<input type="button" value="Add Player" ng-click="addPlayer()">
+<input type="button" value="Claim Player" ng-disabled="selectedPlayerId==0" ng-click="addPlayer()">
 <div ng-hide="userPlayers.length == 0">
     <table class="table">
         <thead>
@@ -22,4 +22,7 @@
         </tbody>
     </table>
 </div>
-<input type="button" value="Return" ng-click="close()">
+
+<input type="button" value="Start Signup!" ng-click="close('signup')" ng-hide="userPlayers.length == 0">
+<input type="button" value="Add More Teams" ng-click="close('teams')">
+<input type="button" value="Home" ng-click="close('home')">

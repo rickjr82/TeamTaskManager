@@ -52,7 +52,7 @@ namespace TeamTaskManager.Controllers
             PlayerId = ta.PlayerId;
             if (ta.PlayerId == 0)
             {
-                DisplayName = "None";
+                DisplayName = "Open";
             }
             else
             {

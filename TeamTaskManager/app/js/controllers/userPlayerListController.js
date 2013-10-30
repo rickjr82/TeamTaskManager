@@ -6,7 +6,7 @@
         $scope.teamId = $routeParams.teamId;
         $scope.players = [];
         $scope.userPlayers = [];
-        $scope.selectedPlayerId = -1;
+        $scope.selectedPlayerId = 0;
         teamDetail.getCurrentUserPlayers($scope.teamId, false).then(function (result) {            
             $scope.userPlayers = result;
         });
@@ -30,7 +30,14 @@
                 $scope.userPlayers.splice(index, 1);
             });
         };
-        $scope.close = function () {
-            $location.path('/manageUser/teams');
+        $scope.close = function (location) {
+            if (location == 'signup') {
+                $location.path('/taskSignUp/' + $scope.teamId + '/' + false);
+            }
+            else if (location == 'teams') {
+                $location.path('/manageUser/teams');
+            } else {
+                $location.path('/parentHome');
+            }
         };
     }]);

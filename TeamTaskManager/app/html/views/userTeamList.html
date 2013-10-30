@@ -1,7 +1,7 @@
-﻿<select ng-model="selectedTeamId" ng-options="t.id as t.name for t in teams">
+﻿Available Teams:<select ng-model="selectedTeamId" ng-options="t.id as t.name for t in teams">
     <option value="">-- Choose Team --</option>
 </select>
-<input type="button" value="Add Team" ng-click="addTeam()" ng-disabled="isTeamAlreadyAdded()">
+<input type="button" value="Claim Team" ng-click="addTeam()" ng-disabled="isTeamAlreadyAdded()">
 <div ng-hide="userTeams.length == 0">
     <table class="table">
         <thead>
@@ -15,7 +15,7 @@
                 <td>{{team.name}}
                 </td>
                 <td>
-                    <input type="button" value="Select Player(s)" ng-click="selectPlayers(team.id)">
+                    <input type="button" value="Claim Player(s)" ng-click="selectPlayers(team.id)">
                 </td>
                 <td>
                     <input type="button" value="Delete" ng-click="removeTeam(team)" />
@@ -25,4 +25,4 @@
     </table>
 
 </div>
-<input type="button" value="Return" ng-click="close()">
+<input type="button" value="Return To Home" ng-click="close()">

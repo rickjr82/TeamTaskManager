@@ -1,4 +1,4 @@
-﻿<input type="button" value="Manage User" ng-click="manageUser()" />
+﻿<input type="button" value="Find My Teams and Players" ng-click="manageUser()" />
 <div ng-hide="userTeams.length == 0">
     <table class ="table">
         <thead>
@@ -30,8 +30,8 @@
     </table>
 </div>
 <div ng-include="'/app/html/views/userTaskAssignments.html'" />
-<select ng-model="teamId" ng-options="t.id as t.name for t in userTeams">
+<select ng-model="teamId" ng-options="t.id as t.name for t in userTeams" ng-hide="userPlayers.length == 0 || userTeams.length == 0">
     <option value="">-- Choose Team --</option>
 </select>
-<input type="button" value="Signup For Tasks" ng-click="signupForTasks()" ng-hide="userPlayers.length == 0 || userTeams.length == 0" ng-disabled="!teamId>0" />
-<input type="button" value="Return" ng-click="close()">
+<input type="button" value="Start Signup!" ng-click="signupForTasks()" ng-hide="userPlayers.length == 0 || userTeams.length == 0" ng-disabled="!teamId>0" />
+<input type="button" value="Coach Tasks" ng-click="selectCoach()" />

@@ -6,6 +6,11 @@
         $scope.userTeams = [];
         $scope.userPlayers = [];
         $scope.teamId = 0;
+        if (typeof ($rootScope.currentUserId) == 'undefined') {
+            teamDetail.getCurrentUserId().then(function (result) {
+                $rootScope.currentUserId = result;
+            });
+        }
         if ($rootScope.parentTeamId >= 0) { $scope.teamId = $rootScope.parentTeamId; }       
         $scope.$watch('teamId', function () { $rootScope.teamId = $scope.teamId });
             teamDetail.getCurrentUserDetails().then(function (result) {
@@ -21,7 +26,7 @@
         $scope.signupForTasks = function() {
             $location.path('/taskSignUp/' + $rootScope.teamId+'/'+false);
         };
-        $scope.close = function () {
-            $location.path('/home');
+        $scope.selectCoach = function () {
+            $location.path('/coachHome');
         };
     }]);

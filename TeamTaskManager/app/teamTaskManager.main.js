@@ -13,7 +13,7 @@ teamTaskManager.value('breeze', window.breeze)
 // Configure routes
 teamTaskManager.config(['$routeProvider', function ($routeProvider) {
       $routeProvider.
-          when('/', { templateUrl: 'app/html/views/home.html', controller: 'homeController' }).
+          when('/', { templateUrl: 'app/html/views/parentHome.html', controller: 'parentHomeController' }).
        when('/teams', { templateUrl: 'app/html/views/teamList.html', controller: 'teamListController' }).
     when('/manageUser/players/:teamId', { templateUrl: 'app/html/views/userPlayerList.html', controller: 'userPlayerListController' }).
           when('/manageUser/teams', { templateUrl: 'app/html/views/userTeamList.html', controller: 'userTeamListController' }).
@@ -22,7 +22,7 @@ teamTaskManager.config(['$routeProvider', function ($routeProvider) {
           when('/tasks/:teamId', { templateUrl: 'app/html/views/taskList.html', controller: 'taskListController' }).
           when('/teamDetail/:teamId', { templateUrl: 'app/html/views/teamDetail.html', controller: 'teamDetailController' }).
     when('/taskSignUp/:teamId/:inCoachMode', { templateUrl: 'app/html/views/signUp.html', controller: 'signupController' })
-        .when('/home', { templateUrl: 'app/html/views/home.html', controller: 'homeController' })
+        .when('/home', { templateUrl: 'app/html/views/parentHome.html', controller: 'parentHomeController' })
     .when('/coachHome', { templateUrl: 'app/html/views/coachHome.html', controller: 'coachHomeController' })
     .when('/parentHome', { templateUrl: 'app/html/views/parentHome.html', controller: 'parentHomeController' })
           .otherwise({ redirectTo: '/' });
