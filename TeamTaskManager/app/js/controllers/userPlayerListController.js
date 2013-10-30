@@ -10,11 +10,13 @@
         teamDetail.getCurrentUserPlayers($scope.teamId, false).then(function (result) {            
             $scope.userPlayers = result;
         });
-        if (typeof ($rootScope.currentUserId) == 'undefined') {
-            teamDetail.getCurrentUserId().then(function (result) {
+        if (typeof($rootScope.currentUserId) == 'undefined') {
+            teamDetail.getCurrentUserId().then(function(result) {
                 $rootScope.currentUserId = result;
                 dataservice.getEntities('Players', $scope.players, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }, { typeQ: 'where', first: 'userId', second: 'eq', third: null }]);
             });
+        } else {
+            dataservice.getEntities('Players', $scope.players, refreshView, [{ typeQ: 'where', first: 'teamId', second: 'eq', third: $scope.teamId }, { typeQ: 'where', first: 'userId', second: 'eq', third: null }]);
         }
         $scope.addPlayer = function () {
             var newPlayer = _.findWhere($scope.players, { id: $scope.selectedPlayerId });
