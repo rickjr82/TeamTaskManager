@@ -64,7 +64,7 @@
         };
         getDisplayName = function (taskAssignment) {
             if (taskAssignment.playerId == 0) {
-                return 'None';
+                return 'Open';
             } else {
                 return taskAssignment.displayName;
             }
