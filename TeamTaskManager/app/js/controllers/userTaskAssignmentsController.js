@@ -14,6 +14,9 @@
             return Date.now() < date;
         };
         $scope.someAreCompletedAlready = function () {
+            if ($scope.includeCompleted) {
+                return true; //will only be set if some are already completed
+            }
             return !_.every($scope.taskAssignments, function (taskAssignment) {
                 return $scope.notAlreadyCompleted(taskAssignment);
             });
