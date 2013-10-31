@@ -20,6 +20,7 @@ namespace TeamTaskManager.Models
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<TaskAssignment> TaskAssignments { get; set; }
+        public DbSet<Log> Logs { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
