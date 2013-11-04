@@ -22,6 +22,7 @@ namespace TeamTaskManager.Models
         public DbSet<TaskAssignment> TaskAssignments { get; set; }
         public DbSet<Log> Logs { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<UserSetting> UserSettings { get; set; }
        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -31,6 +32,7 @@ namespace TeamTaskManager.Models
             modelBuilder.Configurations.Add(new TeamMap());
             modelBuilder.Configurations.Add(new TaskAssignmentMap());
             modelBuilder.Configurations.Add(new UserProfileMap());
+            modelBuilder.Configurations.Add(new UserSettingMap());
        }
     }
 }

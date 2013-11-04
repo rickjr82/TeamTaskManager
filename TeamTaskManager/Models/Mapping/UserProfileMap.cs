@@ -15,7 +15,9 @@ namespace TeamTaskManager.Models.Mapping
                     x.MapLeftKey("TeamId");
                     x.MapRightKey("UserId");
                     x.ToTable("ParentTeams");
-                });           
+                });
+            this.HasMany(x => x.UserSettings)
+                .WithRequired(x => x.UserProfile);
         }
     }
 }

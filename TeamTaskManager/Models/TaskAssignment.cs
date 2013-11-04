@@ -8,5 +8,6 @@
         public Task Task { get; set; }
         public int GameId { get; set; }
         public Game Game { get; set; }
+        public string Status { get; set; }
     }
 }

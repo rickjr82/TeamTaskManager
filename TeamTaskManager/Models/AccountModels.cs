@@ -22,6 +22,7 @@ namespace TeamTaskManager.Models
         public virtual ICollection<Player> Players { get; set; }
         public virtual ICollection<Team> Teams { get; set; }
         public virtual ICollection<Team> TeamsCoached { get; set; }
+        public virtual ICollection<UserSetting> UserSettings { get; set; }
     }   
     public class RegisterExternalLoginModel
     {

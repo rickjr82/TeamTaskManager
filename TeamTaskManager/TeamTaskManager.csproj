@@ -65,6 +65,9 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\net45\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="Quartz">
       <HintPath>..\packages\Quartz.2.2\lib\net40\Quartz.dll</HintPath>
     </Reference>
@@ -281,12 +284,14 @@
     <Compile Include="Models\Mapping\TaskMap.cs" />
     <Compile Include="Models\Mapping\TeamMap.cs" />
     <Compile Include="Models\Mapping\UserProfileMap.cs" />
+    <Compile Include="Models\Mapping\UserSettingMap.cs" />
     <Compile Include="Models\MyTeamTrackerContext.cs" />
     <Compile Include="Models\MyTeamTrackerDBInitializer.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\TaskAssignment.cs" />
     <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\UserSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
