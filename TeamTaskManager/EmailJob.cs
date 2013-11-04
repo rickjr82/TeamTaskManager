@@ -26,13 +26,27 @@ namespace TeamTaskManager
             dbContext.SaveChanges();
             try
             {
-                var from = new MailAddress("rickjr82@gmail.com");
-        //        var taskAssignmentsForNoticitation = GetTaskAssignmentsForNotification(dbContext);
-                var to = new MailAddress[] {new MailAddress("rickjr82@gmail.com")};
-                var subject = "Testing the SendGrid Library";
-                var html = "<p>Hello World!</p>";
-                var text = "Hello World plain text!";
 
+                var from = new MailAddress("rickjr82@gmail.com");
+                var taskAssignments = GetTaskAssignmentsForNotification(dbContext);
+                var users= taskAssignments.Select(x=>x.Player.User);
+                var subject = "Notifications For Upcoming Games";
+                
+                var html = "";
+                var text="";s
+                s
+                foreach(var user in users)
+                {
+                    var to = new MailAddress[] {new MailAddress(user.Email)};
+                     html="<p>Hello "+user.FirstName+",</p>"
+                     text="Hello "+user.FirstName+",\n"
+                    var userTasks=taskAssignments.Where(x=>x.Player.UserId==user.UserId);
+                    foreach (var task in userTasks)
+                    {
+                        
+                    }
+                }
+                
                 // Create an email, passing in the the eight properties as arguments.
                 SendGrid myMessage = SendGrid.GetInstance(from, to, to, to, subject, html, text);
                 var credentials = new NetworkCredential("azure_5b07d2f6abf18718ec02b13cc62088fd@azure.com", "omy86md7");
@@ -52,14 +66,15 @@ namespace TeamTaskManager
                 dbContext.Logs.Add(log);
                 dbContext.SaveChanges();
             }
-        }
+        }s
 
-        private IEnumerable<TaskAssignment> GetTaskAssignmentsForNotification(MyTeamTrackerContext context)
+        private IQueryable<TaskAssignment> GetTaskAssignmentsForNotification(MyTeamTrackerContext context)
         {
             var taskAssignments =
-                context.TaskAssignments.Where(
+                context.TaskAssignments.Include(x=>x.User).Where(
                     x => x.Status == null && x.Game.Time.AddDays(-1).CompareTo(DateTime.Now)>0 && x.Game.Time.CompareTo(DateTime.Now) < 0);
-            return null;
+            return taskAssignments;
         }
     }
 }
+s
