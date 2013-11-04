@@ -27,6 +27,7 @@ namespace TeamTaskManager
             try
             {
                 var from = new MailAddress("rickjr82@gmail.com");
+        //        var taskAssignmentsForNoticitation = GetTaskAssignmentsForNotification(dbContext);
                 var to = new MailAddress[] {new MailAddress("rickjr82@gmail.com")};
                 var subject = "Testing the SendGrid Library";
                 var html = "<p>Hello World!</p>";
@@ -34,7 +35,7 @@ namespace TeamTaskManager
 
                 // Create an email, passing in the the eight properties as arguments.
                 SendGrid myMessage = SendGrid.GetInstance(from, to, to, to, subject, html, text);
-                var credentials = new NetworkCredential("userazure_5b07d2f6abf18718ec02b13cc62088fd", "omy86md7");
+                var credentials = new NetworkCredential("azure_5b07d2f6abf18718ec02b13cc62088fd@azure.com", "omy86md7");
 
                 // Create an SMTP transport for sending email.
                 var transportSMTP = SMTP.GetInstance(credentials);
@@ -51,6 +52,14 @@ namespace TeamTaskManager
                 dbContext.Logs.Add(log);
                 dbContext.SaveChanges();
             }
+        }
+
+        private IEnumerable<TaskAssignment> GetTaskAssignmentsForNotification(MyTeamTrackerContext context)
+        {
+            var taskAssignments =
+                context.TaskAssignments.Where(
+                    x => x.Status == null && x.Game.Time.AddDays(-1).CompareTo(DateTime.Now)>0 && x.Game.Time.CompareTo(DateTime.Now) < 0);
+            return null;
         }
     }
 }
