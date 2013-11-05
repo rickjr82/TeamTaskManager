@@ -35,28 +35,27 @@ namespace TeamTaskManager
             {
 
                 var from = new MailAddress("rickjr82@gmail.com");
-                var taskAssignments = GetTaskAssignmentsForNotification(dbContext);
-                var users = taskAssignments.Select(x => x.Player.User);
                 var subject = "Notifications For Upcoming Games";
-
                 var html = "";
                 var text = "";
 
+                var taskAssignments = GetTaskAssignmentsForNotification(dbContext);
+                var users = taskAssignments.Select(x => x.Player.User);
                 foreach (var user in users)
                 {
                     var to = new MailAddress[] {new MailAddress(user.Email)};
-                    html = "<p>Hello " + user.FirstName + ",</p><br/><p>Your Tasks for the upcoming game are:</p><ul>"
-                    text = "Hello " + user.FirstName + ",\n Your Tasks for the upcoming game are:"
+                    html = "<p>Hello " + user.UserName + ",</p><br/><p>Your Tasks for the upcoming game are:</p><ul>";
+                    text = "Hello " + user.UserName + ",\n Your Tasks for the upcoming game are:";
                     var userTasks = taskAssignments.Where(x => x.Player.UserId == user.UserId);
 
                     foreach (var task in userTasks)
                     {
                         html += "<li>" + task.Task.Name + " - " + task.Task.Description + "</li>";
-                        text += task.Task.Name + " - " + task.Task.Description + "\n"
+                        text += task.Task.Name + " - " + task.Task.Description + "\n";
+                        task.Status = "Email Sent";
                     }
-                    SendEmail(to, from, html, text);
+                    SendEmail(dbContext, to, from,subject, html, text);
                 }
-
 
                 log = new Log {LogArea = "Email", LogType = "Success", Message = "Completed Send", Severity = "Info"};
                 dbContext.Logs.Add(log);
@@ -69,35 +68,34 @@ namespace TeamTaskManager
                 dbContext.SaveChanges();
             }
         }
-
-        private s 
+      
 
         private IQueryable<TaskAssignment> GetTaskAssignmentsForNotification(MyTeamTrackerContext context)
         {
             var taskAssignments =
-                context.TaskAssignments.Include(x => x.User).Where(
+                context.TaskAssignments.Include("Player.User").Where(
                     x =>
                         x.Status == null && x.Game.Time.AddDays(-1).CompareTo(DateTime.Now) > 0 &&
                         x.Game.Time.CompareTo(DateTime.Now) < 0);
             return taskAssignments;
         }
 
-        public void SendEmail(MailAddress to, MailAddress from, string subject, string html, string text)
+        public void SendEmail(MyTeamTrackerContext context, MailAddress[] to, MailAddress from, string subject, string html, string text)
         {
             var reader = new AppSettingsReader();
             var fakeEmails = (bool) reader.GetValue("email:SendFake", typeof (bool));
-
+            
             if (fakeEmails)
             {
-                log = new Log
+                var log = new Log
                 {
                     LogArea = "Email",
                     LogType = "Fake",
-                    Message = "to=" + to", from="+from+", subect="+subject+", text="+text+", html"+html,
+                    Message = "to=" + to+", from="+from+", subect="+subject+", text="+text+", html"+html,
                     Severity = "Fake"
                 };
-                dbContext.Logs.Add(log);
-                dbContext.SaveChanges();
+                context.Logs.Add(log);
+                context.SaveChanges();
             }
             else
             {
